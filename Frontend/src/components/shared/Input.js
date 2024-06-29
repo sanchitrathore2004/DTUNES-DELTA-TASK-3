@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Input({label,placeholder}) {
+function Input({label,placeholder, value, setValue}) {
   return (
-    <div>
-        <label for={label} className='text-white text-xs'>{label}</label>
-        <input type='text' placeholder={placeholder} className='w-11/12 h-3 placeholder:text-xs p-3 rounded-md text-xs flex justify-center items-center'></input>
+    <div className='my-1'>
+        <label for={label} className='text-white text-base'>{label}</label>
+        <input id={label} type='text' placeholder={placeholder} className='placeholder:text-base p-3 rounded-md text-base flex justify-center items-center' value={value} onChange={(e) => { setValue(e.target.value)}}></input>
     </div>
   )
 }

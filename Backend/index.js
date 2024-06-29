@@ -10,7 +10,9 @@ const authRoutes = require('./routes/auth');
 const songRoutes = require('./routes/songs');
 const playlistRoutes = require('./routes/playlist');
 const port = 8000;
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 
 const username="rathoresanchit786";

@@ -12,8 +12,8 @@ function Login() {
         <div className='w-full h-3/4 flex flex-col justify-center items-center'>
         <Input label="Email or Username" placeholder="Email" />
         <Password label="Password" placeholder="Password" />
-        <div className='p-4'><button style={{backgroundColor:'#EA445A'}} className='rounded-md text-white p-2 font-bold text-xs bg-white'>LOGIN</button></div>
-        <div className='text-white text-xs'>Don't have an Account? <Link to='/signup' className='font-bold cursor-pointer'>Register</Link></div>
+        <div className='p-4'><button style={{backgroundColor:'#EA445A'}} className='rounded-md text-white p-4 font-bold text-base bg-white'>LOGIN</button></div>
+        <div className='text-white text-base'>Don't have an Account? <Link to='/signup' className='font-bold cursor-pointer'>Register</Link></div>
         </div>
         </div>        
     </div>

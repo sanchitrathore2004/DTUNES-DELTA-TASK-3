@@ -6,6 +6,7 @@ module.exports = {
       height: {
         '1/10': '10%',
         '9/10': '90%',
+        '7/8' : '87%',
       },
       fontSize: {
         'medium' : '10px',
