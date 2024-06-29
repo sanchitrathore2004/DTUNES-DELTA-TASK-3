@@ -13,7 +13,7 @@ router.post('/register', async function (req,res) {
     }
     else {
         //here we convert the password plain text to encription so that security issues must be removed
-        const hashedPassword = bcrypt.hash(password,10);
+        const hashedPassword = await bcrypt.hash(password,10);
         const newUserData = {email, password: hashedPassword, firstName, lastName, userName};
         const newUser = await User.create(newUserData);
         const token = await getToken(email, newUser); 
@@ -29,12 +29,12 @@ router.post('/login', async function (req,res){
     if(!user){
         return res.status(602).json({err: 'Invalid Email'});
     }
-
+ 
     // comparing one password in plain text and other one in the hashed format
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if(!isPasswordValid){
-        return res.status(602).json({err: 'Invalid Password'});
+        return res.status(603).json({err: 'Invalid Password'});
     }
 
     const token = await getToken(user.email, user); 
@@ -42,5 +42,6 @@ router.post('/login', async function (req,res){
     delete userToReturn.password;
     return res.status(200).json(userToReturn);
 });
+
 
 module.exports = router;

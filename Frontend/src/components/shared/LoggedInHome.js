@@ -14,7 +14,7 @@ import diljitImage from '../../assets/diljit.jpeg';
 import APImage from '../../assets/AP_Dhillon_CA.jpg';
 let i=0;
 
-function Home() {
+function LoggedInHome() {
   return (
     <div className='flex w-full h-screen overflow-hidden'>
         <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
@@ -27,7 +27,7 @@ function Home() {
         </div>
         <div className='w-4/5'>
             <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end'>
-                <Navigation firstText='SIGN UP' nextText='LOGIN' />
+                <Navigation firstText='UPLOAD SONGS' nextText='S' />
             </div>
             <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
                 <PlayList titleName='Punjabi Playlist' />
@@ -61,4 +61,4 @@ function Cards ({thumbnail, title, description}) {
     )
 }
 
-export default Home
+export default LoggedInHome

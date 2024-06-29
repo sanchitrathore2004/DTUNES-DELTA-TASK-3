@@ -7,7 +7,7 @@ import { makeUnauthenticatedPOSTRequest } from '../utils/apiCalling';
 import {useCookies} from 'react-cookie';
 
 function Signup() {
-  const {cookie, setCookie} = useCookies(["token"]);
+  const [cookie, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
