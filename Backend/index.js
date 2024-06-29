@@ -32,19 +32,20 @@ mongoose.connect(`mongodb+srv://rathoresanchit786:gvYB8qYI0gHfBsOK@cluster0.lzil
 var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = 'secret';
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    User.findOne({id: jwt_payload.sub}, function(err, user) {
-        if (err) {
-            return done(err, false);
-        }
+
+passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
+    try {
+        const user = await User.findOne({ id: jwt_payload.id });
         if (user) {
             return done(null, user);
         } else {
             return done(null, false);
-            // or you could create a new account
         }
-    });
+    } catch (err) {
+        return done(err, false);
+    }
 }));
+
 
 app.get('/', function (req,res){
     res.send('hello');

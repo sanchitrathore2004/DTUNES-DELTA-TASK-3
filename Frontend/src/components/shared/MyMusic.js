@@ -14,8 +14,12 @@ import diljitImage from '../../assets/diljit.jpeg';
 import APImage from '../../assets/AP_Dhillon_CA.jpg';
 import musicIcon from '../../assets/music-icon.jpg';
 import { Link } from 'react-router-dom';
+import SongCard from './SongCard';
+import levelsImage from '../../assets/levels.jpg';
 
-function LoggedInHome() {
+const data = [{name:'LEVELS', thumbnail: 'https://c.saavncdn.com/220/Levels-feat-Sunny-Malton-Punjabi-2022-20220525101628-500x500.jpg', artist: 'Siddhu Moosewala'}];
+
+function MyMusic() {
   return (
     <div className='flex w-full h-screen overflow-hidden'>
         <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
@@ -32,8 +36,12 @@ function LoggedInHome() {
                 <Navigation firstText='UPLOAD SONGS' nextText='S' />
             </div>
             <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
-                <PlayList titleName='Punjabi Playlist' />
-                <PlayList titleName='Bollywood' />
+            <div className='p-8 text-2xl font-bold'>
+                My Songs
+            </div>
+                {data.map((item) => {
+                    return <SongCard info={item} />
+                })}
             </div>
         </div>
     </div>
@@ -43,24 +51,8 @@ function LoggedInHome() {
 function PlayList ({titleName}) {
     return (
         <div className='p-8 font-semibold'><div className='text-3xl font-bold p-2'>{titleName}</div>
-        <div className='flex my-2'>
-                <Cards thumbnail={siddhuImage} title='Siddhu Moosewala' description='Hit Punjabi Songs' />
-                <Cards thumbnail={guruImage} title='Guru Randhawa' description='Hit Punjabi Songs' />
-                <Cards thumbnail={hardyImage} title='Hardy Sandhu' description='Hit Punjabi Songs' />
-                <Cards thumbnail={diljitImage} title='Diljit Dosanjh' description='Hit Punjabi Songs' />
-                <Cards thumbnail={APImage} title='AP Dhillon' description='Hit Punjabi Songs' />
-                </div></div>
+       </div>
     )
 }
 
-function Cards ({thumbnail, title, description}) {
-    return (
-        <div className='cursor-pointer hover:bg-zinc-900 p-2 flex flex-col items-center justify-end text-white bg-black w-1/5 mx-2 rounded-md'>
-            <div className='my-2'><img className='w-full h-auto h-full rounded-md' src={thumbnail} /></div>
-            <div className='font-semibold text-lg'>{title}</div>
-            <div className='text-sm text-gray'>{description}</div>
-        </div>
-    )
-}
-
-export default LoggedInHome
+export default MyMusic

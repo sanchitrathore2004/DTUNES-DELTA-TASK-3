@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/logo-2.png';
 import IconText from './IconText';
 import homeIcon from '../../assets/home-icon.jpg';
@@ -13,9 +13,30 @@ import hardyImage from '../../assets/hardy.jpg';
 import diljitImage from '../../assets/diljit.jpeg';
 import APImage from '../../assets/AP_Dhillon_CA.jpg';
 import musicIcon from '../../assets/music-icon.jpg';
-import { Link } from 'react-router-dom';
+import Input from './Input';
+import UploadInput from './UploadInput';
+import CloudinaryUpload from './CloudinaryUpload';
+import { makeAuthenticatedPOSTRequest } from '../../utils/apiCalling';
+import { Link, useNavigate } from 'react-router-dom';
 
-function LoggedInHome() {
+function UploadSongs() {
+    const navigate = useNavigate();
+
+    const uploadBtn = async () => {
+        console.log(name,thumbnail,link,fileName);
+        const data = {name, thumbnail, track: link};
+        const response = await makeAuthenticatedPOSTRequest('/song/create', data);
+        if(response.err){
+            alert('Song not created');
+        }
+        console.log(response);
+        navigate('/loggedin/home');
+    }
+    const [name, setName] = useState("");
+    const [thumbnail, setThumbnail] = useState("");
+    const [link, setLink] = useState("");
+    const [fileName, setFileName] = useState("");
+    console.log(window.cloudinary);
   return (
     <div className='flex w-full h-screen overflow-hidden'>
         <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
@@ -32,10 +53,27 @@ function LoggedInHome() {
                 <Navigation firstText='UPLOAD SONGS' nextText='S' />
             </div>
             <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
-                <PlayList titleName='Punjabi Playlist' />
-                <PlayList titleName='Bollywood' />
-            </div>
+                <PlayList titleName='Upload Your Song' />
+                <div className='flex p-2 w-full'>
+                <UploadInput value={name} setValue={setName} label='Name' placeholder='Name of Your Song' />
+                <UploadInput value={thumbnail} setValue={setThumbnail} label='Thumbnail' placeholder='Link for your Thumbnail' />
+                </div>
+                <div className='flex justify-evenly'>
+                    {fileName ? (
+                        <div className='text-base font-bold mx-5'> 
+                            {`Uploaded File Name : ${fileName}`}
+                        </div>
+                    ) : (
+                    <CloudinaryUpload setUrl={setLink} setName={setFileName}/>
+                    )
+                }
+                <div onClick={(e) => {
+                    e.preventDefault();
+                    uploadBtn();
+                }} style={{backgroundColor: '#EA445A'}} className=' flex text-white w-1/6 justify-center items-center font-bold cursor-pointer rounded-full'>Upload Song</div>
+                </div>  
         </div>
+    </div>
     </div>
   )
 }
@@ -43,13 +81,7 @@ function LoggedInHome() {
 function PlayList ({titleName}) {
     return (
         <div className='p-8 font-semibold'><div className='text-3xl font-bold p-2'>{titleName}</div>
-        <div className='flex my-2'>
-                <Cards thumbnail={siddhuImage} title='Siddhu Moosewala' description='Hit Punjabi Songs' />
-                <Cards thumbnail={guruImage} title='Guru Randhawa' description='Hit Punjabi Songs' />
-                <Cards thumbnail={hardyImage} title='Hardy Sandhu' description='Hit Punjabi Songs' />
-                <Cards thumbnail={diljitImage} title='Diljit Dosanjh' description='Hit Punjabi Songs' />
-                <Cards thumbnail={APImage} title='AP Dhillon' description='Hit Punjabi Songs' />
-                </div></div>
+       </div>
     )
 }
 
@@ -63,4 +95,4 @@ function Cards ({thumbnail, title, description}) {
     )
 }
 
-export default LoggedInHome
+export default UploadSongs

@@ -5,15 +5,20 @@ import Signup from "./routes/Signup";
 import Home from "./components/shared/Home";
 import { useCookies } from "react-cookie";
 import LoggedInHome from "./components/shared/LoggedInHome";
+import UploadSongs from "./components/shared/UploadSongs";
+import MyMusic from "./components/shared/MyMusic";
 
 function App() {
   const [cookie, setCookies] = useCookies(["token"]);
   return (
         <BrowserRouter> 
         {cookie.token ? (
+          //logged in routes
         <Routes>
           <Route path="/loggedin/home" element={<LoggedInHome />} />
           <Route path="*" element={<Navigate to='/loggedin/home' />}/>
+          <Route path="/upload/songs" element={<UploadSongs />} />
+          <Route path="/mymusic" element={<MyMusic />} />
           </Routes>
         ) : (
           <Routes>

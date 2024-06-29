@@ -8,6 +8,9 @@ module.exports = {
         '9/10': '90%',
         '7/8' : '87%',
       },
+      width: {
+        '1/6' : '15%',
+      },
       fontSize: {
         'medium' : '10px',
         'small' : '7px',
