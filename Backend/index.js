@@ -11,6 +11,7 @@ const songRoutes = require('./routes/songs');
 const playlistRoutes = require('./routes/playlist');
 const port = 8000;
 const cors = require('cors');
+const path = require('path');
 
 app.use(cors());
 app.use(express.json());
@@ -51,6 +52,13 @@ app.get('/', function (req,res){
 app.use('/auth', authRoutes);
 app.use('/song', songRoutes);
 app.use('/playlist', playlistRoutes);
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(port, function () {
     console.log(`app running on ${port}`);

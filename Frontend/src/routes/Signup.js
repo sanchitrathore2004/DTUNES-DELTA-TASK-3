@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import logo from '../assets/logo-2.png';
 import Input from '../components/shared/Input';
 import Password from '../components/shared/Password';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { makeUnauthenticatedPOSTRequest } from '../utils/apiCalling';
+import {useCookies} from 'react-cookie';
 
 function Signup() {
+  const {cookie, setCookie} = useCookies(["token"]);
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
   const [userName, setUserName] = useState("");
@@ -21,6 +24,11 @@ function Signup() {
     const response = await makeUnauthenticatedPOSTRequest("/auth/register", data);
     if(response && !response.err){
       console.log('done');
+      const date = new Date();
+      date.setDate(date.getDate()+30);
+      const token = response.token;
+      setCookie("token", token, {path: "/", expires: date});
+      navigate("/home");
     }
   }
   return (

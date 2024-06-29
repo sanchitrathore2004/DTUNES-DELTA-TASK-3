@@ -17,7 +17,7 @@ let i=0;
 function Home() {
   return (
     <div className='flex w-full h-screen'>
-        <div className='bg-black h-screen flex flex-col items-center w-1/5'>
+        <div className='bg-black h-screen flex gap-4 flex-col items-center w-1/5'>
             <div className='flex justify-center items-center p-2 my-3'><img src={logo} alt='logo' className='w-2/4'/></div>
             <div><IconText icon={homeIcon} text="HOME" /></div>
             <div><IconText icon={searchIcon} text="SEARCH" /></div>
@@ -41,7 +41,7 @@ function Home() {
 
 function PlayList ({titleName}) {
     return (
-        <div className='p-3 font-semibold'>{titleName}
+        <div className='p-8 font-semibold'><div className='text-3xl font-bold p-2'>{titleName}</div>
         <div className='flex my-2'>
                 <Cards thumbnail={siddhuImage} title='Siddhu Moosewala' description='Hit Punjabi Songs' />
                 <Cards thumbnail={guruImage} title='Guru Randhawa' description='Hit Punjabi Songs' />
@@ -56,8 +56,8 @@ function Cards ({thumbnail, title, description}) {
     return (
         <div className='cursor-pointer hover:bg-zinc-900 p-2 flex flex-col items-center justify-end text-white bg-black w-1/5 mx-2 rounded-md'>
             <div className='my-2'><img className='w-full h-auto h-full rounded-md' src={thumbnail} /></div>
-            <div className='font-semibold text-medium'>{title}</div>
-            <div className='text-small text-gray'>{description}</div>
+            <div className='font-semibold text-lg'>{title}</div>
+            <div className='text-sm text-gray'>{description}</div>
         </div>
     )
 }
