@@ -50,7 +50,8 @@ function MyMusic() {
             const response=[];
              response.push(await makeAuthenticatedGETRequest('/song/get/mysongs'));
                 console.log(response[0].data);
-                setSongData(response[0].data);
+                setSongData(response[0].data.songs); 
+                console.log(songData);
         }
         getData();
     }, []);
@@ -63,9 +64,9 @@ function MyMusic() {
                 My Songs
             </div>
             {/* songData.map Songcard ko call kr rha h jb bhi songdata me kuch new add ho rha h */}
-                {songData.map((item) => {
-                    return <SongCard info={item} playMusic={playMusic} />
-                })}
+                 {  songData.map((item) => {
+                        return <SongCard key={item.id} info={item} playMusic={playMusic} />;
+                    })}
             </div>
         </div>
             </LoggedInUI>

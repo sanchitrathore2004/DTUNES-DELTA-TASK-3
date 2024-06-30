@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const {getToken} = require('../utils/helper');
+// const {getToken} = require('../utils/helper');
 
 router.post('/register', async function (req,res) {
     const {email, password, firstName, lastName, userName} = req.body;
@@ -42,6 +42,18 @@ router.post('/login', async function (req,res){
     delete userToReturn.password;
     return res.status(200).json(userToReturn);
 });
+
+const jwt = require('jsonwebtoken');
+
+const getToken = (email, user) => {
+  const payload = {
+    id: user._id, // Ensure the user ID is included here
+    email: email,
+  };
+
+  return jwt.sign(payload, 'secret', { expiresIn: '1h' });
+};
+
 
 
 module.exports = router;
