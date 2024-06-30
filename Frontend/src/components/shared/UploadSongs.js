@@ -18,8 +18,9 @@ import UploadInput from './UploadInput';
 import CloudinaryUpload from './CloudinaryUpload';
 import { makeAuthenticatedPOSTRequest } from '../../utils/apiCalling';
 import { Link, useNavigate } from 'react-router-dom';
+import LoggedInUI from './LoggedInUI';
 
-function UploadSongs() {
+function UploadSongs () {
     const navigate = useNavigate();
 
     const uploadBtn = async () => {
@@ -37,21 +38,9 @@ function UploadSongs() {
     const [link, setLink] = useState("");
     const [fileName, setFileName] = useState("");
     console.log(window.cloudinary);
-  return (
-    <div className='flex w-full h-screen overflow-hidden'>
-        <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
-            <div className='flex justify-center items-center p-2 my-3'><img src={logo} alt='logo' className='w-2/4'/></div>
-            <div><IconText icon={homeIcon} text="HOME" /></div>
-            <div><IconText icon={searchIcon} text="SEARCH" /></div>
-            <div><IconText icon={playlistIcon} text="PLAYLISTS" /></div>
-            <div><IconText icon={addIcon} text="CREATE PLAYLISTS" /></div>
-            <div><IconText icon={likeIcon} text="LIKED SONGS" /></div>
-            <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>
-        </div>
-        <div className='w-4/5'>
-            <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end'>
-                <Navigation firstText='UPLOAD SONGS' nextText='S' />
-            </div>
+
+    return (
+        <LoggedInUI>
             <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
                 <PlayList titleName='Upload Your Song' />
                 <div className='flex p-2 w-full'>
@@ -73,9 +62,8 @@ function UploadSongs() {
                 }} style={{backgroundColor: '#EA445A'}} className=' flex text-white w-1/6 justify-center items-center font-bold cursor-pointer rounded-full'>Upload Song</div>
                 </div>  
         </div>
-    </div>
-    </div>
-  )
+        </LoggedInUI>
+    )
 }
 
 function PlayList ({titleName}) {

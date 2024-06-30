@@ -23,9 +23,9 @@ export const makeAuthenticatedPOSTRequest = async (route, body) => {
     return formattedResponse;
 }
 
-const makeAuthenticatedGETRequest = async (route, body) => {
+export const makeAuthenticatedGETRequest = async (route) => {
     const token = getToken();
-    const response = await fetch(siteUrl+route, {method: 'GET', headers: {'content-type': 'application/json', Authorization: `Bearer ${token}`,}, body: JSON.stringify(body)});
+    const response = await fetch(siteUrl+route, {method: 'GET', headers: {'content-type': 'application/json', Authorization: `Bearer ${token}`,},});
 
     const formattedResponse = await response.json();
 
@@ -35,4 +35,4 @@ const makeAuthenticatedGETRequest = async (route, body) => {
 function getToken () {
     const accessToken = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,"$1");
     return accessToken;
-}
+} 

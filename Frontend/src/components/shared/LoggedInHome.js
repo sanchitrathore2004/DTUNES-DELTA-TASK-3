@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/logo-2.png';
 import IconText from './IconText';
 import homeIcon from '../../assets/home-icon.jpg';
@@ -14,30 +14,20 @@ import diljitImage from '../../assets/diljit.jpeg';
 import APImage from '../../assets/AP_Dhillon_CA.jpg';
 import musicIcon from '../../assets/music-icon.jpg';
 import { Link } from 'react-router-dom';
+import { Howl, Howler } from 'howler';
+import playBtn from '../../assets/play-3.png';
+import pauseBtn from '../../assets/pause-2.png';
+import LoggedInUI from './LoggedInUI';
 
-function LoggedInHome() {
-  return (
-    <div className='flex w-full h-screen overflow-hidden'>
-        <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
-            <div className='flex justify-center items-center p-2 my-3'><img src={logo} alt='logo' className='w-2/4'/></div>
-            <div><IconText icon={homeIcon} text="HOME" /></div>
-            <div><IconText icon={searchIcon} text="SEARCH" /></div>
-            <div><IconText icon={playlistIcon} text="PLAYLISTS" /></div>
-            <div><IconText icon={addIcon} text="CREATE PLAYLISTS" /></div>
-            <div><IconText icon={likeIcon} text="LIKED SONGS" /></div>
-            <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>
-        </div>
-        <div className='w-4/5'>
-            <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end'>
-                <Navigation firstText='UPLOAD SONGS' nextText='S' />
-            </div>
+function LoggedInHome () {
+    return(
+    <LoggedInUI>
             <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
                 <PlayList titleName='Punjabi Playlist' />
                 <PlayList titleName='Bollywood' />
-            </div>
-        </div>
-    </div>
-  )
+            </div> 
+    </LoggedInUI>
+    )
 }
 
 function PlayList ({titleName}) {

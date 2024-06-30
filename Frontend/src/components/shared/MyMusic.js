@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import {Howl, Howler} from 'howler';
 import logo from '../../assets/logo-2.png';
 import IconText from './IconText';
 import homeIcon from '../../assets/home-icon.jpg';
@@ -16,36 +17,59 @@ import musicIcon from '../../assets/music-icon.jpg';
 import { Link } from 'react-router-dom';
 import SongCard from './SongCard';
 import levelsImage from '../../assets/levels.jpg';
+import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
+import LoggedInUI from './LoggedInUI';
 
 const data = [{name:'LEVELS', thumbnail: 'https://c.saavncdn.com/220/Levels-feat-Sunny-Malton-Punjabi-2022-20220525101628-500x500.jpg', artist: 'Siddhu Moosewala'}];
 
 function MyMusic() {
-  return (
-    <div className='flex w-full h-screen overflow-hidden'>
-        <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
-            <div className='flex justify-center items-center p-2 my-3'><img src={logo} alt='logo' className='w-2/4'/></div>
-            <div><IconText icon={homeIcon} text="HOME" /></div>
-            <div><IconText icon={searchIcon} text="SEARCH" /></div>
-            <div><IconText icon={playlistIcon} text="PLAYLISTS" /></div>
-            <div><IconText icon={addIcon} text="CREATE PLAYLISTS" /></div>
-            <div><IconText icon={likeIcon} text="LIKED SONGS" /></div>
-            <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>
-        </div>
-        <div className='w-4/5'>
-            <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end'>
-                <Navigation firstText='UPLOAD SONGS' nextText='S' />
-            </div>
+    const [songData, setSongData] = useState([]);
+    const [musicPlayed, setMusicPlayed] = useState(null);
+
+    //for music streaming we are using howler 
+
+    const playMusic = (songSrc) => {
+        if(musicPlayed){
+            musicPlayed.stop();
+        }
+        let sound = new Howl({
+            src: [songSrc],
+            html5: true
+          });
+
+          setMusicPlayed(sound);
+          
+          sound.play();
+    }
+
+    // its a function which have a callback function which is called or shows effect only on page reload
+    useEffect(()=>{
+        // use effect callback function can't be async so we can't use an await statement inside it we will make another function
+
+        const getData = async () => {
+            const response=[];
+             response.push(await makeAuthenticatedGETRequest('/song/get/mysongs'));
+                console.log(response[0].data);
+                setSongData(response[0].data);
+        }
+        getData();
+    }, []);
+
+    return (
+        <LoggedInUI>
+            <div className='w-4/5'>
             <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
             <div className='p-8 text-2xl font-bold'>
                 My Songs
             </div>
-                {data.map((item) => {
-                    return <SongCard info={item} />
+            {/* songData.map Songcard ko call kr rha h jb bhi songdata me kuch new add ho rha h */}
+                {songData.map((item) => {
+                    return <SongCard info={item} playMusic={playMusic} />
                 })}
             </div>
         </div>
-    </div>
-  )
+            </LoggedInUI>
+    )
 }
 
 function PlayList ({titleName}) {

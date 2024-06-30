@@ -18,8 +18,9 @@ router.post('/create', passport.authenticate('jwt', {session: false}), async fun
 });
 
 router.get('/get/mysongs', passport.authenticate('jwt', {session:false}), async function (req,res) {
-    const songs = await Song.find({artist: req.user._id});
-    return res.status(200).json({data: songs});
+    // .populate is used for fetching the complete user data related to some other data
+    const songs = await Song.find({artist: req.user._id}).populate("artist");
+    return res.status(200).json({data: {songs, artist}});
 });
 
 router.get('/get/artist/:artistId', passport.authenticate('jwt', {session: false}), async function (req,res) {
