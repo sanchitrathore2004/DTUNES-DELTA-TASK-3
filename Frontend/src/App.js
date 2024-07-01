@@ -9,6 +9,9 @@ import UploadSongs from "./components/shared/UploadSongs";
 import MyMusic from "./components/shared/MyMusic";
 import songContext from "./contexts/songContext";
 import { useState } from "react";
+import SearchPage from "./components/shared/SearchPage";
+import CreatePlaylist from "./components/shared/CreatePlaylist";
+import MyPlaylist from "./components/shared/MyPlaylist";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
@@ -25,6 +28,9 @@ function App() {
           <Route path="*" element={<Navigate to='/loggedin/home' />}/>
           <Route path="/upload/songs" element={<UploadSongs />} />
           <Route path="/mymusic" element={<MyMusic />} />
+          <Route path="/searchpage" element={<SearchPage />} />
+          <Route path="/createplaylist" element={<CreatePlaylist />} />
+          <Route path="/myplaylist" element={<MyPlaylist />} />
           </Routes>
           </songContext.Provider>
         ) : (

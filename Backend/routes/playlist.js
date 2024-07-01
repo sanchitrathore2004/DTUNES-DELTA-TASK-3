@@ -7,16 +7,15 @@ const Song = require('../models/songs');
 
 router.post('/create', passport.authenticate('jwt', {session: false}), async function (req,res) {
     const currentUser = req.user;
-    const {name, thumbnail, songs} = req.body;
+    const {name, thumbnail} = req.body;
 
-    if(!name || !thumbnail || !songs){
+    if(!name){
         return res.status(201).json({err: 'Insufficient Data'});
     }
 
     const playlistData = {
         name,
         thumbnail,
-        songs,
         owner: currentUser._id,
         collaborators: [],
     };
@@ -37,14 +36,12 @@ router.get('/get/playlist/:playlistId', passport.authenticate('jwt', {session: f
     return res.status(200).json(playlist);
 });
 
-router.get('/get/artist/:artistId', passport.authenticate('jwt', {session: false}), async function (req,res) {
-    const artistId = req.params.artistId;
-
-    const artist = await User.findOne({_id: artistId});
-    if(!artist){
-        return res.status(201).json({err: 'Invalid artist ID'});
+router.get('/get/my/playlist', passport.authenticate('jwt', {session: false}), async function (req,res) {
+    const userId = req.user._id;
+    if(!userId){
+        return res.status(201).json({err: 'Invalid user ID'});
     }
-    const playlist = await Playlist.find({owner: artistId});
+    const playlist = await Playlist.find({owner: req.user._id});
     return res.status(200).json({data: playlist});
 });
 

@@ -39,11 +39,12 @@ router.get('/get/artist/:artistId', passport.authenticate('jwt', {session: false
 });
 
 router.get('/get/songname/:songName', passport.authenticate('jwt', {session: false}), async function (req,res) {
-    const {songName} = req.params.songName;
+    // you have to write only req.params if you want to fetch anything from the route important to remember
+    const {songName} = req.params;
 
     //pattern name matching try kro 
     //the one used here is exact name matching
-    const songs = await Song.find({name: songName});
+    const songs = await Song.find({name: songName}).populate("artist");
     return res.status(200).json({data: songs});
 });
 

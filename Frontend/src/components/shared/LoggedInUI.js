@@ -68,9 +68,9 @@ function LoggedInUI({ children }) {
                         <img src={logo} alt='logo' className='w-2/4' />
                     </div>
                     <Link to='/home'><div><IconText icon={homeIcon} text="HOME" /></div></Link>
-                    <div><IconText icon={searchIcon} text="SEARCH" /></div>
-                    <div><IconText icon={playlistIcon} text="PLAYLISTS" /></div>
-                    <div><IconText icon={addIcon} text="CREATE PLAYLISTS" /></div>
+                    <Link to='/searchpage'><div><IconText icon={searchIcon} text="SEARCH" /></div></Link>
+                    <Link to='/myplaylist'><div><IconText icon={playlistIcon} text="PLAYLISTS" /></div></Link>
+                    <Link to='/createplaylist'><div><IconText icon={addIcon} text="CREATE PLAYLISTS" /></div></Link>
                     <div><IconText icon={likeIcon} text="LIKED SONGS" /></div>
                     <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>
                 </div>
