@@ -49,4 +49,25 @@ router.get('/get/songname/:songName', passport.authenticate('jwt', {session: fal
     return res.status(200).json({data: songs});
 });
 
+router.get('/like/song/:songId', passport.authenticate('jwt', {session:false}), async function (req,res) {
+    const songId = req.params.songId;
+    const userId = req.user._id;
+
+    const song = await Song.findOne({_id: songId});
+
+    if(!song){
+        return res.status(404).json({err: 'not found'});
+    }
+
+    const user = await User.findOne({_id: userId});
+    if(user.likedSongs.includes(songId)){
+        return res.status(200).json({data: 'already liked'});
+    }
+    user.likedSongs.push(songId);
+    await user.save();
+    song.likeCount+=1;
+    await song.save();
+    return res.status(200).json({data: song});
+});
+
 module.exports = router;

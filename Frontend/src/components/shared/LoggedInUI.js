@@ -66,6 +66,13 @@ function LoggedInUI({ children }) {
         sound.play();
     };
 
+    const likeSong = async () => {
+        console.log(currentSong);
+        const response = await makeAuthenticatedGETRequest('/song/like/song/'+currentSong._id);
+
+        console.log(response);
+    }
+
     return (
         <div className='h-screen w-full'>
             {profileModal && <ProfileModal onClose={()=> setProfileModal(false)} />}
@@ -111,7 +118,10 @@ function LoggedInUI({ children }) {
                     e.preventDefault();
                     setShowModal(true);
                 }} className='cursor-pointer w-full h-1/2 mx-3' src='https://cdn-icons-png.flaticon.com/512/11065/11065753.png'></img>
-                <img className='w-full h-1/2 rounded-full mx-3 cursor-pointer' src='https://banner2.cleanpng.com/20180330/aue/kisspng-facebook-like-button-computer-icons-thumb-signal-thumbs-up-5abddf56860ef2.1284314315223929185491.jpg'></img></div>
+                <img onClick={(e=>{
+                    e.preventDefault();
+                    likeSong();
+                })} className='w-full h-1/2 rounded-full mx-3 cursor-pointer' src='https://banner2.cleanpng.com/20180330/aue/kisspng-facebook-like-button-computer-icons-thumb-signal-thumbs-up-5abddf56860ef2.1284314315223929185491.jpg'></img></div>
             </div>
         </div>
     );

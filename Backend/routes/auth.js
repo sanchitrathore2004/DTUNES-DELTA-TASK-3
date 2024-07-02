@@ -58,7 +58,7 @@ const getToken = (email, user) => {
     email: email,
   };
 
-  return jwt.sign(payload, 'secret', { expiresIn: '1h' });
+  return jwt.sign(payload, 'secret', { expiresIn: '30d' });
 };
 
 

@@ -22,6 +22,12 @@ const user = new mongoose.Schema({
         required: true,
         private: true,
     },
+    likedSongs: [
+        {
+            type: mongoose.Types.ObjectId,
+            required: true,
+        }
+    ],
 });
 
 const userModel = mongoose.model('User', user);

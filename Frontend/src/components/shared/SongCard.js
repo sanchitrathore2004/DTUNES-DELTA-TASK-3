@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import levelsImage from '../../assets/levels.jpg';
 import songContext from '../../contexts/songContext';
+import likeImage from '../../assets/like-icon-2.jpg'
 
 function SongCard({info, playMusic}) {
 
@@ -18,6 +19,8 @@ function SongCard({info, playMusic}) {
                 {info.artist.firstName+info.artist.lastName}
             </div>
         </div>
+        <div className='w-10 flex justify-center items-center h-full'><img className='rounded-full w-fit h-fit' src={likeImage} /></div>
+        <div className='h-full flex justify-center items-center text-white text-xl font-bold mx-3'>{info.likeCount}</div>
         </div>
     </div>
   )
