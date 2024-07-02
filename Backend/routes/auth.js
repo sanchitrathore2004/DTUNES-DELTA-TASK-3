@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 // const {getToken} = require('../utils/helper');
 
 router.post('/register', async function (req,res) {
@@ -43,7 +44,13 @@ router.post('/login', async function (req,res){
     return res.status(200).json(userToReturn);
 });
 
+router.post('/logout',passport.authenticate('jwt', {session: false}), async (req, res) => {
+    res.cookie('token', '', { expires: new Date(0), httpOnly: true, sameSite: 'Strict', path: 'http://localhost:3000/' });
+    res.json({ message: 'Logged out successfully' });
+  });
+
 const jwt = require('jsonwebtoken');
+// const passport = require('passport');
 
 const getToken = (email, user) => {
   const payload = {

@@ -16,7 +16,7 @@ const Playlist = new mongoose.Schema({
     songs: [
         {
             type: mongoose.Types.ObjectId,
-            ref: "song",
+            ref: "Songs",
         },
     ],
     collaborators: [

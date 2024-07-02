@@ -9,6 +9,7 @@ const User = require('./models/user');
 const authRoutes = require('./routes/auth');
 const songRoutes = require('./routes/songs');
 const playlistRoutes = require('./routes/playlist');
+const myDetails = require('./routes/myDetails');
 const port = 8000;
 const cors = require('cors');
 const path = require('path');
@@ -45,7 +46,7 @@ passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
         return done(err, false);
     }
 }));
-
+ 
 
 app.get('/', function (req,res){
     res.send('hello');
@@ -54,6 +55,7 @@ app.get('/', function (req,res){
 app.use('/auth', authRoutes);
 app.use('/song', songRoutes);
 app.use('/playlist', playlistRoutes);
+app.use('/me', myDetails);
 
 app.use(express.static(path.join(__dirname, 'build')));
 

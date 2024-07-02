@@ -4,6 +4,7 @@ const Playlist = require('../models/playlist');
 const passport = require('passport');
 const User = require('../models/user');
 const Song = require('../models/songs');
+const circularJson = require('circular-json');
 
 router.post('/create', passport.authenticate('jwt', {session: false}), async function (req,res) {
     const currentUser = req.user;
@@ -18,7 +19,7 @@ router.post('/create', passport.authenticate('jwt', {session: false}), async fun
         thumbnail,
         owner: currentUser._id,
         collaborators: [],
-    };
+    }; 
 
     const playlist = await Playlist.create(playlistData);
     return res.status(200).json(playlist);
@@ -27,7 +28,12 @@ router.post('/create', passport.authenticate('jwt', {session: false}), async fun
 router.get('/get/playlist/:playlistId', passport.authenticate('jwt', {session: false}), async function (req,res) {
     const playlistId = req.params.playlistId;
 
-    const playlist = Playlist.findOne({_id: playlistId});
+    const playlist = await Playlist.findOne({_id: playlistId}).populate({
+        path: "songs",
+        populate: {
+            path: "artist",
+        },
+    });
 
     if(!playlist){
         return res.status(201).json({err: 'No Playlist Found'});
@@ -41,12 +47,12 @@ router.get('/get/my/playlist', passport.authenticate('jwt', {session: false}), a
     if(!userId){
         return res.status(201).json({err: 'Invalid user ID'});
     }
-    const playlist = await Playlist.find({owner: req.user._id});
+    const playlist = await Playlist.find({owner: req.user._id}).populate("owner");
     return res.status(200).json({data: playlist});
 });
 
 router.post('/add/song', passport.authenticate('jwt', {session: false}), async function (req,res) {
-    const currentUser = req.body;
+    const currentUserId = req.user._id;
     const {playlistId, songId} = req.body;
 
     const playlist = await Playlist.findOne({_id: playlistId});
@@ -54,7 +60,7 @@ router.post('/add/song', passport.authenticate('jwt', {session: false}), async f
         return res.status(201).json({err: 'Playlist does not exist'});
     }
 
-    if(!playlist.owner.equals(currentUser._id) && !playlist.collaborators.includes(currentUser._id)){
+    if(!playlist.owner.equals(currentUserId) && !playlist.collaborators.includes(currentUserId)){
         return res.status(201).json({err: 'Not Allowed'});
     }
 

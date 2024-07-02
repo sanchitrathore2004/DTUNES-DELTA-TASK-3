@@ -3,6 +3,7 @@ const passport = require('passport');
 const router = express.Router();
 const Song = require('../models/songs');
 const User = require('../models/user');
+const { findOne } = require('../models/playlist');
 
 router.post('/create', passport.authenticate('jwt', {session: false}), async function (req,res) {
     const {name, thumbnail, track} = req.body;

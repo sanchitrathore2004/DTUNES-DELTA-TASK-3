@@ -13,8 +13,14 @@ import { Howl } from 'howler';
 import playBtn from '../../assets/play-3.png';
 import pauseBtn from '../../assets/pause-2.png';
 import songContext from '../../contexts/songContext';
+import AddSongModal from '../../Modals/AddSongModal';
+import ProfileModal from '../../Modals/ProfileModal';
+import LoggedInNavigation from '../shared/LoggedInNavigation';
+import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 
 function LoggedInUI({ children }) {
+    const [showModal, setShowModal] = useState(false);
+    const [profileModal, setProfileModal] = useState(false);
 
     const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused } = useContext(songContext);
     console.log(currentSong);
@@ -62,6 +68,8 @@ function LoggedInUI({ children }) {
 
     return (
         <div className='h-screen w-full'>
+            {profileModal && <ProfileModal onClose={()=> setProfileModal(false)} />}
+             {showModal && <AddSongModal onClose={() => setShowModal(false)} />}
             <div className={`flex w-full ${currentSong ? `h-9/10` : `h-full`} overflow-hidden`}>
                 <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
                     <div className='flex justify-center items-center p-2 my-3'>
@@ -76,7 +84,7 @@ function LoggedInUI({ children }) {
                 </div>
                 <div className='w-4/5'>
                     <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end'>
-                        <Navigation firstText='UPLOAD SONGS' nextText='S' />
+                        <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText='UPLOAD SONGS' nextText='S' />
                     </div>
                     <div className='h-full overflow-auto' style={{ backgroundColor: '#74F0ED' }}>
                         {children}
@@ -99,7 +107,11 @@ function LoggedInUI({ children }) {
                     </div>
                     <div>progress bar</div>
                 </div>
-                <div className='flex justify-center items-center'>volume</div>
+                <div className='flex justify-center items-center'><img onClick={(e)=>{
+                    e.preventDefault();
+                    setShowModal(true);
+                }} className='cursor-pointer w-full h-1/2 mx-3' src='https://cdn-icons-png.flaticon.com/512/11065/11065753.png'></img>
+                <img className='w-full h-1/2 rounded-full mx-3 cursor-pointer' src='https://banner2.cleanpng.com/20180330/aue/kisspng-facebook-like-button-computer-icons-thumb-signal-thumbs-up-5abddf56860ef2.1284314315223929185491.jpg'></img></div>
             </div>
         </div>
     );
