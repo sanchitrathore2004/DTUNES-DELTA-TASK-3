@@ -1,12 +1,11 @@
 import {openUploadWidget} from "../../utils/cloudinaryService";
-import { cloudinary_Preset } from "../../config";
 
 const CloudinaryUpload = ({setUrl, setName}) => {
     const uploadImageWidget = () => {
         let myUploadWidget = openUploadWidget(
             {
                 cloudName: "dgtydwf1v",
-                uploadPreset: cloudinary_Preset,
+                uploadPreset: 'DTUNES',
                 sources: ["local"],
             },
             function (error, result) {
