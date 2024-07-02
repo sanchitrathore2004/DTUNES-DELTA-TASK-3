@@ -75,4 +75,14 @@ router.post('/add/song', passport.authenticate('jwt', {session: false}), async f
     return res.status(200).json(playlist);
 });
 
+router.get('/get/all/playlist', passport.authenticate('jwt', {session: false}), async function (req,res) {
+    const playlists = await Playlist.find().populate("owner");
+
+    if(!playlists){
+        return res.status(404).json({err: 'not found'});
+    }
+
+    return res.status(200).json({data: playlists});
+});
+
 module.exports = router;

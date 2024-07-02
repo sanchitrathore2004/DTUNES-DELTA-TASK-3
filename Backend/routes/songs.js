@@ -6,11 +6,13 @@ const User = require('../models/user');
 const { findOne } = require('../models/playlist');
 
 router.post('/create', passport.authenticate('jwt', {session: false}), async function (req,res) {
-    const {name, thumbnail, track} = req.body;
+    let {name, thumbnail, track} = req.body;
 
     if(!name || !thumbnail || !track){
         return res.status(201).json({err: 'Incomplete Details'});
     }
+
+    name = name.toLowerCase();
 
     const artist = req.user._id;
     const songDetails = {name,thumbnail, track, artist};
@@ -41,7 +43,9 @@ router.get('/get/artist/:artistId', passport.authenticate('jwt', {session: false
 
 router.get('/get/songname/:songName', passport.authenticate('jwt', {session: false}), async function (req,res) {
     // you have to write only req.params if you want to fetch anything from the route important to remember
-    const {songName} = req.params;
+    let {songName} = req.params;
+
+    songName = songName.toLowerCase();
 
     //pattern name matching try kro 
     //the one used here is exact name matching

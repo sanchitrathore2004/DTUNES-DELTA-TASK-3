@@ -14,7 +14,7 @@ function SearchPage() {
     const searchSong = async () => {
         const response = await makeAuthenticatedGETRequest('/song/get/songname/'+value);
         console.log(response.data);
-        setSongData(response.data)
+        setSongData(response.data) 
     }
 
     const [musicPlayed, setMusicPlayed] = useState(null);

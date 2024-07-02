@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import LoggedInUI from './LoggedInUI'
 import UploadInput from './UploadInput'
 import { makeAuthenticatedPOSTRequest } from '../../utils/apiCalling';
+import { useNavigate } from 'react-router-dom';
 
 function CreatePlaylist() {
+    const navigation = useNavigate();
 
     const makePlaylist = async () => {
         const data = {name, thumbnail};
         const response = await makeAuthenticatedPOSTRequest('/playlist/create', data);
         console.log(response);
+        navigation('/createplaylist');
     }
 
     const [name, setName] = useState("");
