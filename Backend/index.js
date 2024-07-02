@@ -17,11 +17,7 @@ const path = require('path');
 app.use(cors());
 app.use(express.json());
 
-//project 0
-// const username="rathoresanchit786";
-// const password = "HrRV9kz1KC9hy2jw";
-
-mongoose.connect(`mongodb+srv://rathoresanchit786:gvYB8qYI0gHfBsOK@cluster0.lzil7z1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`, {
+mongoose.connect(`mongodb+srv://rathoresanchit786:${process.env.MONGO_PASSWORD}@cluster0.lzil7z1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`, {
     // userNewUrlParser: true,
     // useUnifiedTopology: true
 }).then((x)=>{
