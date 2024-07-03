@@ -8,9 +8,9 @@ const circularJson = require('circular-json');
 
 router.post('/create', passport.authenticate('jwt', {session: false}), async function (req,res) {
     const currentUser = req.user;
-    const {name, thumbnail} = req.body;
+    const {name, thumbnail, visibility} = req.body;
 
-    if(!name){
+    if(!name || !visibility){
         return res.status(201).json({err: 'Insufficient Data'});
     }
 
@@ -19,6 +19,7 @@ router.post('/create', passport.authenticate('jwt', {session: false}), async fun
         thumbnail,
         owner: currentUser._id,
         collaborators: [],
+        visibility,
     }; 
 
     const playlist = await Playlist.create(playlistData);
@@ -76,7 +77,7 @@ router.post('/add/song', passport.authenticate('jwt', {session: false}), async f
 });
 
 router.get('/get/all/playlist', passport.authenticate('jwt', {session: false}), async function (req,res) {
-    const playlists = await Playlist.find().populate("owner");
+    const playlists = await Playlist.find({visibility: 'Public'}).populate("owner");
 
     if(!playlists){
         return res.status(404).json({err: 'not found'});

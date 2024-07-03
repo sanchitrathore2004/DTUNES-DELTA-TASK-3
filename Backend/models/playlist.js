@@ -26,6 +26,10 @@ const Playlist = new mongoose.Schema({
             ref: "User",
         },
     ],
+    visibility: {
+        type: String,
+        required: true,
+    },
 });
 
 const playlistModel = mongoose.model('Playlist', Playlist);
