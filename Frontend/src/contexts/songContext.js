@@ -9,6 +9,8 @@ const songContext = createContext({
     setPaused: (paused)=>{},
     playlist: null,
     setPlaylist: (playlist)=>{},
+    songData: null,
+    setSongData: (songData)=>{},
 });
 
 export default songContext 

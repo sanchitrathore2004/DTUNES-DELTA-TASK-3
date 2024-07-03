@@ -41,7 +41,7 @@ function LoggedInHome () {
 
                 <PlayList titleName='Exciting Plalists' />
 
-                <div className='flex justify-center items-center flex-wrap'>
+                <div className='flex items-center flex-wrap'>
                 {playlist && playlist.map((item)=>{
                     return <Cards thumbnail={item.thumbnail} title={item.name} description={item.owner} playlistId={item._id} />
                 })}
@@ -70,7 +70,7 @@ function Cards ({thumbnail, title, description, playlistId}) {
         }} className='cursor-pointer hover:bg-zinc-900 p-2 flex flex-col items-center justify-end text-white bg-black w-1/5 mx-5 my-5 h-64 rounded-md'>
             <div className='my-2'><img className='w-fit h-auto h-full rounded-md' src={thumbnail} /></div>
             <div className='font-semibold text-lg p-2'>{title}</div>
-            <div className='text-sm text-gray p-1'>Created By - {description.firstName}</div>
+            <div className='text-sm text-gray p-2'>Created By - {description.firstName}</div>
         </div>
     )
 }

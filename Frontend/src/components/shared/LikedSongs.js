@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import LoggedInUI from './LoggedInUI'
-import songContext from '../../contexts/songContext'
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import SongCard from './SongCard';
 import { Howl, Howler } from 'howler';
+import songContext from '../../contexts/songContext';
 
-function InsidePlaylist() {
+function LikedSongs() {
+  const [likedSongData, setlikedSongData] = useState([]);
   const {playlist} = useContext(songContext);
   const {currentSong} = useContext(songContext);
   const {songData, setSongData} = useContext(songContext);
@@ -13,9 +14,18 @@ function InsidePlaylist() {
   console.log(playlist);
   const [musicPlayed, setMusicPlayed] = useState(null);
 
-  //for music streaming we are using howler 
+    useEffect(()=>{
+        const getLikedSongs = async () => {
+            const data = await makeAuthenticatedGETRequest('/me/get/my/liked/song');
+            console.log(data);
+            console.log(data.data.likedSongs);
+            setlikedSongData(data.data.likedSongs);
+            setSongData(data.data.likedSongs);
+        }
+        getLikedSongs();
+    },[]);
 
-  const playMusic = (songSrc) => {
+    const playMusic = (songSrc) => {
       if(musicPlayed){
           musicPlayed.stop();
       }
@@ -34,21 +44,13 @@ function InsidePlaylist() {
   }
 
   useEffect(()=>{
-    const getData = async () => {
-      
-      const response = await makeAuthenticatedGETRequest('/playlist/get/playlist/'+playlist);
-      console.log(response);
-      setSongData(response.songs);
-      setPLaylistName(response.name)
-      console.log(playlistName);
-    }
-    getData();
-  },[]);
-
-  useEffect(()=>{
     console.log(songData);
     console.log(currentSong);
   },[songData]);
+
+  useEffect(()=>{
+    console.log(likedSongData);
+  },[likedSongData]);
 
   const playNextSong = async () => {
     const currentIndex = songData.indexOf(currentSong);
@@ -59,13 +61,13 @@ function InsidePlaylist() {
   return (
     <div>
         <LoggedInUI>
-          <div className='text-black font-bold text-3xl p-10'>{playlistName}</div>
-            {songData.map((item)=>{
-              return <SongCard playMusic={playMusic} info={item} />
-            })}
+          <div className='p-8 text-3xl font-bold'>Your Liked Songs</div>
+          {likedSongData && likedSongData.map((item)=>{
+            return <SongCard info={item} playMusic={playMusic} />
+          })}
         </LoggedInUI>
     </div>
   )
 }
 
-export default InsidePlaylist
+export default LikedSongs

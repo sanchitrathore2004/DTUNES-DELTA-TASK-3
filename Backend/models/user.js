@@ -25,9 +25,12 @@ const user = new mongoose.Schema({
     likedSongs: [
         {
             type: mongoose.Types.ObjectId,
-            required: true,
+            ref: "Songs",
         }
     ],
+    accountType: {
+        type: String,
+    },
 });
 
 const userModel = mongoose.model('User', user);

@@ -7,6 +7,7 @@ const passport = require('passport');
 
 router.post('/register', async function (req,res) {
     const {email, password, firstName, lastName, userName} = req.body;
+    const accountType = 'listener';
 
     const user = await User.findOne({email: email });
     if(user){
@@ -15,7 +16,27 @@ router.post('/register', async function (req,res) {
     else {
         //here we convert the password plain text to encription so that security issues must be removed
         const hashedPassword = await bcrypt.hash(password,10);
-        const newUserData = {email, password: hashedPassword, firstName, lastName, userName};
+        const newUserData = {email, password: hashedPassword, firstName, lastName, userName, accountType};
+        const newUser = await User.create(newUserData);
+        const token = await getToken(email, newUser); 
+        const userToReturn = {...newUser.toJSON(), token};
+        delete userToReturn.password;
+        return res.status(200).json(userToReturn);
+    }
+});
+
+router.post('/register/artist', async function (req,res) {
+    const {email, password, firstName, lastName, userName} = req.body;
+    const accountType = 'artist';
+
+    const user = await User.findOne({email: email });
+    if(user){
+        return res.status(404).json({error: 'A user with this email already exist'});
+    }
+    else {
+        //here we convert the password plain text to encription so that security issues must be removed
+        const hashedPassword = await bcrypt.hash(password,10);
+        const newUserData = {email, password: hashedPassword, firstName, lastName, userName, accountType};
         const newUser = await User.create(newUserData);
         const token = await getToken(email, newUser); 
         const userToReturn = {...newUser.toJSON(), token};

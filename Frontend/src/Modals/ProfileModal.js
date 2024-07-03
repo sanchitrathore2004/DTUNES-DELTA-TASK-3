@@ -24,7 +24,7 @@ function ProfileModal({onClose}) {
 
   return (
     <div onClick={onClose} className='w-full h-full bg-black bg-opacity-80 absolute text-white flex justify-center items-center'>
-        <div className='gap-10 w-1/3 h-1/2 bg-zinc-900 text-white flex flex-col justify-center items-center rounded-md'>
+        <div className='gap-10 w-1/3 h-3/4 bg-zinc-900 text-white flex flex-col justify-center items-center rounded-md'>
               <div style={{backgroundColor: '#EA445A'}} className='rounded-full w-12 h-12 flex justify-center items-center text-2xl font-bold'>
                 {data.firstName && data.firstName.charAt(0).toUpperCase()}
               </div>
@@ -36,6 +36,9 @@ function ProfileModal({onClose}) {
               </div>
               <div>
               <span className='font-bold'>Username : </span>{data.userName}
+              </div>
+              <div>
+              <span className='font-bold'>Account Type : </span>{data.accountType && data.accountType.toUpperCase()}
               </div>
               <div onClick={(e)=>{
                 e.preventDefault();

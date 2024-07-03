@@ -8,11 +8,28 @@ router.get('/get/my/details', passport.authenticate('jwt', {session: false}), as
 
     const user = await User.findOne({_id: userId});
 
-    if(!user){
+    if(!user){ 
         return res.status(404).json({err: 'not found'});
     }
+    
+    return res.status(200).json({data: user}); 
+});
 
-    return res.status(200).json({data: user});
+router.get('/get/my/liked/song', passport.authenticate('jwt', {session: false}), async function (req,res) {
+    const userId = req.user._id;
+
+    const user = await User.findOne({_id: userId}).populate({
+        path: 'likedSongs',
+        populate: {
+            path: 'artist',
+        },
+    });
+
+    if(!user){ 
+        return res.status(404).json({err: 'not found'});
+    }
+    
+    return res.status(200).json({data: user}); 
 });
 
 module.exports = router;

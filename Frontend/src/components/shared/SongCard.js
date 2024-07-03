@@ -3,7 +3,7 @@ import levelsImage from '../../assets/levels.jpg';
 import songContext from '../../contexts/songContext';
 import likeImage from '../../assets/like-icon-2.jpg'
 
-function SongCard({info, playMusic}) {
+function SongCard({info, playMusic}) { 
 
   const {currentSong, setCurrentSong} = useContext(songContext);
 

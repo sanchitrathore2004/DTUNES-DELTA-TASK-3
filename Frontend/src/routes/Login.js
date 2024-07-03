@@ -28,7 +28,7 @@ function Login() {
     }
   }
   return (
-    <div className='w-full h-screen bg-zinc-900 flex flex-col justify-center items-center' style={{backgroundColor: '#74F0ED'}}>
+    <div className='w-full h-screen bg-zinc-900 flex flex-col gap-10 justify-center items-center' style={{backgroundColor: '#74F0ED'}}>
         <div className='flex flex-col bg-white rounded-md w-4/12 h-3/4' style={{backgroundColor: '#000000'}}>
         <div className='w-full h-1/4 flex justify-center'><img src={logo} alt='logo'/></div>
         <div className='w-full h-3/4 flex flex-col justify-center items-center'>
@@ -38,9 +38,10 @@ function Login() {
           e.preventDefault();
           loginBtn();
         }} style={{backgroundColor:'#EA445A'}} className='rounded-md text-white p-4 font-bold text-base bg-white'>LOGIN</button></div>
-        <div className='text-white text-base'>Don't have an Account? <Link to='/signup' className='font-bold cursor-pointer'>Register</Link></div>
+        <div className='text-white text-base'>Don't have an Account? Register as <Link to='/signup' className='font-bold cursor-pointer'>Listener</Link>/<Link to='/artist/signup' className='font-bold cursor-pointer'>Artist</Link></div>
         </div>
-        </div>        
+        </div>      
+        <div className=''>Made with ❤️ by Sanchit</div>    
     </div>
   )
 }

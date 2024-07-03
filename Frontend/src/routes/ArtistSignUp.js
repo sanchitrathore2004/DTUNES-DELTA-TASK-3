@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { makeUnauthenticatedPOSTRequest } from '../utils/apiCalling';
 import {useCookies} from 'react-cookie';
 
-function Signup() {
+function ArtistSignUp() {
   const [cookie, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -21,7 +21,7 @@ function Signup() {
       return;
     }
     const data = {email, userName, password, firstName, lastName};
-    const response = await makeUnauthenticatedPOSTRequest("/auth/register", data);
+    const response = await makeUnauthenticatedPOSTRequest("/auth/register/artist", data);
     if(response && !response.err){
       console.log('done');
       const date = new Date();
@@ -46,7 +46,7 @@ function Signup() {
     </div>
     <div className='p-4'><button style={{backgroundColor:'#EA445A'}} className='rounded-md text-white p-3 font-bold text-base bg-white' onClick={(e)=>{e.preventDefault();
       signUpBtn();
-    }}>REGISTER</button></div>
+    }}>REGISTER AS ARTIST</button></div>
     <div className='text-white text-base'>Already have an Account? <Link to='/login' className='font-bold cursor-pointer'>Login</Link></div>
     </div>
     </div>    
@@ -55,4 +55,4 @@ function Signup() {
   )
 }
 
-export default Signup
+export default ArtistSignUp

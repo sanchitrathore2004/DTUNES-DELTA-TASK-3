@@ -18,11 +18,10 @@ import ProfileModal from '../../Modals/ProfileModal';
 import LoggedInNavigation from '../shared/LoggedInNavigation';
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 
-function LoggedInUI({ children }) {
+function LoggedInUIArtist({ children }) {
     const [showModal, setShowModal] = useState(false);
     const [profileModal, setProfileModal] = useState(false);
     const {songData, setSongData} = useContext(songContext);
-    const [accountType, setAccountType] = useState("");
 
     const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused } = useContext(songContext);
     console.log(currentSong);
@@ -90,19 +89,6 @@ function LoggedInUI({ children }) {
         console.log('new song',currentSong);
       }
 
-      useEffect(()=>{
-        const getAccountType = async () => {
-            const response = await makeAuthenticatedGETRequest('/me/get/my/details');
-            console.log(response);
-            setAccountType(response.data.accountType);
-        }
-        getAccountType();
-      },[]);
-
-      useEffect(()=>{
-        console.log(accountType);
-      },[accountType]);
-
     return (
         <div className='h-screen w-full'>
             {profileModal && <ProfileModal onClose={()=> setProfileModal(false)} />}
@@ -117,11 +103,11 @@ function LoggedInUI({ children }) {
                     <Link to='/myplaylist'><div><IconText icon={playlistIcon} text="PLAYLISTS" /></div></Link>
                     <Link to='/createplaylist'><div><IconText icon={addIcon} text="CREATE PLAYLISTS" /></div></Link>
                     <Link to='/liked/songs'><div><IconText icon={likeIcon} text="LIKED SONGS" /></div></Link>
-                    {accountType=='artist' && <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>}
+                    <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>
                 </div>
                 <div className='w-4/5'>
                     <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end'>
-                        <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText={accountType === 'artist' ? 'UPLOAD SONGS' : ''}  nextText='S' />
+                        <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText='UPLOAD SONGS' nextText='S' />
                     </div>
                     <div className='h-full overflow-auto' style={{ backgroundColor: '#74F0ED' }}>
                         {children}
@@ -157,4 +143,4 @@ function LoggedInUI({ children }) {
     );
 }
 
-export default LoggedInUI;
+export default LoggedInUIArtist;

@@ -27,7 +27,10 @@ function SearchPage() {
         }
         let sound = new Howl({
             src: [songSrc],
-            html5: true
+            html5: true,
+            onend: () => {
+                console.log('ended');
+            },
           });
 
           setMusicPlayed(sound);

@@ -43,7 +43,7 @@ function Cards ({thumbnail, title, description, playlistId}) {
         navigationFunc();
       }} className='cursor-pointer hover:bg-zinc-900 p-2 flex flex-col items-center justify-end text-white bg-black w-1/5 mx-2 h-64 rounded-md'>
           <div className='my-2'><img className='w-full h-auto h-full rounded-md' src={thumbnail} /></div>
-          <div className='font-semibold text-lg'>{title}</div>
+          <div className='font-semibold text-lg p-2'>{title}</div>
           <div className='text-sm text-gray'>{description}</div>
       </div>
   )
