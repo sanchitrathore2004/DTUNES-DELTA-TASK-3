@@ -46,7 +46,7 @@ function Signup() {
     </div>
     <div className='p-4'><button style={{backgroundColor:'#EA445A'}} className='rounded-md text-white p-3 font-bold text-base bg-white' onClick={(e)=>{e.preventDefault();
       signUpBtn();
-    }}>REGISTER</button></div>
+    }}>REGISTER AS LISTENER</button></div>
     <div className='text-white text-base'>Already have an Account? <Link to='/login' className='font-bold cursor-pointer'>Login</Link></div>
     </div>
     </div>    

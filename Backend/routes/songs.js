@@ -12,8 +12,6 @@ router.post('/create', passport.authenticate('jwt', {session: false}), async fun
         return res.status(201).json({err: 'Incomplete Details'});
     }
 
-    name = name.toLowerCase();
-
     const artist = req.user._id;
     const songDetails = {name,thumbnail, track, artist};
     const createdSong = await Song.create(songDetails);
@@ -45,11 +43,9 @@ router.get('/get/songname/:songName', passport.authenticate('jwt', {session: fal
     // you have to write only req.params if you want to fetch anything from the route important to remember
     let {songName} = req.params;
 
-    songName = songName.toLowerCase();
-
     //pattern name matching try kro 
     //the one used here is exact name matching
-    const songs = await Song.find({name: songName}).populate("artist");
+    const songs = await Song.find({name: {$regex: songName, $options: 'i'}}).populate("artist");
     return res.status(200).json({data: songs});
 });
 
@@ -84,6 +80,20 @@ router.get('/get/my/liked/songs', passport.authenticate('jwt', {session: false})
     }
 
     return res.status(200).json({data: user});
+});
+
+router.get('/get/songs/from/api/:q', passport.authenticate('jwt', {session: false}), async function (req,res) {
+    const query = req.params.q;
+
+    const response = await fetch(`https://v1.nocodeapi.com/sanchit0610/spotify/nGprlezEVcXvcxuT/search
+?q=${query}`);
+
+    if(!response){
+        return res.status(404).json({err: 'error not found'});
+    }
+
+    return res.status(200).json(response);
+
 });
 
 module.exports = router;

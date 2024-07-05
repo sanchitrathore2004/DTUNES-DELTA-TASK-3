@@ -31,6 +31,24 @@ const user = new mongoose.Schema({
     accountType: {
         type: String,
     },
+    inbox: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
+    ],
+    sent: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
+    ],
+    friends: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
+    ],
 });
 
 const userModel = mongoose.model('User', user);

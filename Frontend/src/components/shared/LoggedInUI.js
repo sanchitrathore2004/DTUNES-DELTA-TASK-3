@@ -17,6 +17,7 @@ import AddSongModal from '../../Modals/AddSongModal';
 import ProfileModal from '../../Modals/ProfileModal';
 import LoggedInNavigation from '../shared/LoggedInNavigation';
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
+import friendsIcon from '../../assets/friends-icon-2.png';
 
 function LoggedInUI({ children }) {
     const [showModal, setShowModal] = useState(false);
@@ -24,7 +25,7 @@ function LoggedInUI({ children }) {
     const {songData, setSongData} = useContext(songContext);
     const [accountType, setAccountType] = useState("");
 
-    const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused } = useContext(songContext);
+    const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi } = useContext(songContext);
     console.log(currentSong);
 
     let firstUpdate = useRef(true);
@@ -117,6 +118,7 @@ function LoggedInUI({ children }) {
                     <Link to='/myplaylist'><div><IconText icon={playlistIcon} text="PLAYLISTS" /></div></Link>
                     <Link to='/createplaylist'><div><IconText icon={addIcon} text="CREATE PLAYLISTS" /></div></Link>
                     <Link to='/liked/songs'><div><IconText icon={likeIcon} text="LIKED SONGS" /></div></Link>
+                    <Link to='/friends'><div><IconText icon={friendsIcon} text="FRIENDS" /></div></Link>
                     {accountType=='artist' && <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>}
                 </div>
                 <div className='w-4/5'>
@@ -128,7 +130,8 @@ function LoggedInUI({ children }) {
                     </div>
                 </div>
             </div>
-            <div className={`${currentSong ? `block` : `hidden`} hover:bg-gray-900 flex bg-black h-20 w-full text-white gap-2`}>
+            {/* play bar */}
+           { currentSong && <div className={`${currentSong ? `block` : `hidden`} hover:bg-gray-900 flex bg-black h-20 w-full text-white gap-2`}>
                 <div className='flex justify-center items-center mx-5'>
                     <img className='w-full h-full p-3 rounded-full' src={currentSong ? currentSong.thumbnail : ""} alt="" />
                 </div>
@@ -152,7 +155,32 @@ function LoggedInUI({ children }) {
                     e.preventDefault();
                     likeSong();
                 })} className='w-full h-1/2 rounded-full mx-3 cursor-pointer' src='https://banner2.cleanpng.com/20180330/aue/kisspng-facebook-like-button-computer-icons-thumb-signal-thumbs-up-5abddf56860ef2.1284314315223929185491.jpg'></img></div>
-            </div>
+            </div> }
+            {/* { currentSongFromApi && <div className={`${currentSongFromApi ? `block` : `hidden`} hover:bg-gray-900 flex bg-black h-20 w-full text-white gap-2`}>
+                <div className='flex justify-center items-center mx-5'>
+                    <img className='w-full h-full p-3 rounded-full' src={currentSongFromApi ? currentSongFromApi.album.images[0].url : ""} alt="" />
+                </div>
+                <div className='flex flex-col justify-center items-center'>
+                    <div className='font-bold hover:underline'>
+                        {currentSongFromApi ? currentSongFromApi.name : ""}
+                    </div>
+                    <div className='text-xs'>{currentSongFromApi ? `${currentSongFromApi.artists[0].name}` : ""}</div>
+                </div>
+                <div className='flex flex-col justify-center items-center w-3/4'>
+                    <div className='h-1/2'>
+                        <img onClick={playSound} className='cursor-pointer w-full h-9/10' src={paused ? playBtn : pauseBtn} alt="Play/Pause Button" />
+                    </div>
+                    <div>progress bar</div>
+                </div>
+                <div className='flex justify-center items-center'><img onClick={(e)=>{
+                    e.preventDefault();
+                    setShowModal(true);
+                }} className='cursor-pointer w-full h-1/2 mx-3' src='https://cdn-icons-png.flaticon.com/512/11065/11065753.png'></img>
+                <img onClick={(e=>{
+                    e.preventDefault();
+                    likeSong();
+                })} className='w-full h-1/2 rounded-full mx-3 cursor-pointer' src='https://banner2.cleanpng.com/20180330/aue/kisspng-facebook-like-button-computer-icons-thumb-signal-thumbs-up-5abddf56860ef2.1284314315223929185491.jpg'></img></div>
+            </div> } */}
         </div>
     );
 }

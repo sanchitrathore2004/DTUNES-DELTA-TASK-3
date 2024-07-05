@@ -16,6 +16,8 @@ import InsidePlaylist from "./components/shared/InsidePlaylist";
 import LikedSongs from "./components/shared/LikedSongs";
 import ArtistSignUp from "./routes/ArtistSignUp";
 import { makeAuthenticatedGETRequest } from "./utils/apiCalling";
+import Notification from "./components/shared/Notification";
+import Friends from "./components/shared/Friends";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
@@ -25,6 +27,7 @@ function App() {
   const [songData, setSongData] = useState([]);
   const [cookie, setCookies] = useCookies(["token"]);
   const [accountType, setAccountType] = useState("");
+  const [currentSongFromApi, setCurrentSongFromApi] = useState(null);
 
   useEffect(()=>{
     
@@ -44,7 +47,7 @@ function App() {
         <BrowserRouter> 
         {cookie.token ? (
           //logged in routes
-          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData}}> 
+          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi}}> 
         <Routes>
           {accountType=='artist' ? (
             <>
@@ -57,9 +60,13 @@ function App() {
           <Route path="/myplaylist" element={<MyPlaylist />} />
           <Route path="/insideplaylist" element={<InsidePlaylist />} />
           <Route path="/liked/songs" element={<LikedSongs />} />  
+          <Route path="/notification" element={<Notification />} />
+          <Route path="/friends" element={<Friends />} />
             </>
           ):(
             <>
+            <Route path="/friends" element={<Friends />} />
+            <Route path="/notification" element={<Notification />} />
             <Route path="/loggedin/home" element={<LoggedInHome />} />
           <Route path="*" element={<Navigate to='/loggedin/home' />}/>
           <Route path="/searchpage" element={<SearchPage />} />

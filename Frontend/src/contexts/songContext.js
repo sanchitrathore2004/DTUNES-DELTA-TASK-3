@@ -11,6 +11,8 @@ const songContext = createContext({
     setPlaylist: (playlist)=>{},
     songData: null,
     setSongData: (songData)=>{},
+    currentSongFromApi: null,
+    setCurrentSongFromApi: (currentSongFromApi)=>{},
 });
 
 export default songContext 

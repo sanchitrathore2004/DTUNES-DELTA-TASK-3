@@ -5,17 +5,52 @@ import Input from './Input'
 import UploadInput from './UploadInput'
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import SongCard from './SongCard';
+import UserCard from './UserCard';
+import SongCardApi from './SongCardApi';
 
 function SearchPage() {
     const [value, setValue] = useState("");
     const [songData, setSongData] = useState([]);
+    const [apiSongData, setApiSongData] = useState([]);
+    const [searchToggle, setSearchToggle] = useState("");
+    const [userData, setUserData] = useState([]);
     console.log(value);
 
-    const searchSong = async () => {
+const searchSong = async () => {
+    if (searchToggle === 'SONGS') {
+        setUserData([]);
+
+        const q = value;
+
         const response = await makeAuthenticatedGETRequest('/song/get/songname/'+value);
         console.log(response.data);
-        setSongData(response.data) 
+        setSongData(response.data); 
+
+        try {
+            let response = await fetch(`https://v1.nocodeapi.com/sanchit0610/spotify/nGprlezEVcXvcxuT/search?q=${q}&type=track`);
+            let data = await response.json();
+            console.log(data);
+
+            if (data && data.tracks && data.tracks.items) {
+                console.log(data.tracks.items);
+                setApiSongData(data.tracks.items);
+            } else {
+                console.error('Unexpected response structure', data);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     }
+    else if(searchToggle=='ACCOUNTS'){
+        setSongData([]);
+        const response = await makeAuthenticatedGETRequest('/me/get/my/details/'+value);
+        console.log(response)
+        setUserData(response.data);
+    }
+    else{
+        console.log('select a toggle');
+    }
+}
 
     const [musicPlayed, setMusicPlayed] = useState(null);
 
@@ -46,7 +81,13 @@ function SearchPage() {
                 searchSong();
             }
           }} className='w-full flex justify-center items-center '>
-          <UploadInput value={value} setValue={setValue} label='Search' placeholder='Enter Song Name' />
+          <div onClick={(e)=>{
+            e.preventDefault();
+            setSearchToggle('SONGS');
+          }} className={`text-white p-3 ${searchToggle=='SONGS' ? `bg-black`:`bg-zinc-700`} font-bold rounded-md mx-2 cursor-pointer`}>SONGS</div><div onClick={(e)=>{
+            e.preventDefault();
+            setSearchToggle('ACCOUNTS');
+          }} className={`cursor-pointer ${searchToggle=='ACCOUNTS' ? `bg-black` : `bg-zinc-700`} text-white p-3 font-bold rounded-md`}>ACCOUNTS</div><UploadInput value={value} setValue={setValue} label='Search' placeholder='Enter Song Name' />
             </div>
             <div>
                 {
@@ -54,11 +95,26 @@ function SearchPage() {
                 <div className='flex justify-center items-center font-semibold p-3'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
                 )}
                 {
-                songData.length == 0 && (
+                userData.length > 0 && (
+                <div className='flex justify-center items-center font-semibold p-3'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
+                )}
+                {
+                songData.length == 0 && userData.length==0 && (
                 <div className='flex justify-center items-center font-semibold p-3'>Nothing to Show Please Modify Your Search</div>
                 )}
+                {
+                    searchToggle=='' && (
+                        <div className='flex justify-center items-center font-semibold p-3'>Please select a toggle to search</div>
+                    )
+                }
                 {songData.map((items)=>{
                     return <SongCard playMusic={playMusic} info={items} />;
+                })}
+                {/* {apiSongData.map((items)=>{
+                    return <SongCardApi playMusic={playMusic} info={items} />;
+                })} */}
+                {userData.map((item)=>{
+                    return <UserCard info={item} />
                 })}
             </div>
         </LoggedInUI>
