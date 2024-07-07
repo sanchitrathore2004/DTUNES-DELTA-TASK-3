@@ -8,7 +8,7 @@ import LoggedInHome from "./components/shared/LoggedInHome";
 import UploadSongs from "./components/shared/UploadSongs";
 import MyMusic from "./components/shared/MyMusic";
 import songContext from "./contexts/songContext";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SearchPage from "./components/shared/SearchPage";
 import CreatePlaylist from "./components/shared/CreatePlaylist";
 import MyPlaylist from "./components/shared/MyPlaylist";
@@ -26,7 +26,7 @@ function App() {
   const [playlist, setPlaylist] = useState("");
   const [songData, setSongData] = useState([]);
   const [cookie, setCookies] = useCookies(["token"]);
-  const [accountType, setAccountType] = useState("");
+  const [accountType, setAccountType] = useState(null);
   const [currentSongFromApi, setCurrentSongFromApi] = useState(null);
 
   useEffect(()=>{
@@ -34,7 +34,7 @@ function App() {
   const getUserIdType = async () => {
     const response = await makeAuthenticatedGETRequest('/me/get/my/details');
     console.log(response); 
-    setAccountType(response.data.accountType);
+    await setAccountType(response.data.accountType);
   }
   getUserIdType();
   },[]);
@@ -47,7 +47,7 @@ function App() {
         <BrowserRouter> 
         {cookie.token ? (
           //logged in routes
-          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi}}> 
+          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType}}> 
         <Routes>
           {accountType=='artist' ? (
             <>

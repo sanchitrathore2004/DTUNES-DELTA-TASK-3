@@ -25,7 +25,7 @@ function UploadSongs () {
 
     const uploadBtn = async () => {
         console.log(name,thumbnail,link,fileName);
-        const data = {name, thumbnail, track: link};
+        const data = {name, thumbnail, track: link, lyrics, artistName, tags};
         const response = await makeAuthenticatedPOSTRequest('/song/create', data);
         if(response.err){
             alert('Song not created');
@@ -35,6 +35,9 @@ function UploadSongs () {
     }
     const [name, setName] = useState("");
     const [thumbnail, setThumbnail] = useState("");
+    const [lyrics, setLyrics] = useState("");
+    const [artistName, setArtistName] = useState("");
+    const [tags, setTags] = useState("");
     const [link, setLink] = useState("");
     const [fileName, setFileName] = useState("");
     console.log(window.cloudinary);
@@ -43,9 +46,12 @@ function UploadSongs () {
         <LoggedInUI>
             <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
                 <PlayList titleName='Upload Your Song' />
-                <div className='flex p-2 w-full'>
+                <div className='flex p-2 w-full flex-col'>
                 <UploadInput value={name} setValue={setName} label='Name' placeholder='Name of Your Song' />
                 <UploadInput value={thumbnail} setValue={setThumbnail} label='Thumbnail' placeholder='Link for your Thumbnail' />
+                <UploadInput value={lyrics} setValue={setLyrics} label='Lyrics' placeholder='Enter Song Lyrics' />
+                <UploadInput value={artistName} setValue={setArtistName} label='Artist Name' placeholder='Enter Artist Name' />
+                <UploadInput value={tags} setValue={setTags} label='Tags' placeholder='Enter Tags Separated by black space' />
                 </div>
                 <div className='flex justify-evenly'>
                     {fileName ? (
@@ -53,13 +59,13 @@ function UploadSongs () {
                             {`Uploaded File Name : ${fileName}`}
                         </div>
                     ) : (
-                    <CloudinaryUpload setUrl={setLink} setName={setFileName}/>
+                    <div className='my-5'><CloudinaryUpload setUrl={setLink} setName={setFileName}/></div>
                     )
                 }
                 <div onClick={(e) => {
                     e.preventDefault();
                     uploadBtn();
-                }} style={{backgroundColor: '#EA445A'}} className=' flex text-white w-1/6 justify-center items-center font-bold cursor-pointer rounded-full'>Upload Song</div>
+                }} style={{backgroundColor: '#EA445A'}} className='my-5 flex text-white w-1/6 justify-center items-center font-bold cursor-pointer rounded-full'>Upload Song</div>
                 </div>  
         </div>
         </LoggedInUI>

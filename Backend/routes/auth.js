@@ -3,7 +3,61 @@ const router = express.Router();
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const axios = require('axios');
+const cookieParser = require('cookie-parser');
 // const {getToken} = require('../utils/helper');
+
+router.use(cookieParser());
+
+
+const clientId = 'Yc8VTFJ0m8Hetmzz';
+const clientSecret = 'qcB_PvB-BXLUTcCbO.67Mmiujmlqtp1y';
+const redirectUri = 'http://localhost:3000/callback';
+const state = 'YOUR_RANDOM_STATE_STRING';
+
+router.get('/callback', async (req, res) => {
+    const authorizationCode = req.query.code;
+    const receivedState = req.query.state;
+
+    // Validate the state parameter to prevent CSRF attacks
+    if (receivedState !== state) {
+        res.status(400).send('Invalid state parameter');
+        return;
+    }
+
+    try {
+        const tokenUrl = 'https://auth.delta.nitt.edu/api/oauth/token';
+        const response = await axios.post(tokenUrl, null, {
+            params: {
+                client_id: clientId,
+                client_secret: clientSecret,
+                grant_type: 'authorization_code',
+                code: authorizationCode,
+                redirect_uri: redirectUri,
+            },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+        });
+
+        console.log('Token response:', response.data);
+
+        const { access_token, id_token } = response.data;
+
+        // return res.status(200).json({token: access_token});
+
+        // Store the access token in a cookie
+        const date = new Date();
+        date.setDate(date.getDate() + 30);
+        res.cookie('token', access_token, { path: '/', expires: date });
+
+        // Redirect to the home page or another protected route
+        res.redirect('http://localhost:3000/loggedin/home');
+    } catch (error) {
+        console.error('Error fetching access token:', error);
+        res.status(500).send('Failed to obtain access token');
+    }
+});
 
 router.post('/register', async function (req,res) {
     const {email, password, firstName, lastName, userName} = req.body;

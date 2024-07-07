@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from '../utils/apiCalling';
 import { useCookies } from 'react-cookie';
+import songContext from '../contexts/songContext';
 
 function ProfileModal({onClose}) {
+  const {accountType, setAccountType} = useContext(songContext);
+  const {currentSong, setCurrentSong} = useContext(songContext);
   const [cookie, setCookies] = useCookies(["token"]);
 
     const [data,setData] = useState([]);
@@ -19,6 +22,8 @@ function ProfileModal({onClose}) {
     const logoutFunc = async () => {
       const response = await makeAuthenticatedPOSTRequest('/auth/logout', {});
       setCookies('token', '');
+      setAccountType("");
+      setCurrentSong(null);
       console.log(response);
     }
 

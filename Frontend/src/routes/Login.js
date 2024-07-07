@@ -12,6 +12,20 @@ function Login() {
   const [cookie, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
+
+  const clientId = 'Yc8VTFJ0m8Hetmzz';
+  const redirectUri = encodeURIComponent('http://localhost:3000/callback');
+  const responseType = 'code';
+  const grantType = 'authorization_code';
+  const state = 'YOUR_RANDOM_STATE_STRING';
+  const scope = 'email openid profile';
+  const nonce = 'YOUR_RANDOM_NONCE_STRING';
+
+  const loginWithDauth = () => {
+    const authorizationUrl = `https://auth.delta.nitt.edu/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&grant_type=${grantType}&state=${state}&scope=${scope}&nonce=${nonce}`;
+    window.location.href = authorizationUrl;
+  };
+
   const loginBtn = async () => {
     if(!email || !password){
       console.log('Incomplete details filled');
@@ -39,6 +53,11 @@ function Login() {
           loginBtn();
         }} style={{backgroundColor:'#EA445A'}} className='rounded-md text-white p-4 font-bold text-base bg-white'>LOGIN</button></div>
         <div className='text-white text-base'>Don't have an Account? Register as <Link to='/signup' className='font-bold cursor-pointer'>Listener</Link>/<Link to='/artist/signup' className='font-bold cursor-pointer'>Artist</Link></div>
+        <div className='text-white font-bold text-xl my-1'>OR</div>
+        <div onClick={(e)=>{
+          e.preventDefault();
+          // loginWithDauth();
+        }} className='text-white my-1 bg-zinc-800 p-5 rounded-md cursor-pointer font-bold text-base'>Login with DAUTH</div>
         </div>
         </div>      
         <div className=''>Made with ❤️ by Sanchit</div>    

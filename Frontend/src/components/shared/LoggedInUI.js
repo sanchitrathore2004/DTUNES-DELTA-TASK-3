@@ -18,14 +18,16 @@ import ProfileModal from '../../Modals/ProfileModal';
 import LoggedInNavigation from '../shared/LoggedInNavigation';
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import friendsIcon from '../../assets/friends-icon-2.png';
+import PlayingSongModal from '../../Modals/PlayingSongModal';
 
 function LoggedInUI({ children }) {
     const [showModal, setShowModal] = useState(false);
     const [profileModal, setProfileModal] = useState(false);
+    const [playingSongModal, setPlayingSongModal] = useState(false);
     const {songData, setSongData} = useContext(songContext);
-    const [accountType, setAccountType] = useState("");
+    // const [accountType, setAccountType] = useState("");
 
-    const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi } = useContext(songContext);
+    const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType } = useContext(songContext);
     console.log(currentSong);
 
     let firstUpdate = useRef(true);
@@ -91,23 +93,24 @@ function LoggedInUI({ children }) {
         console.log('new song',currentSong);
       }
 
-      useEffect(()=>{
-        const getAccountType = async () => {
-            const response = await makeAuthenticatedGETRequest('/me/get/my/details');
-            console.log(response);
-            setAccountType(response.data.accountType);
-        }
-        getAccountType();
-      },[]);
+    //   useEffect(()=>{
+    //     const getAccountType = async () => {
+    //         const response = await makeAuthenticatedGETRequest('/me/get/my/details');
+    //         console.log(response);
+    //         setAccountType(response.data.accountType);
+    //     }
+    //     getAccountType();
+    //   },[]);
 
-      useEffect(()=>{
-        console.log(accountType);
-      },[accountType]);
+    //   useEffect(()=>{
+    //     console.log(accountType);
+    //   },[accountType]);
 
     return (
         <div className='h-screen w-full'>
             {profileModal && <ProfileModal onClose={()=> setProfileModal(false)} />}
              {showModal && <AddSongModal onClose={() => setShowModal(false)} />}
+                {playingSongModal && <PlayingSongModal onClose={()=>setPlayingSongModal(false)} />}
             <div className={`flex w-full ${currentSong ? `h-9/10` : `h-full`} overflow-hidden`}>
                 <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
                     <div className='flex justify-center items-center p-2 my-3'>
@@ -135,11 +138,14 @@ function LoggedInUI({ children }) {
                 <div className='flex justify-center items-center mx-5'>
                     <img className='w-full h-full p-3 rounded-full' src={currentSong ? currentSong.thumbnail : ""} alt="" />
                 </div>
-                <div className='flex flex-col justify-center items-center'>
-                    <div className='font-bold hover:underline'>
+                <div className='flex flex-col justify-center cursor-pointer text-center items-center'>
+                    <div  onClick={(e)=>{
+            e.preventDefault();
+            setPlayingSongModal(true);
+           }} className='font-bold hover:underline'>
                         {currentSong ? currentSong.name : ""}
                     </div>
-                    <div className='text-xs'>{currentSong ? `${currentSong.artist.firstName} ${currentSong.artist.lastName}` : ""}</div>
+                    <div className='text-xs'>{currentSong ? `${currentSong.artistName}` : ""}</div>
                 </div>
                 <div className='flex flex-col justify-center items-center w-3/4'>
                     <div className='h-1/2'>

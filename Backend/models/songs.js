@@ -22,6 +22,17 @@ const Songs = new mongoose.Schema({
         required: true,
         default: 0,
     },
+    lyrics: {
+        type: String,
+        required: true,
+    },
+    artistName: {
+        type: String,
+        required: true,
+    },
+    tags: {
+        type: String, 
+    },
 });
 
 const songModel = mongoose.model('Songs', Songs);

@@ -16,7 +16,7 @@ function SongCard({info, playMusic}) {
                 {info.name}
             </div>
             <div className='text-xs'>
-                {info.artist.firstName+info.artist.lastName}
+                {info.artistName}
             </div>
         </div>
         <div className='w-10 flex justify-center items-center h-full'><img className='rounded-full w-fit h-fit' src={likeImage} /></div>

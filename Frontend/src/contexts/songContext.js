@@ -13,6 +13,8 @@ const songContext = createContext({
     setSongData: (songData)=>{},
     currentSongFromApi: null,
     setCurrentSongFromApi: (currentSongFromApi)=>{},
+    accountType: null,
+    setAccountType: (accountType)=>{},
 });
 
 export default songContext 

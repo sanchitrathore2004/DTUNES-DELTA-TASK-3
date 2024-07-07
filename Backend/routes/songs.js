@@ -6,14 +6,14 @@ const User = require('../models/user');
 const { findOne } = require('../models/playlist');
 
 router.post('/create', passport.authenticate('jwt', {session: false}), async function (req,res) {
-    let {name, thumbnail, track} = req.body;
+    let {name, thumbnail, track, lyrics, artistName, tags} = req.body;
 
-    if(!name || !thumbnail || !track){
+    if(!name || !thumbnail || !track || !lyrics || !artistName){
         return res.status(201).json({err: 'Incomplete Details'});
     }
 
     const artist = req.user._id;
-    const songDetails = {name,thumbnail, track, artist};
+    const songDetails = {name,thumbnail, track, artist, lyrics, artistName, tags};
     const createdSong = await Song.create(songDetails);
     return res.status(200).json(createdSong);
 });
