@@ -25,7 +25,7 @@ function UploadSongs () {
 
     const uploadBtn = async () => {
         console.log(name,thumbnail,link,fileName);
-        const data = {name, thumbnail, track: link, lyrics, artistName, tags};
+        const data = {name, thumbnail, track: link, lyrics, artistName, tags, genre};
         const response = await makeAuthenticatedPOSTRequest('/song/create', data);
         if(response.err){
             alert('Song not created');
@@ -38,13 +38,14 @@ function UploadSongs () {
     const [lyrics, setLyrics] = useState("");
     const [artistName, setArtistName] = useState("");
     const [tags, setTags] = useState("");
+    const [genre, setGenre] = useState("");
     const [link, setLink] = useState("");
     const [fileName, setFileName] = useState("");
     console.log(window.cloudinary);
 
     return (
         <LoggedInUI>
-            <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
+            <div className='h-full overflow-auto' style={{backgroundColor:'#74F0ED'}}>
                 <PlayList titleName='Upload Your Song' />
                 <div className='flex p-2 w-full flex-col'>
                 <UploadInput value={name} setValue={setName} label='Name' placeholder='Name of Your Song' />
@@ -52,6 +53,7 @@ function UploadSongs () {
                 <UploadInput value={lyrics} setValue={setLyrics} label='Lyrics' placeholder='Enter Song Lyrics' />
                 <UploadInput value={artistName} setValue={setArtistName} label='Artist Name' placeholder='Enter Artist Name' />
                 <UploadInput value={tags} setValue={setTags} label='Tags' placeholder='Enter Tags Separated by black space' />
+                <UploadInput value={genre} setValue={setGenre} label='Genre' placeholder='Whats the Genre of your song' />
                 </div>
                 <div className='flex justify-evenly'>
                     {fileName ? (

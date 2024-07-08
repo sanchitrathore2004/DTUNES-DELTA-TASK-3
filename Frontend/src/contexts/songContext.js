@@ -15,6 +15,12 @@ const songContext = createContext({
     setCurrentSongFromApi: (currentSongFromApi)=>{},
     accountType: null,
     setAccountType: (accountType)=>{},
+    partyModeActivated: null,
+    setPartyModeActivated: (partyModeActivated)=>{},
+    partyModeData: null,
+    setPartyModeData: (partyModeData)=>{},
+    partyModeFriendName: null,
+    setPartyModeFriendName: (partyModeFriendName)=>{},
 });
 
 export default songContext 

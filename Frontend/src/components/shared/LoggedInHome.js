@@ -20,10 +20,13 @@ import pauseBtn from '../../assets/pause-2.png';
 import LoggedInUI from './LoggedInUI';
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import songContext from '../../contexts/songContext';
+import SongCard from './SongCard';
+import { format } from 'date-fns';
 
 function LoggedInHome () {
     const [playlist, setPlaylist] = useState([]);
     const {accountType, setAccountType} = useContext(songContext);
+    const [friendActivity, setFriendActivity] = useState([]);
 
     useEffect(()=>{
         const getPlaylist = async () => {
@@ -48,9 +51,23 @@ function LoggedInHome () {
           console.log(accountType);
         },[accountType]);
 
+        useEffect(()=>{
+    
+            const getFriendsActivity = async () => {
+              const response = await makeAuthenticatedGETRequest('/me/get/my/details/only');
+              console.log(response); 
+              await setFriendActivity(response.data.friends);
+            }
+            getFriendsActivity();
+            },[]);
+          
+            useEffect(()=>{
+              console.log(friendActivity);
+            },[friendActivity]);
+
     return(
     <LoggedInUI>
-            <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
+            <div className='h-full overflow-auto' style={{backgroundColor:'#74F0ED'}}>
                 {/* <PlayList titleName='Punjabi Playlist' />
                 <PlayList titleName='Bollywood' /> */}
 
@@ -61,7 +78,18 @@ function LoggedInHome () {
                     return <Cards thumbnail={item.thumbnail} title={item.name} description={item.owner} playlistId={item._id} />
                 })}
                 </div>
-
+                <div className='p-10 text-3xl font-bold'>
+                    Friend's Activity
+                </div>
+                <div>
+                    {friendActivity && friendActivity.map((item)=>{
+                        return( item.liveUpdate.songId && 
+                            <div>
+                                <div className='mx-12 text-xl font-semibold'>{item.firstName} was listening to <span style={{color: '#EA445A'}} className='font-bold'>{item.liveUpdate.songId.name}</span> at {format(new Date(item.liveUpdate.timestamp), 'HH:mm:ss')}</div>
+                            <SongCard info={item.liveUpdate.songId} /> </div>)
+                    })}
+                </div>
+                ``
             </div> 
     </LoggedInUI>
     )

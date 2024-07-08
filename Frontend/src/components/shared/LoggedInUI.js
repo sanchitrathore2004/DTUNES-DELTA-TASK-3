@@ -16,7 +16,7 @@ import songContext from '../../contexts/songContext';
 import AddSongModal from '../../Modals/AddSongModal';
 import ProfileModal from '../../Modals/ProfileModal';
 import LoggedInNavigation from '../shared/LoggedInNavigation';
-import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
+import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from '../../utils/apiCalling';
 import friendsIcon from '../../assets/friends-icon-2.png';
 import PlayingSongModal from '../../Modals/PlayingSongModal';
 
@@ -25,12 +25,23 @@ function LoggedInUI({ children }) {
     const [profileModal, setProfileModal] = useState(false);
     const [playingSongModal, setPlayingSongModal] = useState(false);
     const {songData, setSongData} = useContext(songContext);
+    const {partyModeData, setPartyModeData} = useContext(songContext); 
     // const [accountType, setAccountType] = useState("");
 
     const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType } = useContext(songContext);
     console.log(currentSong);
 
     let firstUpdate = useRef(true);
+
+    console.log(songData);
+
+    const saveDetail = async (info) => {
+        console.log('aaya');
+        const body = { songId: info._id };
+        console.log(body);
+        const response = await makeAuthenticatedPOSTRequest('/me/save/live/song', body);
+        console.log(response);
+      }
 
     useLayoutEffect(() => {
         if(firstUpdate.current){
@@ -66,7 +77,12 @@ function LoggedInUI({ children }) {
             html5: true,
             onend: () => {
                 console.log('ended');
+                if(songData.length!=0){
                 playNextSong();
+                }
+                else if(partyModeData.length!=0){
+                    playNextSongFromPartyMode();
+                }
             }
         });
 
@@ -89,7 +105,14 @@ function LoggedInUI({ children }) {
     
       const playNextSong = async () => {
         const currentIndex = songData.indexOf(currentSong);
+        saveDetail(songData[currentIndex+1]);
         setCurrentSong(songData[currentIndex+1]);
+        console.log('new song',currentSong);
+      }
+
+      const playNextSongFromPartyMode = async () => {
+        const currentIndex = partyModeData.indexOf(currentSong);
+        setCurrentSong(partyModeData[currentIndex+1]);
         console.log('new song',currentSong);
       }
 
@@ -128,7 +151,7 @@ function LoggedInUI({ children }) {
                     <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end'>
                         <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText={accountType === 'artist' ? 'UPLOAD SONGS' : ''}  nextText='S' />
                     </div>
-                    <div className='h-full overflow-auto' style={{ backgroundColor: '#74F0ED' }}>
+                    <div className='h-9/10 overflow-auto' style={{ backgroundColor: '#74F0ED' }}>
                         {children}
                     </div>
                 </div>

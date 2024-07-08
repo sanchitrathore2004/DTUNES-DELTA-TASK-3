@@ -48,7 +48,7 @@ router.get('/get/my/playlist', passport.authenticate('jwt', {session: false}), a
     if(!userId){
         return res.status(201).json({err: 'Invalid user ID'});
     }
-    const playlist = await Playlist.find({owner: req.user._id}).populate("owner");
+    const playlist = await Playlist.find({owner: req.user._id}).populate("owner").populate("songs");
     return res.status(200).json({data: playlist});
 });
 
@@ -81,6 +81,18 @@ router.get('/get/all/playlist', passport.authenticate('jwt', {session: false}), 
 
     if(!playlists){
         return res.status(404).json({err: 'not found'});
+    }
+
+    return res.status(200).json({data: playlists});
+});
+
+router.get('/get/playlist/by/:owerId', passport.authenticate('jwt', {session: false}), async function (req,res) {
+    const ownerId = req.params.owerId;
+
+    const playlists = await Playlist.find({owner: ownerId}).populate("songs");
+
+    if(!playlists){
+        res.status(404).json({err: 'not found'});
     }
 
     return res.status(200).json({data: playlists});

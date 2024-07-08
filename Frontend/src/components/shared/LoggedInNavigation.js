@@ -23,6 +23,7 @@ function LoggedInNavigation({firstText, nextText, onOpen}) {
           navigate('/notification');
         }} className='w-12 h-12 cursor-pointer rounded-full' src={bellIcon} /></div>
         <div className='bg-white w-0.5 m-4 text-white'>'</div>
+        <Link to='/partymode'><div className='font-bold text-2xl mx-4 cursor-pointer hover:text-white'>PARTY MODE</div></Link>
         <div className='text-2xl font-bold cursor-pointer hover:text-white'><Link to={`${firstText=='SIGN UP'? `/signup` : `/upload/songs`}`} className='font-bold'>{firstText}</Link></div>
     <div onClick={onOpen} className={`${nextText!=''? `rounded-full w-12 flex items-center justify-center` : `rounded-md`} cursor-pointer font-bold p-2 mx-3 text-2xl text-white`} style={{backgroundColor:'#EA445A'}}>{profileData.firstName && profileData.firstName.charAt(0).toUpperCase()}</div>
     </div>

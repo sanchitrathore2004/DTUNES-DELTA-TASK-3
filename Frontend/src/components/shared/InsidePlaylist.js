@@ -13,12 +13,13 @@ function InsidePlaylist() {
   console.log(playlist);
   const [musicPlayed, setMusicPlayed] = useState(null);
 
+
   //for music streaming we are using howler 
 
   const playMusic = (songSrc) => {
       if(musicPlayed){
           musicPlayed.stop();
-      }
+      } 
       let sound = new Howl({
           src: [songSrc],
           html5: true,

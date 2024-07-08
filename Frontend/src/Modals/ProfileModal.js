@@ -6,6 +6,8 @@ import songContext from '../contexts/songContext';
 function ProfileModal({onClose}) {
   const {accountType, setAccountType} = useContext(songContext);
   const {currentSong, setCurrentSong} = useContext(songContext);
+  const {partyModeData, setPartyModeData} = useContext(songContext);
+  const{partyModeActivated, setPartyModeActivated} = useContext(songContext);
   const [cookie, setCookies] = useCookies(["token"]);
 
     const [data,setData] = useState([]);
@@ -24,6 +26,8 @@ function ProfileModal({onClose}) {
       setCookies('token', '');
       setAccountType("");
       setCurrentSong(null);
+      setPartyModeData(null);
+      setPartyModeActivated(false);
       console.log(response);
     }
 

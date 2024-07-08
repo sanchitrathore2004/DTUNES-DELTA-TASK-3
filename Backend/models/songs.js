@@ -33,6 +33,10 @@ const Songs = new mongoose.Schema({
     tags: {
         type: String, 
     },
+    genre: {
+        type: String,
+        required: true,
+    },
 });
 
 const songModel = mongoose.model('Songs', Songs);

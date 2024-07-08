@@ -18,6 +18,7 @@ import ArtistSignUp from "./routes/ArtistSignUp";
 import { makeAuthenticatedGETRequest } from "./utils/apiCalling";
 import Notification from "./components/shared/Notification";
 import Friends from "./components/shared/Friends";
+import PartyMode from "./components/shared/PartyMode";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
@@ -25,6 +26,9 @@ function App() {
   const [paused, setPaused] = useState(true);
   const [playlist, setPlaylist] = useState("");
   const [songData, setSongData] = useState([]);
+  const [partyModeActivated, setPartyModeActivated] = useState(false);
+  const [partyModeData, setPartyModeData] = useState([]);
+  const [partyModeFriendName, setPartyModeFriendName] = useState("");
   const [cookie, setCookies] = useCookies(["token"]);
   const [accountType, setAccountType] = useState(null);
   const [currentSongFromApi, setCurrentSongFromApi] = useState(null);
@@ -47,7 +51,7 @@ function App() {
         <BrowserRouter> 
         {cookie.token ? (
           //logged in routes
-          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType}}> 
+          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, partyModeActivated, setPartyModeActivated, partyModeData, setPartyModeData, partyModeFriendName, setPartyModeFriendName}}> 
         <Routes>
           {accountType=='artist' ? (
             <>
@@ -62,9 +66,11 @@ function App() {
           <Route path="/liked/songs" element={<LikedSongs />} />  
           <Route path="/notification" element={<Notification />} />
           <Route path="/friends" element={<Friends />} />
+          <Route path="/partymode" element={<PartyMode />} />
             </>
           ):(
             <>
+            <Route path="/partymode" element={<PartyMode />} />
             <Route path="/friends" element={<Friends />} />
             <Route path="/notification" element={<Notification />} />
             <Route path="/loggedin/home" element={<LoggedInHome />} />

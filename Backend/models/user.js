@@ -49,6 +49,27 @@ const user = new mongoose.Schema({
             ref: "User",
         },
     ],
+    liveUpdate: {
+        songId: {
+            type: mongoose.Types.ObjectId,
+            ref: "Songs",
+        },
+        timestamp: {
+            type: Date,
+            default: Date.now,
+        }
+    },
+    playbackHistory: [
+        {
+            songId: {
+                type: mongoose.Types.ObjectId,
+                ref: "Songs",
+            },
+            timestamp: {
+                type: Date,
+            },
+        },
+    ],
 });
 
 const userModel = mongoose.model('User', user);

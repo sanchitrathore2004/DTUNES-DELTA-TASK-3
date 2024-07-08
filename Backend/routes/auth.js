@@ -49,7 +49,13 @@ router.get('/callback', async (req, res) => {
         // Store the access token in a cookie
         const date = new Date();
         date.setDate(date.getDate() + 30);
-        res.cookie('token', access_token, { path: '/', expires: date });
+           res.cookie('token', access_token, {
+            path: '/',
+            expires: date,
+            httpOnly: true, // Helps mitigate XSS attacks
+            secure: false,  // Set to true if using HTTPS
+            sameSite: 'Lax', // Adjust as necessary, e.g., 'Strict' or 'None' (if cross-site)
+        });
 
         // Redirect to the home page or another protected route
         res.redirect('http://localhost:3000/loggedin/home');
