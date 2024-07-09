@@ -50,7 +50,7 @@ function Signup() {
     <div className='text-white my-[0.5vmax] text-[1.1vmax]'>Already have an Account? <Link to='/login' className='font-bold cursor-pointer'>Login</Link></div>
     </div>
     </div>    
-    <div className='text-[1.1vw]'>Made with ❤️ by Sanchit</div>    
+    <div className='text-[1.1vmax]'>Made with ❤️ by Sanchit</div>    
 </div> 
   )
 }
