@@ -17,9 +17,9 @@ function MyPlaylist() {
     },[]);
   return (
     <div>
-        <LoggedInUI>
-          <div className='p-10 font-bold text-3xl'>Your Playlists</div>
-          <div className='flex mx-10'>
+        <LoggedInUI> 
+          <div className='font-bold text-[2.2vw] px-[2vw] py-[0.8vw]'>Your Playlists</div>
+          <div className='flex mx-[1.5vw]'>
           {playlistData.map((item)=>{
             console.log(item);
            return <Cards thumbnail={item.thumbnail} title={item.name} description={item.visibility} playlistId={item._id} />
@@ -31,20 +31,17 @@ function MyPlaylist() {
 }
 
 function Cards ({thumbnail, title, description, playlistId}) {
-  const {playlist, setPlaylist} = useContext(songContext);
   const navigation = useNavigate();
-  const navigationFunc = () => {
-    navigation('/insideplaylist');
-  }
+  const {playlist, setPlaylist} = useContext(songContext);
   return (
       <div onClick={(e)=>{
-        e.preventDefault();
-        setPlaylist(playlistId);
-        navigationFunc();
-      }} className='cursor-pointer hover:bg-zinc-900 p-2 flex flex-col items-center justify-end text-white bg-black w-1/5 mx-2 h-64 rounded-md'>
-          <div className='my-2'><img className='w-full h-auto h-full rounded-md' src={thumbnail} /></div>
-          <div className='font-semibold text-lg p-2'>{title}</div>
-          <div className='text-sm text-gray p-1'>{description}</div>
+          e.preventDefault();
+          setPlaylist(playlistId);
+          navigation('/insideplaylist');
+      }} className='cursor-pointer hover:bg-zinc-900 p-[0.5vw] flex flex-col items-center justify-end text-white bg-black w-1/5 m-[1vw] h-[18vw] rounded-md'>
+          <div className='flex justify-center items-center w-full h-full'><img className='w-full h-full rounded-md' src={thumbnail} /></div>
+          <div className='font-semibold text-[1.2vw] p-[0.3vw]'>{title}</div>
+          <div className='text-[0.8vw] text-gray p-[0.3vw]'>{description}</div>
       </div>
   )
 }

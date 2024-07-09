@@ -42,25 +42,25 @@ function Login() {
     }
   }
   return (
-    <div className='w-full h-screen bg-zinc-900 flex flex-col gap-10 justify-center items-center' style={{backgroundColor: '#74F0ED'}}>
-        <div className='flex flex-col bg-white rounded-md w-4/12 h-3/4' style={{backgroundColor: '#000000'}}>
-        <div className='w-full h-1/4 flex justify-center'><img src={logo} alt='logo'/></div>
+    <div className='w-full h-screen bg-zinc-900 flex flex-col gap-[1.5vmax] justify-center items-center' style={{backgroundColor: '#74F0ED'}}>
+        <div className='flex flex-col bg-white rounded-md w-[35vmax] h-[38vmax]' style={{backgroundColor: '#000000'}}>
+        <div className='w-full h-1/4 my-[1vmax] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
         <div className='w-full h-3/4 flex flex-col justify-center items-center'>
         <Input value={email} setValue={setEmail} label="Email or Username" placeholder="Email" />
         <Password value={password} setValue={setPassword} label="Password" placeholder="Password" />
-        <div className='p-4'><button onClick={(e) => {
+        <div className=' flex justify-center items-center'><button onClick={(e) => {
           e.preventDefault();
           loginBtn();
-        }} style={{backgroundColor:'#EA445A'}} className='rounded-md text-white p-4 font-bold text-base bg-white'>LOGIN</button></div>
-        <div className='text-white text-base'>Don't have an Account? Register as <Link to='/signup' className='font-bold cursor-pointer'>Listener</Link>/<Link to='/artist/signup' className='font-bold cursor-pointer'>Artist</Link></div>
-        <div className='text-white font-bold text-xl my-1'>OR</div>
+        }} style={{backgroundColor:'#EA445A'}} className='rounded-[0.5vmax] text-white p-[1vmax] font-bold text-[1.2vmax] bg-white'>LOGIN</button></div>
+        <div className='text-white my-[0.5vmax] text-[1.1vmax]'>Don't have an Account? Register as <Link to='/signup' className='font-bold cursor-pointer'>Listener</Link>/<Link to='/artist/signup' className='font-bold cursor-pointer'>Artist</Link></div>
+        <div className='text-white font-bold text-[1.5vmax] my-[0.5vmax]'>OR</div>
         <div onClick={(e)=>{
           e.preventDefault();
           // loginWithDauth();
-        }} className='text-white my-1 bg-zinc-800 p-5 rounded-md cursor-pointer font-bold text-base'>Login with DAUTH</div>
+        }} className='text-white my-[0.3vmax] bg-zinc-800 p-[1vmax] rounded-[0.5vmax] cursor-pointer font-bold text-[1.1vmax]'>Login with DAUTH</div>
         </div>
         </div>      
-        <div className=''>Made with ❤️ by Sanchit</div>    
+        <div className='text-[1.1vmax]'>Made with ❤️ by Sanchit</div>    
     </div>
   )
 }

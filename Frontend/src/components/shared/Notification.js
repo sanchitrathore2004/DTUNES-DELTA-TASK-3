@@ -20,7 +20,7 @@ function Notification() {
     <div>
         <LoggedInUI>
             <div className='flex flex-col'>
-            <div className='p-8 font-bold text-3xl'>
+            <div className='px-[2vw] py-[0.8vw] font-bold text-[2.2vw]'>
                 Notifications
             </div>
             <div>

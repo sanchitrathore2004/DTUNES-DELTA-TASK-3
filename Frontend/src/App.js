@@ -19,6 +19,7 @@ import { makeAuthenticatedGETRequest } from "./utils/apiCalling";
 import Notification from "./components/shared/Notification";
 import Friends from "./components/shared/Friends";
 import PartyMode from "./components/shared/PartyMode";
+import MyActivity from "./components/shared/MyActivity";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
@@ -67,9 +68,11 @@ function App() {
           <Route path="/notification" element={<Notification />} />
           <Route path="/friends" element={<Friends />} />
           <Route path="/partymode" element={<PartyMode />} />
+          <Route path="/myactivity" element={<MyActivity />} />
             </>
           ):(
             <>
+            <Route path="/myactivity" element={<MyActivity />} />
             <Route path="/partymode" element={<PartyMode />} />
             <Route path="/friends" element={<Friends />} />
             <Route path="/notification" element={<Notification />} />

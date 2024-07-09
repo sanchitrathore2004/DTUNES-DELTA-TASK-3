@@ -80,7 +80,7 @@ function PartyMode() {
   return (
     <div>
         <LoggedInUI>
-            <div className='p-8 text-3xl font-bold'>Party Mode (You & {partyModeFriendName})</div>
+            <div className='px-[2vw] py-[0.8vw] text-[2.2vw] font-bold'>Party Mode (You & {partyModeFriendName})</div>
             {partyModeData && partyModeData.map((item)=>{
                 return <SongCard playMusic={playMusic} info={item} />
             })}

@@ -17,7 +17,7 @@ function Friends() {
   return (
     <div>
         <LoggedInUI>
-            <div className='p-8 text-black text-3xl font-bold'>Friends</div>
+            <div className='px-[2vw] py-[0.8vw] text-black text-[2.2vw] font-bold'>Friends</div>
             {friendsData.map((item)=>{
                 return <FriendsCard info={item} />
             })}

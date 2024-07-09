@@ -149,7 +149,7 @@ router.get('/get/playback/history', passport.authenticate('jwt', {session: false
 
         // Calculate the date for one week ago
         const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7); 
 
         // Query the user's playback history for the past week
         const user = await User.findOne({

@@ -61,13 +61,13 @@ function UploadSongs () {
                             {`Uploaded File Name : ${fileName}`}
                         </div>
                     ) : (
-                    <div className='my-5'><CloudinaryUpload setUrl={setLink} setName={setFileName}/></div>
+                    <div className='flex justify-center items-center'><CloudinaryUpload setUrl={setLink} setName={setFileName}/></div>
                     )
                 }
                 <div onClick={(e) => {
                     e.preventDefault();
                     uploadBtn();
-                }} style={{backgroundColor: '#EA445A'}} className='my-5 flex text-white w-1/6 justify-center items-center font-bold cursor-pointer rounded-full'>Upload Song</div>
+                }} style={{backgroundColor: '#EA445A'}} className='my-[1.5vw] flex p-[1vw] text-white w-1/6 h-full text-[1.3vw] justify-center items-center font-bold cursor-pointer rounded-full'>Upload Song</div>
                 </div>  
         </div>
         </LoggedInUI>
@@ -76,7 +76,7 @@ function UploadSongs () {
 
 function PlayList ({titleName}) {
     return (
-        <div className='p-8 font-semibold'><div className='text-3xl font-bold p-2'>{titleName}</div>
+        <div className='px-[2vw] py-[0.8vw] font-semibold'><div className='text-[2.2vw] font-bold'>{titleName}</div>
        </div>
     )
 }

@@ -18,14 +18,14 @@ function LoggedInNavigation({firstText, nextText, onOpen}) {
 
   return (
     <div className='flex items-center'>
-        <div className='font-bold h-full text-2xl cursor-pointer hover:text-white'><img onClick={(e)=>{
+        <Link to='/partymode'><div className='font-bold text-[1.5vw] mx-[0.7vw] cursor-pointer hover:text-white'>PARTY MODE</div></Link>
+        <div className='text-[1.5vw] font-bold mx-[0.7vw] cursor-pointer hover:text-white'><Link to={`${firstText=='SIGN UP'? `/signup` : `/upload/songs`}`} className='font-bold'>{firstText}</Link></div>
+        <div className='bg-white w-[0.2vw] h-[2.2vw] m-[0.7vw] text-white'>'</div>
+        <div className='font-bold h-full cursor-pointer hover:text-white'><img onClick={(e)=>{
           e.preventDefault();
           navigate('/notification');
-        }} className='w-12 h-12 cursor-pointer rounded-full' src={bellIcon} /></div>
-        <div className='bg-white w-0.5 m-4 text-white'>'</div>
-        <Link to='/partymode'><div className='font-bold text-2xl mx-4 cursor-pointer hover:text-white'>PARTY MODE</div></Link>
-        <div className='text-2xl font-bold cursor-pointer hover:text-white'><Link to={`${firstText=='SIGN UP'? `/signup` : `/upload/songs`}`} className='font-bold'>{firstText}</Link></div>
-    <div onClick={onOpen} className={`${nextText!=''? `rounded-full w-12 flex items-center justify-center` : `rounded-md`} cursor-pointer font-bold p-2 mx-3 text-2xl text-white`} style={{backgroundColor:'#EA445A'}}>{profileData.firstName && profileData.firstName.charAt(0).toUpperCase()}</div>
+        }} className='w-[2.2vw] h-[2.2vw] cursor-pointer rounded-full' src={bellIcon} /></div>
+    <div onClick={onOpen} className={`${nextText!=''? `rounded-full w-[2.3vw] h-[2.3vw] flex items-center justify-center` : `rounded-md`} cursor-pointer font-bold mx-[0.7vw] text-[1.5vw] text-white`} style={{backgroundColor:'#EA445A'}}>{profileData.firstName && profileData.firstName.charAt(0).toUpperCase()}</div>
     </div>
   )
 }

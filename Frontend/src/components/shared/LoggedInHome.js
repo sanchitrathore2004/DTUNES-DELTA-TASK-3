@@ -65,31 +65,38 @@ function LoggedInHome () {
               console.log(friendActivity);
             },[friendActivity]);
 
+            useEffect(()=>{
+                const getData = async () => {
+                const response = await makeAuthenticatedGETRequest('/me/get/playback/history');
+                console.log(response);
+            }
+            getData();
+            },[]);
+
     return(
     <LoggedInUI>
-            <div className='h-full overflow-auto' style={{backgroundColor:'#74F0ED'}}>
+            <div className='h-full w-full overflow-auto' style={{backgroundColor:'#74F0ED'}}>
                 {/* <PlayList titleName='Punjabi Playlist' />
                 <PlayList titleName='Bollywood' /> */}
 
                 <PlayList titleName='Exciting Plalists' />
 
-                <div className='flex items-center flex-wrap'>
+                <div className='flex mx-[1.5vw] items-center flex-wrap'>
                 {playlist && playlist.map((item)=>{
                     return <Cards thumbnail={item.thumbnail} title={item.name} description={item.owner} playlistId={item._id} />
                 })}
                 </div>
-                <div className='p-10 text-3xl font-bold'>
+                <div className='px-[2.2vw] py-[0.8vw] text-[2.2vw] font-bold'>
                     Friend's Activity
                 </div>
                 <div>
                     {friendActivity && friendActivity.map((item)=>{
                         return( item.liveUpdate.songId && 
                             <div>
-                                <div className='mx-12 text-xl font-semibold'>{item.firstName} was listening to <span style={{color: '#EA445A'}} className='font-bold'>{item.liveUpdate.songId.name}</span> at {format(new Date(item.liveUpdate.timestamp), 'HH:mm:ss')}</div>
+                                <div className='mx-[3vw] text-[1.3vw] font-semibold'>{item.firstName} was listening to <span style={{color: '#EA445A'}} className='font-bold'>{item.liveUpdate.songId.name}</span> at {format(new Date(item.liveUpdate.timestamp), 'HH:mm:ss')}</div>
                             <SongCard info={item.liveUpdate.songId} /> </div>)
                     })}
                 </div>
-                ``
             </div> 
     </LoggedInUI>
     )
@@ -97,7 +104,7 @@ function LoggedInHome () {
 
 function PlayList ({titleName, info}) {
     return (
-        <div className=' px-8 py-2 font-semibold'><div className='text-3xl font-bold p-2'>{titleName}</div>
+        <div className=' px-[2vw] py-[0.8vw] font-semibold'><div className='text-[2.2vw] font-bold'>{titleName}</div>
        </div>
     )
 }
@@ -110,10 +117,10 @@ function Cards ({thumbnail, title, description, playlistId}) {
             e.preventDefault();
             setPlaylist(playlistId);
             navigation('/insideplaylist');
-        }} className='cursor-pointer hover:bg-zinc-900 p-2 flex flex-col items-center justify-end text-white bg-black w-1/5 mx-5 my-5 h-64 rounded-md'>
-            <div className='my-2'><img className='w-fit h-auto h-full rounded-md' src={thumbnail} /></div>
-            <div className='font-semibold text-lg p-3'>{title}</div>
-            <div className='text-sm text-gray p-2'>Created By - {description.firstName}</div>
+        }} className='cursor-pointer hover:bg-zinc-900 p-[0.5vw] flex flex-col items-center justify-end text-white bg-black w-1/5 m-[1vw] h-[18vw] rounded-md'>
+            <div className='flex justify-center items-center w-full h-full'><img className='w-full h-full rounded-md' src={thumbnail} /></div>
+            <div className='font-semibold text-[1.2vw] p-[0.3vw]'>{title}</div>
+            <div className='text-[0.8vw] text-gray p-[0.3vw]'>Created By - {description.firstName}</div>
         </div>
     )
 }

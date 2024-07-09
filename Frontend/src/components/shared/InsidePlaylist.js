@@ -60,7 +60,7 @@ function InsidePlaylist() {
   return (
     <div>
         <LoggedInUI>
-          <div className='text-black font-bold text-3xl p-10'>{playlistName}</div>
+          <div className='text-black font-bold text-[2.2vw] px-[2vw] py-[0.8vw]'>{playlistName}</div>
             {songData.map((item)=>{
               return <SongCard playMusic={playMusic} info={item} />
             })}

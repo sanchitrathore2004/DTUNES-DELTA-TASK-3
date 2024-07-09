@@ -60,7 +60,7 @@ function MyMusic() {
         <LoggedInUI>
             <div className='w-4/5'>
             <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
-            <div className='p-8 text-2xl font-bold'>
+            <div className='px-[2vw] py-[0.8vw] text-[2.2vw] font-bold'>
                 My Songs
             </div>
             {/* songData.map Songcard ko call kr rha h jb bhi songdata me kuch new add ho rha h */}

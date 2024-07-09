@@ -17,21 +17,21 @@ function SongCard({info, playMusic}) {
   }
 
   return (
-    <div className='p-4'>
+    <div className='p-[1.5vw]'>
         <div onClick={()=>{
           saveDetail();
-          setCurrentSong(info)}} className='bg-black hover:bg-gray-900 flex mx-12 rounded-md cursor-pointer h-14'>
-        <div className='text-white w-12 h-full object-cover flex justify-center items-center mx-2'><img className='rounded-md' src={info.thumbnail} /></div>
-        <div className='w-full text-white flex flex-col justify-center px-5'>
+          setCurrentSong(info)}} className='bg-black hover:bg-gray-900 flex mx-[2vw] rounded-md cursor-pointer h-[3.3vw]'>
+        <div className='text-white w-[3.1vw] h-full object-cover flex justify-center items-center mx-[0.5vw]'><img className='rounded-md' src={info.thumbnail} /></div>
+        <div className='w-full text-white flex flex-col justify-center text-[1.2vw] px-[1vw]'>
             <div className='hover:underline font-semibold'>
                 {info.name}
             </div>
-            <div className='text-xs'>
+            <div className='text-[0.8vw]'>
                 {info.artistName}
             </div>
         </div>
-        <div className='w-10 flex justify-center items-center h-full'><img className='rounded-full w-fit h-fit' src={likeImage} /></div>
-        <div className='h-full flex justify-center items-center text-white text-xl font-bold mx-3'>{info.likeCount}</div>
+        <div className='w-[2.9vw] flex justify-center items-center h-full'><img className='rounded-full w-fit h-fit' src={likeImage} /></div>
+        <div className='h-full flex justify-center items-center text-white text-[1.6vw] font-bold mx-[1vw]'>{info.likeCount}</div>
         </div>
     </div>
   )

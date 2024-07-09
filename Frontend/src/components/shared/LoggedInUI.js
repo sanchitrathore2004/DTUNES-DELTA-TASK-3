@@ -135,9 +135,9 @@ function LoggedInUI({ children }) {
              {showModal && <AddSongModal onClose={() => setShowModal(false)} />}
                 {playingSongModal && <PlayingSongModal onClose={()=>setPlayingSongModal(false)} />}
             <div className={`flex w-full ${currentSong ? `h-9/10` : `h-full`} overflow-hidden`}>
-                <div className='bg-black h-full flex gap-4 flex-col items-center w-1/5'>
-                    <div className='flex justify-center items-center p-2 my-3'>
-                        <img src={logo} alt='logo' className='w-2/4' />
+                <div className='bg-black h-full gap-[0.5vw] flex flex-col items-center w-1/5'>
+                    <div className='flex justify-center items-center p-2 my-[0.5vw]'>
+                        <img src={logo} alt='logo' className='w-[7vw]' />
                     </div>
                     <Link to='/home'><div><IconText icon={homeIcon} text="HOME" /></div></Link>
                     <Link to='/searchpage'><div><IconText icon={searchIcon} text="SEARCH" /></div></Link>
@@ -148,7 +148,8 @@ function LoggedInUI({ children }) {
                     {accountType=='artist' && <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>}
                 </div>
                 <div className='w-4/5'>
-                    <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end'>
+                    <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end justify-between'>
+                    <Link to='/myactivity'><div className='flex items-center justify-start text-[1.5vw] hover:text-white cursor-pointer font-bold'>My Activity</div></Link>
                         <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText={accountType === 'artist' ? 'UPLOAD SONGS' : ''}  nextText='S' />
                     </div>
                     <div className='h-9/10 overflow-auto' style={{ backgroundColor: '#74F0ED' }}>
