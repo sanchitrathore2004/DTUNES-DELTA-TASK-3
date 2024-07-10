@@ -20,6 +20,9 @@ import Notification from "./components/shared/Notification";
 import Friends from "./components/shared/Friends";
 import PartyMode from "./components/shared/PartyMode";
 import MyActivity from "./components/shared/MyActivity";
+import Callback from "./components/shared/Callback";
+import {Auth0Provider} from '@auth0/auth0-react';
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
@@ -48,8 +51,18 @@ function App() {
     console.log(accountType);
   },[accountType]);
 
+  const clientId = 'Yc8VTFJ0m8Hetmzz';
+  const redirectUri = encodeURIComponent('http://localhost:3000/callback');
+  const responseType = 'code';
+  const grantType = 'authorization_code';
+  const state = 'YOUR_RANDOM_STATE_STRING';
+  const scope = 'email openid profile';
+  const nonce = 'YOUR_RANDOM_NONCE_STRING';
+
   return (
+    <Auth0Provider domain="https://auth.delta.nitt.edu" clientId={clientId} redirectUri={redirectUri}>
         <BrowserRouter> 
+        <Toaster />
         {cookie.token ? (
           //logged in routes
           <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, partyModeActivated, setPartyModeActivated, partyModeData, setPartyModeData, partyModeFriendName, setPartyModeFriendName}}> 
@@ -89,6 +102,7 @@ function App() {
           </songContext.Provider>
         ) : (
           <Routes>
+            <Route path="/callback" element={<Callback />} />
           <Route path="/artist/signup" element={<ArtistSignUp />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<Signup />} />
@@ -97,6 +111,7 @@ function App() {
         </Routes>
 )};
         </BrowserRouter>
+        </Auth0Provider>
   );
 }
 

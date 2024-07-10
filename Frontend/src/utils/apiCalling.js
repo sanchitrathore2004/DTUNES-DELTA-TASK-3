@@ -9,6 +9,14 @@ export const makeUnauthenticatedPOSTRequest = async (route, body) => {
     return formattedResponse; 
 };
 
+export const makeUnauthenticatedGETRequest = async (route) => {
+    console.log(siteUrl+route);
+    const response = await fetch(siteUrl+route, {method: 'GET', headers: {'content-type': 'application/json',},});
+    const formattedResponse = await response.json();
+
+    return formattedResponse; 
+};
+
 export const makeAuthenticatedPOSTRequest = async (route, body) => {
 
     // token is saved in cookie so we have to extract it

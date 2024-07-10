@@ -84,27 +84,27 @@ const searchSong = async () => {
           <div onClick={(e)=>{
             e.preventDefault();
             setSearchToggle('SONGS');
-          }} className={`text-white p-3 ${searchToggle=='SONGS' ? `bg-black`:`bg-zinc-700`} font-bold rounded-md mx-2 cursor-pointer`}>SONGS</div><div onClick={(e)=>{
+          }} className={`text-white p-[1.1vmax] ${searchToggle=='SONGS' ? `bg-black`:`bg-zinc-700`} text-[1.1vmax] flex justify-center items-center font-bold rounded-[0.5vmax] mx-[0.7vmax] cursor-pointer`}>SONGS</div><div onClick={(e)=>{
             e.preventDefault();
             setSearchToggle('ACCOUNTS');
-          }} className={`cursor-pointer ${searchToggle=='ACCOUNTS' ? `bg-black` : `bg-zinc-700`} text-white p-3 font-bold rounded-md`}>ACCOUNTS</div><UploadInput value={value} setValue={setValue} label='Search' placeholder='Enter Song Name' />
+          }} className={`cursor-pointer ${searchToggle=='ACCOUNTS' ? `bg-black` : `bg-zinc-700`} text-white p-[1.1vmax] flex justify-center items-center text-[1.1vmax] font-bold rounded-[0.5vmax]`}>ACCOUNTS</div><UploadInput value={value} setValue={setValue} label='Search' placeholder='Enter Song Name' />
             </div>
             <div>
                 {
                 songData.length > 0 && (
-                <div className='flex justify-center items-center font-semibold p-3'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
+                <div className='flex justify-center items-center font-semibold p-[1.5vmax] text-[1.1vmax]'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
                 )}
                 {
                 userData.length > 0 && (
-                <div className='flex justify-center items-center font-semibold p-3'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
+                <div className='flex justify-center items-center font-semibold text-[1.1vmax] p-[1.5vmax]'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
                 )}
                 {
                 songData.length == 0 && userData.length==0 && (
-                <div className='flex justify-center items-center font-semibold p-3'>Nothing to Show Please Modify Your Search</div>
+                <div className='flex justify-center items-center text-[1.1vmax] font-semibold p-[1.5vmax]'>Nothing to Show Please Modify Your Search</div>
                 )}
                 {
                     searchToggle=='' && (
-                        <div className='flex justify-center items-center font-semibold p-3'>Please select a toggle to search</div>
+                        <div className='flex justify-center items-center text-[1.1vmax] font-semibold p-[1.5vmax]'>Please select a toggle to search</div>
                     )
                 }
                 {songData.map((items)=>{

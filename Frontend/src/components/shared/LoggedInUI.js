@@ -148,11 +148,11 @@ function LoggedInUI({ children }) {
                     {accountType=='artist' && <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>}
                 </div>
                 <div className='w-4/5'>
-                    <div className='h-1/10 bg-black text-gray-400 flex items-center justify-end justify-between'>
+                    <div className='h-[10vmin] bg-black text-gray-400 flex items-center justify-end justify-between'>
                     <Link to='/myactivity'><div className='flex items-center justify-start text-[1.5vw] hover:text-white cursor-pointer font-bold'>My Activity</div></Link>
                         <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText={accountType === 'artist' ? 'UPLOAD SONGS' : ''}  nextText='S' />
                     </div>
-                    <div className='h-9/10 overflow-auto' style={{ backgroundColor: '#74F0ED' }}>
+                    <div className='overflow-auto' style={{ backgroundColor: '#74F0ED', height: 'calc(100% - 10vmin)' }}>
                         {children}
                     </div>
                 </div>

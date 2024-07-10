@@ -88,6 +88,9 @@ function LoggedInHome () {
                 </div>
                 <div className='px-[2.2vw] py-[0.8vw] text-[2.2vw] font-bold'>
                     Friend's Activity
+                    {friendActivity.length==0 && <div>
+                       <Link to='/searchpage'> <button style={{backgroundColor: '#EA445A'}} className='rounded-[1vmax] text-white cursor-pointer text-[1.3vmax] p-[1vmax] font-semibold'>Add Friends</button></Link>
+                        </div>}
                 </div>
                 <div>
                     {friendActivity && friendActivity.map((item)=>{

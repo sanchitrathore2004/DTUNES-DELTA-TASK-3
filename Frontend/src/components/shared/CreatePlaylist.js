@@ -25,26 +25,26 @@ function CreatePlaylist() {
         <LoggedInUI>
         <div className='h-9/10 overflow-none' style={{backgroundColor:'#74F0ED'}}>
         <PlayList titleName='Create Playlist' />
-        <div className='flex p-2 w-full'>
+        <div className='flex p-[1vmax] w-full'>
                 <UploadInput value={name} setValue={setName} label='Name' placeholder='Name of Your Song' />
                 <UploadInput value={thumbnail} setValue={setThumbnail} label='Thumbnail' placeholder='Link for your Thumbnail' />
                 <DroupDown value={visibility} setValue={setVisibility} />
                 </div>
-                <div className='w-full flex items-center mx-10 my-5'>
+                <div className='w-full flex items-center mx-[2.5vmax] my-[1.5vmax]'>
                 <button onClick={(e)=>{
                     e.preventDefault();
                     makePlaylist();
-                }} style={{backgroundColor: '#EA445A'}} className='p-5 rounded-full text-white font-bold cursor-pointer'>Create Playlist</button>
+                }} style={{backgroundColor: '#EA445A'}} className='p-[1.5vmax] rounded-full text-[1vmax] text-white font-bold cursor-pointer'>Create Playlist</button>
                 </div>
             </div>
         </LoggedInUI>
     </div>
   )
-}
+} 
 
 function PlayList ({titleName}) {
     return (
-        <div className='p-8 font-semibold'><div className='text-3xl font-bold p-2'>{titleName}</div>
+        <div className='px-[2vw] py-[0.8vw] font-semibold'><div className='text-[2.2vmax] font-bold'>{titleName}</div>
        </div>
     )
 }

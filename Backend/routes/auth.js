@@ -6,6 +6,7 @@ const passport = require('passport');
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
 // const {getToken} = require('../utils/helper');
+let access_token = '';
 
 router.use(cookieParser());
 
@@ -14,56 +15,6 @@ const clientId = 'Yc8VTFJ0m8Hetmzz';
 const clientSecret = 'qcB_PvB-BXLUTcCbO.67Mmiujmlqtp1y';
 const redirectUri = 'http://localhost:3000/callback';
 const state = 'YOUR_RANDOM_STATE_STRING';
-
-router.get('/callback', async (req, res) => {
-    const authorizationCode = req.query.code;
-    const receivedState = req.query.state;
-
-    // Validate the state parameter to prevent CSRF attacks
-    if (receivedState !== state) {
-        res.status(400).send('Invalid state parameter');
-        return;
-    }
-
-    try {
-        const tokenUrl = 'https://auth.delta.nitt.edu/api/oauth/token';
-        const response = await axios.post(tokenUrl, null, {
-            params: {
-                client_id: clientId,
-                client_secret: clientSecret,
-                grant_type: 'authorization_code',
-                code: authorizationCode,
-                redirect_uri: redirectUri,
-            },
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        });
-
-        console.log('Token response:', response.data);
-
-        const { access_token, id_token } = response.data;
-
-        // return res.status(200).json({token: access_token});
-
-        // Store the access token in a cookie
-        const date = new Date();
-        date.setDate(date.getDate() + 30);
-           res.cookie('token', access_token, {
-            path: '/',
-            expires: date,
-            httpOnly: true, // Helps mitigate XSS attacks
-            secure: false,  // Set to true if using HTTPS
-            sameSite: 'Lax', // Adjust as necessary, e.g., 'Strict' or 'None' (if cross-site)
-        });
-
-        // Redirect to the home page or another protected route
-        res.redirect('http://localhost:3000/loggedin/home');
-    } catch (error) {
-        console.error('Error fetching access token:', error);
-        res.status(500).send('Failed to obtain access token');
-    }
-});
 
 router.post('/register', async function (req,res) {
     const {email, password, firstName, lastName, userName} = req.body;
@@ -142,6 +93,67 @@ const getToken = (email, user) => {
   return jwt.sign(payload, 'secret', { expiresIn: '30d' });
 };
 
+router.post('/proxy/token', async (req, res) => {
+    const code = req.body.code;
+    const clientId = req.body.client_id;
+    const clientSecret = req.body.client_secret;
+    const redirectUri = req.body.redirect_uri;
+  
+    console.log(clientId, clientSecret, code, redirectUri);
+    try {
+        const formData = new URLSearchParams();
+        formData.append('client_id', clientId);
+        formData.append('client_secret', clientSecret);
+        formData.append('grant_type', 'authorization_code');
+        formData.append('code', code);
+        formData.append('redirect_uri', redirectUri);
 
+        const response = await axios.post('https://auth.delta.nitt.edu/api/oauth/token', formData.toString(), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        access_token=response.data.access_token;
+      res.json(response.data);
+    } catch (error) {
+      console.error('Error exchanging code for tokens:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+
+  router.get('/get/user/details', async (req, res) => {
+    console.log(access_token);
+        const response = await axios.post('https://auth.delta.nitt.edu/api/resources/user', {}, {
+            headers: {
+                'Authorization': `Bearer ${access_token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        res.json(response.data);
+});
+
+router.post('/create/user/dauth', async function (req,res) {
+    const email = req.body.email;
+    const firstName = req.body.name.split(" ")[0];
+    const lastName = req.body.name.split(" ")[1];
+    const userName = firstName+"_"+lastName;
+    const accountType = req.body.accountType;
+
+    const checkUser = await User.findOne({email: email});
+
+    if(checkUser){
+        const token = await getToken(checkUser.email, checkUser); 
+    const userToReturn = {...checkUser.toJSON(), token};
+    return res.status(200).json(userToReturn);
+    }
+
+    const newUserData = {email, firstName, lastName, userName, accountType};
+
+    const user = await User.create(newUserData);
+
+    const token = await getToken(email, user); 
+    const userToReturn = {...user.toJSON(), token};
+    return res.status(200).json(userToReturn);
+});
 
 module.exports = router;

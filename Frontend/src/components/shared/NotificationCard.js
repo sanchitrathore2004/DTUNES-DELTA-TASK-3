@@ -3,6 +3,7 @@ import levelsImage from '../../assets/levels.jpg';
 import songContext from '../../contexts/songContext';
 import likeImage from '../../assets/like-icon-2.jpg'
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from '../../utils/apiCalling';
+import toast from 'react-hot-toast';
 
 function NotificationCard({info, notificationData, setNotificationData}) {
     const [notificationStatus, setNotificationStatus] = useState("");
@@ -12,6 +13,7 @@ function NotificationCard({info, notificationData, setNotificationData}) {
     const response = await makeAuthenticatedPOSTRequest('/me/accept/request', body);
     console.log(response);
     if(response && !response.err){
+      toast.success("Request Accepted!");
         console.log('accepted');
     }
   }
@@ -20,7 +22,7 @@ function NotificationCard({info, notificationData, setNotificationData}) {
     const fetchFriendData = async () => {
         const response = await makeAuthenticatedGETRequest('/me/get/my/details/only');
         console.log(response);
-        if(response.data.friends.includes(info._id)){
+        if(response.data.friends.some(user => user._id === info._id)){
             setNotificationStatus('accepted');
             console.log(notificationStatus);
         }

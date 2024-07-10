@@ -2,9 +2,10 @@ import React from 'react'
 
 function Password({label, placeholder, value, setValue}) {
   return (
-    <div className='my-[0.5vmax] w-full flex flex-col justify-center items-center'>
-        <label for={label} className='text-white text-[1.2vmax]'>{label}</label>
-        <input type='password' placeholder={placeholder} className='p-[0.5vw] placeholder:text-[1vmax] rounded-[0.5vmax] text-[1vmax] h-[2.9vmax] w-3/4 flex justify-center items-center' id={label} value={value} onChange={(e) => { setValue(e.target.value)}}></input>
+    <div className='my-[0.5vmax] w-full flex flex-col'>
+        <label for={label} className='text-white font-semibold mx-[4vmax] text-[1.5vmax]'>{label}</label>
+        <div className='flex justify-center items-center w-full'>
+        <input type='password' placeholder={placeholder} className='p-[0.5vw] placeholder:text-[1vmax] rounded-[0.5vmax] text-[1vmax] h-[2.9vmax] w-3/4 flex justify-center items-center' id={label} value={value} onChange={(e) => { setValue(e.target.value)}}></input></div>
     </div>
   )
 }

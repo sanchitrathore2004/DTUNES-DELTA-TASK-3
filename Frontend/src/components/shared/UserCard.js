@@ -3,6 +3,7 @@ import levelsImage from '../../assets/levels.jpg';
 import songContext from '../../contexts/songContext';
 import likeImage from '../../assets/like-icon-2.jpg'
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from '../../utils/apiCalling';
+import toast from 'react-hot-toast';
 
 function UserCard({info}) {
   const [userData, setUserData] = useState([]);
@@ -11,7 +12,10 @@ function UserCard({info}) {
     console.log(info._id);
     const body = {requestId: info._id};
     const response = await makeAuthenticatedPOSTRequest('/me/send/request', body);
-    console.log(response);
+    if(response && !response.err){
+      toast.success("Request Sent!");
+      console.log(response);
+    }
   }
 
   useEffect(()=>{
@@ -25,7 +29,11 @@ function UserCard({info}) {
 
   useEffect(()=>{
     console.log(userData);
+    console.log(info._id);
   },[userData]);
+
+  const isFriend = userData.some(user => user._id === info._id);
+  console.log(isFriend);
   
   return (
     <div className='p-4'>
@@ -36,15 +44,18 @@ function UserCard({info}) {
             {info.firstName+" "+info.lastName}
         </div>
     </div>
-    {userData && userData.includes(info._id) && <div className='text-white font-semibold w-1/6 flex justify-center items-center h-7/10 rounded-md cursor-pointer' style={{backgroundColor: '#EA445A'}}>
-      Friend
-    </div>}
-    {!userData.includes(info._id) && <div onClick={(e)=>{
-      e.preventDefault();
-      sendRequest();
-    }} className='text-white font-semibold w-1/6 flex justify-center items-center h-7/10 rounded-md cursor-pointer' style={{backgroundColor: '#EA445A'}}>
-      Send Request
-    </div>}
+    {isFriend ? (
+          <div className='text-white font-semibold w-1/6 flex justify-center items-center h-7/10 rounded-md cursor-pointer' style={{ backgroundColor: '#EA445A' }}>
+            Friend
+          </div>
+        ) : (
+          <div onClick={(e) => {
+            e.preventDefault();
+            sendRequest();
+          }} className='text-white font-semibold w-1/6 flex justify-center items-center h-7/10 rounded-md cursor-pointer' style={{ backgroundColor: '#EA445A' }}>
+            Send Request
+          </div>
+        )}
 
     </div>
 </div>

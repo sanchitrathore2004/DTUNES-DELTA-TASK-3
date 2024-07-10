@@ -18,7 +18,7 @@ function Login() {
   const responseType = 'code';
   const grantType = 'authorization_code';
   const state = 'YOUR_RANDOM_STATE_STRING';
-  const scope = 'email openid profile';
+  const scope = 'email openid profile user';
   const nonce = 'YOUR_RANDOM_NONCE_STRING';
 
   const loginWithDauth = () => {
@@ -39,14 +39,14 @@ function Login() {
       const token = response.token;
       setCookie('token', token, {path: '/', expires: date});
       navigate('/home');
-    }
+    } 
   }
   return (
     <div className='w-full h-screen bg-zinc-900 flex flex-col gap-[1.5vmax] justify-center items-center' style={{backgroundColor: '#74F0ED'}}>
         <div className='flex flex-col bg-white rounded-md w-[35vmax] h-[38vmax]' style={{backgroundColor: '#000000'}}>
         <div className='w-full h-1/4 my-[1vmax] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
         <div className='w-full h-3/4 flex flex-col justify-center items-center'>
-        <Input value={email} setValue={setEmail} label="Email or Username" placeholder="Email" />
+        <Input value={email} setValue={setEmail} label="Email Address" placeholder="Email" />
         <Password value={password} setValue={setPassword} label="Password" placeholder="Password" />
         <div className=' flex justify-center items-center'><button onClick={(e) => {
           e.preventDefault();
@@ -56,7 +56,7 @@ function Login() {
         <div className='text-white font-bold text-[1.5vmax] my-[0.5vmax]'>OR</div>
         <div onClick={(e)=>{
           e.preventDefault();
-          // loginWithDauth();
+          loginWithDauth();
         }} className='text-white my-[0.3vmax] bg-zinc-800 p-[1vmax] rounded-[0.5vmax] cursor-pointer font-bold text-[1.1vmax]'>Login with DAUTH</div>
         </div>
         </div>      
