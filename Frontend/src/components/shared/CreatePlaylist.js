@@ -4,6 +4,7 @@ import UploadInput from './UploadInput'
 import { makeAuthenticatedPOSTRequest } from '../../utils/apiCalling';
 import { useNavigate } from 'react-router-dom';
 import DroupDown from './DroupDown';
+import {toast} from 'react-hot-toast';
 
 function CreatePlaylist() {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ function CreatePlaylist() {
         const response = await makeAuthenticatedPOSTRequest('/playlist/create', data);
         console.log(response);
         if(response && !response.err){
+            toast.success("Playlist Created");
             navigate('/myplaylist');
         }
     }

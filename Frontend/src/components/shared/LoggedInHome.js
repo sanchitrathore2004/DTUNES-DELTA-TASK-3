@@ -27,7 +27,8 @@ function LoggedInHome () {
     const [playlist, setPlaylist] = useState([]);
     const {accountType, setAccountType} = useContext(songContext);
     const [friendActivity, setFriendActivity] = useState([]);
-
+    const {recommendedSong, setRecommendedSong} = useContext(songContext);
+    const [sortedSongIds, setSortedSongIds] = useState([]);
     useEffect(()=>{
         const getPlaylist = async () => {
             const response = await makeAuthenticatedGETRequest('/playlist/get/all/playlist');
@@ -73,6 +74,39 @@ function LoggedInHome () {
             getData();
             },[]);
 
+    useEffect(()=>{ 
+        const getData = async () => {
+            const response = await makeAuthenticatedGETRequest('/me/get/playback/history');
+            // console.log(response.data);
+            const date = new Date();
+            date.setDate(date.getDate()-7);
+           // Filter songs to only include those from the last week
+           const recentSongs = response.data.filter(song => new Date(song.timestamp) > date);
+
+           // Count the frequency of each song ID
+           const songFrequency = recentSongs.reduce((acc, song) => {
+               acc[song.songId._id] = (acc[song.songId._id] || 0) + 1;
+               return acc;
+           }, {});
+
+           // Remove duplicates and sort by frequency in descending order
+           const uniqueSortedSongs = Object.entries(songFrequency)
+               .sort((a, b) => b[1] - a[1])
+               .map(([songId, frequency]) => {
+                   const song = recentSongs.find(song => song.songId._id === songId);
+                   return { ...song, frequency };
+               });
+
+           setSortedSongIds(uniqueSortedSongs);
+           setRecommendedSong(uniqueSortedSongs);
+        }
+        getData();
+    },[]);
+    useEffect(()=>{
+        console.log(sortedSongIds);
+        console.log(recommendedSong);
+    },[sortedSongIds]);
+
     return(
     <LoggedInUI>
             <div className='h-full w-full overflow-auto' style={{backgroundColor:'#74F0ED'}}>
@@ -98,6 +132,13 @@ function LoggedInHome () {
                             <div>
                                 <div className='mx-[3vw] text-[1.3vw] font-semibold'>{item.firstName} was listening to <span style={{color: '#EA445A'}} className='font-bold'>{item.liveUpdate.songId.name}</span> at {format(new Date(item.liveUpdate.timestamp), 'HH:mm:ss')}</div>
                             <SongCard info={item.liveUpdate.songId} /> </div>)
+                    })}
+                </div>
+                <div>
+                    <PlayList titleName='Recommended For You' />
+                    {recommendedSong.length==0 && <div className='mx-[3.3vmax] my-[0.5vmax] '><span className='text-[1.1vmax] mx-[0.5vmax] font-semibold'>Nothing to recommend</span><Link to='/searchpage'><button className=' rounded-[0.5vmax] text-white font-semibold text-[1.1vmax] p-[1vmax]' style={{backgroundColor: '#EA445A'}}>Explore Now</button></Link></div>}
+                    {recommendedSong && recommendedSong.map((item)=>{
+                        return <SongCard info={item.songId} />
                     })}
                 </div>
             </div> 

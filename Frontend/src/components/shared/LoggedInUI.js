@@ -97,7 +97,9 @@ function LoggedInUI({ children }) {
         const response = await makeAuthenticatedGETRequest('/song/like/song/'+currentSong._id);
         if(response && !response.err){
             if(response.data=='already liked'){
-                toast.success("Song Already Liked");
+                const dislikeSong = await makeAuthenticatedGETRequest('/song/dislike/song/'+currentSong._id);
+                console.log(dislikeSong);
+                toast.success("Removed From Liked Songs");
             }
             else {toast.success("Added To Liked Songs");
             console.log(response);
@@ -195,31 +197,6 @@ function LoggedInUI({ children }) {
                     likeSong();
                 })} className='w-[3vmax] h-[3vmax] rounded-full mx-[1.5vmax] cursor-pointer' src={likeIcon}></img></div>
             </div> }
-            {/* { currentSongFromApi && <div className={`${currentSongFromApi ? `block` : `hidden`} hover:bg-gray-900 flex bg-black h-20 w-full text-white gap-2`}>
-                <div className='flex justify-center items-center mx-5'>
-                    <img className='w-full h-full p-3 rounded-full' src={currentSongFromApi ? currentSongFromApi.album.images[0].url : ""} alt="" />
-                </div>
-                <div className='flex flex-col justify-center items-center'>
-                    <div className='font-bold hover:underline'>
-                        {currentSongFromApi ? currentSongFromApi.name : ""}
-                    </div>
-                    <div className='text-xs'>{currentSongFromApi ? `${currentSongFromApi.artists[0].name}` : ""}</div>
-                </div>
-                <div className='flex flex-col justify-center items-center w-3/4'>
-                    <div className='h-1/2'>
-                        <img onClick={playSound} className='cursor-pointer w-full h-9/10' src={paused ? playBtn : pauseBtn} alt="Play/Pause Button" />
-                    </div>
-                    <div>progress bar</div>
-                </div>
-                <div className='flex justify-center items-center'><img onClick={(e)=>{
-                    e.preventDefault();
-                    setShowModal(true);
-                }} className='cursor-pointer w-full h-1/2 mx-3' src='https://cdn-icons-png.flaticon.com/512/11065/11065753.png'></img>
-                <img onClick={(e=>{
-                    e.preventDefault();
-                    likeSong();
-                })} className='w-full h-1/2 rounded-full mx-3 cursor-pointer' src='https://banner2.cleanpng.com/20180330/aue/kisspng-facebook-like-button-computer-icons-thumb-signal-thumbs-up-5abddf56860ef2.1284314315223929185491.jpg'></img></div>
-            </div> } */}
         </div>
     );
 }

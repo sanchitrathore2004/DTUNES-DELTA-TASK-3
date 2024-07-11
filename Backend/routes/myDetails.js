@@ -147,26 +147,20 @@ router.post('/save/live/song', passport.authenticate('jwt', {session: false}), a
 router.get('/get/playback/history', passport.authenticate('jwt', {session: false}), async function (req,res) {
     const userId = req.user._id;
 
-        // Calculate the date for one week ago 
-        const oneWeekAgo = new Date();
-        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7); 
+    const user = await User.findOne({_id: userId}).populate({
+        path: "playbackHistory",
+        populate: {
+            path: 'songId',
+        },
+    });
 
-        // Query the user's playback history for the past week
-        const user = await User.findOne({
-            _id: userId,
-            'playbackHistory.timestamp': { $gte: oneWeekAgo }
-        }, {
-            'playbackHistory.$': 1 // Project only the matching playbackHistory entries
-        }).populate('playbackHistory.songId'); // Populate song details if necessary
+    if(!user){
+        return res.status(404).json({err: 'not found'});
+    }
 
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
+    const playbackHistory = user.playbackHistory;
 
-        // Filter the playbackHistory array to include only entries within the past week
-        const history = user.playbackHistory.filter(entry => entry.timestamp >= oneWeekAgo);
-
-        return res.status(200).json({ data: history });
+    return res.status(200).json({data: playbackHistory});
 });
 
 module.exports = router;

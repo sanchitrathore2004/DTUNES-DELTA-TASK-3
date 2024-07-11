@@ -36,6 +36,7 @@ function App() {
   const [cookie, setCookies] = useCookies(["token"]);
   const [accountType, setAccountType] = useState(null);
   const [currentSongFromApi, setCurrentSongFromApi] = useState(null);
+  const [recommendedSong, setRecommendedSong] = useState([]);
 
   useEffect(()=>{
     
@@ -65,7 +66,7 @@ function App() {
         <Toaster />
         {cookie.token ? (
           //logged in routes
-          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, partyModeActivated, setPartyModeActivated, partyModeData, setPartyModeData, partyModeFriendName, setPartyModeFriendName}}> 
+          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, partyModeActivated, setPartyModeActivated, partyModeData, setPartyModeData, partyModeFriendName, setPartyModeFriendName, recommendedSong, setRecommendedSong}}> 
         <Routes>
           {accountType=='artist' ? (
             <>
@@ -106,7 +107,7 @@ function App() {
           <Route path="/artist/signup" element={<ArtistSignUp />} />
           <Route path="/login" element={<Login />}/>
           <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<Home />} />  
+          {/* <Route path="/home" element={<Home />} />   */}
           <Route path="*" element={<Navigate to='/login' />}/>
         </Routes>
 )};

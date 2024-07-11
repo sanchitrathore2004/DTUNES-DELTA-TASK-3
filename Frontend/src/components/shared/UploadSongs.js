@@ -52,7 +52,7 @@ function UploadSongs () {
                 <UploadInput value={thumbnail} setValue={setThumbnail} label='Thumbnail' placeholder='Link for your Thumbnail' />
                 <UploadInput value={lyrics} setValue={setLyrics} label='Lyrics' placeholder='Enter Song Lyrics' />
                 <UploadInput value={artistName} setValue={setArtistName} label='Artist Name' placeholder='Enter Artist Name' />
-                <UploadInput value={tags} setValue={setTags} label='Tags' placeholder='Enter Tags Separated by black space' />
+                <UploadInput value={tags} setValue={setTags} label='Tags' placeholder='Enter Tags Separated by blank space' />
                 <UploadInput value={genre} setValue={setGenre} label='Genre' placeholder='Whats the Genre of your song' />
                 </div>
                 <div className='flex justify-evenly'>
