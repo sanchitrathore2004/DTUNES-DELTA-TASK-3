@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from '../utils/apiCalling'
 import songContext from '../contexts/songContext';
+import {toast} from 'react-hot-toast';
 
 function AddSongModal({onClose}) {
     const [playlistData, setPlaylistData] = useState([]);
@@ -42,8 +43,10 @@ function PlaylistCard ({info}) {
         const data = {playlistId, songId};
 
         const response = await makeAuthenticatedPOSTRequest('/playlist/add/song', data);
-
-        console.log(response);
+        if(response && !response.err){
+            toast.success("Added to Playlist");
+            console.log(response); 
+        }   
     }
 
     return (

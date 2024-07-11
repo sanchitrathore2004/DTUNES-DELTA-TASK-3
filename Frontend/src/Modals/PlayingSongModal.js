@@ -9,7 +9,7 @@ function PlayingSongModal({onClose}) {
         <div className='w-3/4 h-3/4 flex'>
         <div className='rounded-md bg-opacity-80 h-full w-1/2 flex flex-col justify-center items-center'>
         <div className='p-5 h-7/10'> <img className='h-full rounded-md' src={currentSong.thumbnail} /> </div>
-        <div className='text-white font-bold text-2xl'>{currentSong.name}</div>
+        <div className='text-white font-bold text-[1.7vmax]'>{currentSong.name}</div>
         <div className='text-white text-base font-semibold'>{currentSong.artistName}</div>
         </div>
         <div className='text-white text-xl font-semibold h-full rounded-md w-1/2 bg-opacity-80 flex justify-center itmes-center'>

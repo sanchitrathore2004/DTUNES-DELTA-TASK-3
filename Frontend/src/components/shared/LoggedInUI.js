@@ -3,15 +3,15 @@ import logo from '../../assets/logo-2.png';
 import IconText from './IconText';
 import homeIcon from '../../assets/home-icon.jpg';
 import searchIcon from '../../assets/search-icon.png';
-import playlistIcon from '../../assets/playlist-icon-3.png';
+import playlistIcon from '../../assets/playlist.png';
 import addIcon from '../../assets/add-icon-3.jpg';
-import likeIcon from '../../assets/like-icon-2.jpg';
+import likeIcon from '../../assets/heart.png';
 import Navigation from './Navigation';
 import musicIcon from '../../assets/music-icon.jpg';
 import { Link } from 'react-router-dom';
 import { Howl } from 'howler';
-import playBtn from '../../assets/play-3.png';
-import pauseBtn from '../../assets/pause-2.png';
+import playBtn from '../../assets/play (1).png';
+import pauseBtn from '../../assets/pause-button.png';
 import songContext from '../../contexts/songContext';
 import AddSongModal from '../../Modals/AddSongModal';
 import ProfileModal from '../../Modals/ProfileModal';
@@ -19,6 +19,7 @@ import LoggedInNavigation from '../shared/LoggedInNavigation';
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from '../../utils/apiCalling';
 import friendsIcon from '../../assets/friends-icon-2.png';
 import PlayingSongModal from '../../Modals/PlayingSongModal';
+import {toast} from 'react-hot-toast';
 
 function LoggedInUI({ children }) {
     const [showModal, setShowModal] = useState(false);
@@ -94,8 +95,16 @@ function LoggedInUI({ children }) {
     const likeSong = async () => {
         console.log(currentSong);
         const response = await makeAuthenticatedGETRequest('/song/like/song/'+currentSong._id);
+        if(response && !response.err){
+            if(response.data=='already liked'){
+                toast.success("Song Already Liked");
+            }
+            else {toast.success("Added To Liked Songs");
+            console.log(response);
+        }
+        }
 
-        console.log(response);
+        
     }
 
     useEffect(()=>{
@@ -158,33 +167,33 @@ function LoggedInUI({ children }) {
                 </div>
             </div>
             {/* play bar */}
-           { currentSong && <div className={`${currentSong ? `block` : `hidden`} hover:bg-gray-900 flex bg-black h-20 w-full text-white gap-2`}>
-                <div className='flex justify-center items-center mx-5'>
-                    <img className='w-full h-full p-3 rounded-full' src={currentSong ? currentSong.thumbnail : ""} alt="" />
+           { currentSong && <div className={`${currentSong ? `block` : `hidden`} hover:bg-gray-900 flex bg-black h-[5vmax] w-full text-white gap-[0.5vmax]`}>
+                <div className='flex justify-center w-[7%] items-center mx-[1vmax]'>
+                    <img className='w-[5vmax] p-[0.1vmax] rounded-full' src={currentSong ? currentSong.thumbnail : ""} alt="" />
                 </div>
-                <div className='flex flex-col justify-center cursor-pointer text-center items-center'>
+                <div className='flex flex-col justify-center cursor-pointer w-[15%] text-center items-center'>
                     <div  onClick={(e)=>{
             e.preventDefault();
             setPlayingSongModal(true);
-           }} className='font-bold hover:underline'>
+           }} className='font-bold text-[1.1vmax] hover:underline'>
                         {currentSong ? currentSong.name : ""}
                     </div>
-                    <div className='text-xs'>{currentSong ? `${currentSong.artistName}` : ""}</div>
+                    <div className='text-[0.9vmax]'>{currentSong ? `${currentSong.artistName}` : ""}</div>
                 </div>
-                <div className='flex flex-col justify-center items-center w-3/4'>
+                <div className='flex flex-col justify-center h-full items-center w-[63%]'>
                     <div className='h-1/2'>
-                        <img onClick={playSound} className='cursor-pointer w-full h-9/10' src={paused ? playBtn : pauseBtn} alt="Play/Pause Button" />
+                        <img onClick={playSound} className='cursor-pointer w-[2.5vmax]' src={paused ? playBtn : pauseBtn} alt="Play/Pause Button" />
                     </div>
-                    <div>progress bar</div>
+                    {/* <div>progress bar</div> */}
                 </div>
-                <div className='flex justify-center items-center'><img onClick={(e)=>{
+                <div className='flex justify-center w-[15%] items-center'><img onClick={(e)=>{
                     e.preventDefault();
                     setShowModal(true);
-                }} className='cursor-pointer w-full h-1/2 mx-3' src='https://cdn-icons-png.flaticon.com/512/11065/11065753.png'></img>
+                }} className='cursor-pointer w-[3vmax] h-[3vmax] mx-[1.5vmax]' src={playlistIcon}></img>
                 <img onClick={(e=>{
                     e.preventDefault();
                     likeSong();
-                })} className='w-full h-1/2 rounded-full mx-3 cursor-pointer' src='https://banner2.cleanpng.com/20180330/aue/kisspng-facebook-like-button-computer-icons-thumb-signal-thumbs-up-5abddf56860ef2.1284314315223929185491.jpg'></img></div>
+                })} className='w-[3vmax] h-[3vmax] rounded-full mx-[1.5vmax] cursor-pointer' src={likeIcon}></img></div>
             </div> }
             {/* { currentSongFromApi && <div className={`${currentSongFromApi ? `block` : `hidden`} hover:bg-gray-900 flex bg-black h-20 w-full text-white gap-2`}>
                 <div className='flex justify-center items-center mx-5'>

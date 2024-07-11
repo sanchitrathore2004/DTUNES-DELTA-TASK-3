@@ -35,7 +35,7 @@ const Songs = new mongoose.Schema({
     },
     genre: {
         type: String,
-        required: true,
+        required: false,
     },
 });
 
