@@ -163,7 +163,8 @@ function LoggedInUI({ children }) {
                     <Link to='/myactivity'><div className='flex items-center justify-start text-[1.5vw] hover:text-white cursor-pointer font-bold'>My Activity</div></Link>
                         <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText={accountType === 'artist' ? 'UPLOAD SONGS' : ''}  nextText='S' />
                     </div>
-                    <div className='overflow-auto' style={{ backgroundColor: '#74F0ED', height: 'calc(100% - 10vmin)' }}>
+                    {/* backgroundColor: '#74F0ED' */}
+                    <div className='overflow-auto bg-white' style={{height: 'calc(100% - 10vmin)' }}>
                         {children}
                     </div>
                 </div>
@@ -188,14 +189,14 @@ function LoggedInUI({ children }) {
                     </div>
                     {/* <div>progress bar</div> */}
                 </div>
-                <div className='flex justify-center w-[15%] items-center'><img onClick={(e)=>{
+                <div className='flex justify-center w-[15%] gap-[1vmax] items-center'><div><img onClick={(e)=>{
                     e.preventDefault();
                     setShowModal(true);
-                }} className='cursor-pointer w-[3vmax] h-[3vmax] mx-[1.5vmax]' src={playlistIcon}></img>
-                <img onClick={(e=>{
+                }} className='cursor-pointer w-[3vmax]' src={playlistIcon}></img></div>
+                <div><img onClick={(e=>{
                     e.preventDefault();
                     likeSong();
-                })} className='w-[3vmax] h-[3vmax] rounded-full mx-[1.5vmax] cursor-pointer' src={likeIcon}></img></div>
+                })} className='w-[3vmax] rounded-full cursor-pointer' src={likeIcon}></img></div></div>
             </div> }
         </div>
     );

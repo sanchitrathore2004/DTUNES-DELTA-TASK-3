@@ -136,7 +136,7 @@ function LoggedInHome () {
 
     return(
     <LoggedInUI>
-            <div className='h-full w-full overflow-auto' style={{backgroundColor:'#74F0ED'}}>
+            <div className='h-full w-full overflow-auto'>
                 {/* <PlayList titleName='Punjabi Playlist' />
                 <PlayList titleName='Bollywood' /> */}
 
@@ -162,7 +162,7 @@ function LoggedInHome () {
                 <div className='px-[2.2vw] py-[0.8vw] text-[2.2vw] font-bold'>
                     Friend's Activity
                     {friendActivity.length==0 && <div>
-                       <Link to='/searchpage'> <button style={{backgroundColor: '#EA445A'}} className='rounded-[1vmax] text-white cursor-pointer text-[1.3vmax] p-[1vmax] font-semibold'>Add Friends</button></Link>
+                       <Link to='/searchpage'> <button style={{backgroundColor: '#EA445A'}} className='rounded-[0.5vmax] text-white cursor-pointer text-[1.3vmax] p-[1vmax] font-semibold'>Add Friends</button></Link>
                         </div>}
                 </div>
                 <div>
@@ -175,7 +175,7 @@ function LoggedInHome () {
                 </div>
                 <div>
                     <PlayList titleName='Recommended For You' />
-                    {recommendedSong.length==0 && <div className='mx-[3.3vmax] my-[0.5vmax] '><span className='text-[1.1vmax] mx-[0.5vmax] font-semibold'>Nothing to recommend</span><Link to='/searchpage'><button className=' rounded-[0.5vmax] text-white font-semibold text-[1.1vmax] p-[1vmax]' style={{backgroundColor: '#EA445A'}}>Explore Now</button></Link></div>}
+                    {recommendedSong.length==0 && <div className='mx-[1.3vmax] my-[0.5vmax] '><span className='text-[1.1vmax] mx-[0.5vmax] font-semibold'></span><Link to='/searchpage'><button className=' rounded-[0.5vmax] text-white font-semibold text-[1.3vmax] p-[1vmax]' style={{backgroundColor: '#EA445A'}}>Explore Now</button></Link></div>}
                     {recommendedSong && recommendedSong.map((item)=>{
                         return <SongCard info={item.songId} />
                     })}

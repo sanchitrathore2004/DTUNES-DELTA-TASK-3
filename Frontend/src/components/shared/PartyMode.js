@@ -4,6 +4,7 @@ import { makeAuthenticatedGETRequest } from '../../utils/apiCalling'
 import SongCard from './SongCard';
 import songContext from '../../contexts/songContext';
 import { Howl, Howler } from 'howler';
+import { Link } from 'react-router-dom';
 
 function PartyMode() {
     const {playlist} = useContext(songContext);
@@ -27,6 +28,9 @@ function PartyMode() {
             const response = await makeAuthenticatedGETRequest('/me/get/my/details');
             console.log(response);
             const friendsArrayLength = await response.data.friends.length;
+            if(friendsArrayLength==0){
+                return;
+            }
             const friendId = await response.data.friends[Math.floor(Math.random()*friendsArrayLength)]._id;
             console.log(friendId);
             const friendName = await makeAuthenticatedGETRequest('/me/get/user/by/'+friendId);
@@ -81,9 +85,12 @@ function PartyMode() {
     <div>
         <LoggedInUI>
             <div className='px-[2vw] py-[0.8vw] text-[2.2vw] font-bold'>Party Mode (You & {partyModeFriendName})</div>
-            {partyModeData && partyModeData.map((item)=>{
+            {partyModeData.length>0 && partyModeData.map((item)=>{
                 return <SongCard playMusic={playMusic} info={item} />
             })}
+
+            {partyModeData.length==0 && <Link to='/searchpage'><button style={{backgroundColor: '#EA445A'}} className='mx-[2.5vmax] rounded-[0.5vmax] text-white font-semibold text-[1.5vmax] p-[0.5vmax]'>Add Friends</button></Link>}
+            
         </LoggedInUI>
     </div>
   )

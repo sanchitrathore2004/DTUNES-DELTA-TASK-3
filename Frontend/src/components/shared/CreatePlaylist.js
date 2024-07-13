@@ -25,7 +25,7 @@ function CreatePlaylist() {
   return (
     <div>
         <LoggedInUI>
-        <div className='h-9/10 overflow-none' style={{backgroundColor:'#74F0ED'}}>
+        <div className='h-9/10 overflow-none' >
         <PlayList titleName='Create Playlist' />
         <div className='flex p-[1vmax] w-full'>
                 <UploadInput value={name} setValue={setName} label='Name' placeholder='Name of Your Song' />

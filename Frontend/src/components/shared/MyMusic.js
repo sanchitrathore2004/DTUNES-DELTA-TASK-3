@@ -59,7 +59,7 @@ function MyMusic() {
     return (
         <LoggedInUI>
             <div className='w-4/5'>
-            <div className='h-9/10 overflow-auto' style={{backgroundColor:'#74F0ED'}}>
+            <div className='h-9/10 overflow-auto'>
             <div className='px-[2vw] py-[0.8vw] text-[2.2vw] font-bold'>
                 My Songs
             </div>

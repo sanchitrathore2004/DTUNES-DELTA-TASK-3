@@ -32,7 +32,7 @@ function Signup() {
     }
   }
   return (
-    <div className='w-full h-screen bg-zinc-900 flex flex-col justify-center items-center' style={{backgroundColor: '#74F0ED'}}>
+    <div className='w-full h-screen bg-zinc-900 flex flex-col justify-center items-center bg-white'>
     <div className='flex flex-col bg-white rounded-md w-[35vmax] h-[48vmax] my-2' style={{backgroundColor: '#000000'}}>
     <div className='w-full h-1/5 my-[0.6vw] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
     <div className='w-full h-3/ flex flex-col justify-center items-center'>
@@ -50,7 +50,7 @@ function Signup() {
     <div className='text-white my-[0.5vmax] text-[1.1vmax]'>Already have an Account? <Link to='/login' className='font-bold cursor-pointer'>Login</Link></div>
     </div>
     </div>    
-    <div className='text-[1.1vmax]'>Made with ❤️ by Sanchit</div>    
+    <footer className='text-[1.1vmax] text-white'>Made with ❤️ by Sanchit</footer>    
 </div> 
   )
 }

@@ -45,7 +45,7 @@ function UploadSongs () {
 
     return (
         <LoggedInUI>
-            <div className='h-full overflow-auto' style={{backgroundColor:'#74F0ED'}}>
+            <div className='h-full overflow-auto'>
                 <PlayList titleName='Upload Your Song' />
                 <div className='flex p-2 w-full flex-col'>
                 <UploadInput value={name} setValue={setName} label='Name' placeholder='Name of Your Song' />
