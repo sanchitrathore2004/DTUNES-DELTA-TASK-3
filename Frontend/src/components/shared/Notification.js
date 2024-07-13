@@ -21,7 +21,7 @@ function Notification() {
         <LoggedInUI>
             <div className='flex flex-col'>
             <div className='px-[2vw] py-[0.8vw] font-bold text-[2.2vw]'>
-                Notifications
+                What's New
             </div>
             <div>
                 {notificationData.map((item)=>{

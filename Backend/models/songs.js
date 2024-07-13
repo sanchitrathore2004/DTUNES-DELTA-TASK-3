@@ -37,6 +37,9 @@ const Songs = new mongoose.Schema({
         type: String,
         required: false,
     },
+    timestamp: {
+        type: Date,
+    },
 });
 
 const songModel = mongoose.model('Songs', Songs);

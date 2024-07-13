@@ -98,4 +98,15 @@ router.get('/get/playlist/by/:owerId', passport.authenticate('jwt', {session: fa
     return res.status(200).json({data: playlists});
 });
 
+router.get('/delete/playlist/:id', passport.authenticate('jwt', {session: false}), async function (req,res) {
+    const playlistId = req.params.id;
+
+    const playlist = await Playlist.deleteOne({_id: playlistId});
+
+    if(!playlist){
+        return res.status(404).json({err: 'not found'});
+    }
+
+    return res.status(200).json({data: 'Deleted'});
+});
 module.exports = router;

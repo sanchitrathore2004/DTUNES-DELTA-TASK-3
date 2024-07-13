@@ -20,7 +20,7 @@ function SongCard({info, playMusic}) {
     <div className='p-[1.5vw]'>
         <div onClick={()=>{
           saveDetail();
-          setCurrentSong(info)}} className='bg-black hover:bg-gray-900 flex mx-[2vw] rounded-md cursor-pointer h-[3.3vw]'>
+          setCurrentSong(info)}} className='bg-black hover:bg-gray-900 flex mx-[2vw] rounded-[0.5vmax] cursor-pointer h-[3.3vw]'>
         <div className='text-white w-[3.1vw] h-full object-cover flex justify-center items-center mx-[0.5vw]'><img className='rounded-md' src={info.thumbnail} /></div>
         <div className='w-full text-white flex flex-col justify-center text-[1.2vw] px-[1vw]'>
             <div className='hover:underline font-semibold'>

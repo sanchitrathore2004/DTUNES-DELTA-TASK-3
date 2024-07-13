@@ -70,6 +70,10 @@ const user = new mongoose.Schema({
             },
         },
     ],
+    recentPlaylist: {
+        type: mongoose.Types.ObjectId,
+        ref: "Playlist",
+    },
 });
 
 const userModel = mongoose.model('User', user);

@@ -26,7 +26,7 @@ router.get('/get/my/details/only', passport.authenticate('jwt', {session: false}
                 path: "songId",
             },
         },
-    });
+    }).populate("recentPlaylist");
 
     if(!user){ 
         return res.status(404).json({err: 'not found'});
@@ -162,5 +162,26 @@ router.get('/get/playback/history', passport.authenticate('jwt', {session: false
 
     return res.status(200).json({data: playbackHistory});
 });
+
+router.get('/save/recents/:Id', passport.authenticate('jwt', {session: false}), async function (req,res) {
+    const userId = req.user._id;
+    const user = await User.findOne({_id: userId}).populate({
+        path: "recentPlaylist",
+        populate: {
+            path: "owner",
+        },
+    });
+
+    if(!user){
+        return res.status(404).json({err: 'not found'});
+    }
+
+    const playlistId = req.params.Id;
+
+    user.recentPlaylist=playlistId;
+    user.save();
+
+    return res.status(200).json({data: user});
+}); 
 
 module.exports = router;

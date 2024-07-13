@@ -15,6 +15,8 @@ router.post('/create', passport.authenticate('jwt', {session: false}), async fun
     const artist = req.user._id;
     const songDetails = {name,thumbnail, track, artist, lyrics, artistName, tags, genre};
     const createdSong = await Song.create(songDetails);
+    createdSong.timestamp = new Date();
+    createdSong.save();
     return res.status(200).json(createdSong);
 });
 
@@ -113,6 +115,11 @@ router.get('/dislike/song/:songId', passport.authenticate('jwt', {session:false}
     song.likeCount-=1;
     await song.save();
     return res.status(200).json({data: song});
+});
+
+router.get('/get/all/songs', passport.authenticate('jwt', {session: false}), async function (req,res) {
+    const songs = await Song.find();
+    return res.status(200).json({data: songs});
 });
 
 module.exports = router;

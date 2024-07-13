@@ -29,12 +29,37 @@ function LoggedInHome () {
     const [friendActivity, setFriendActivity] = useState([]);
     const {recommendedSong, setRecommendedSong} = useContext(songContext);
     const [sortedSongIds, setSortedSongIds] = useState([]);
+    const [myDetails, setMyDetails] = useState("");
+    const [recentPlaylist, setRecentPlaylist] = useState(null);
+    const [newSongs, setNewSongs] = useState([]);
     useEffect(()=>{
         const getPlaylist = async () => {
             const response = await makeAuthenticatedGETRequest('/playlist/get/all/playlist');
-            console.log(response.data);
-            setPlaylist(response.data);
+            const allPlaylists = response.data;
+
+        for (let i = allPlaylists.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allPlaylists[i], allPlaylists[j]] = [allPlaylists[j], allPlaylists[i]];
         }
+
+        const randomPlaylists = allPlaylists.slice(0, 4);
+        console.log(randomPlaylists);
+        setPlaylist(randomPlaylists);
+        }
+        const newRelease = async () => {
+            const response = await makeAuthenticatedGETRequest('/song/get/all/songs');
+            console.log(response);
+            const allSongs = response.data;
+
+        for (let i = allSongs.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allSongs[i], allSongs[j]] = [allSongs[j], allSongs[i]];
+        }
+
+        const randomSongs = allSongs.slice(0, 5);
+        setNewSongs(randomSongs);
+        }
+        newRelease();
         getPlaylist();
     },[]);
 
@@ -56,7 +81,9 @@ function LoggedInHome () {
     
             const getFriendsActivity = async () => {
               const response = await makeAuthenticatedGETRequest('/me/get/my/details/only');
-              console.log(response); 
+              console.log(response);  
+              await setRecentPlaylist(response.data.recentPlaylist);
+              await setMyDetails(response.data.firstName+" "+response.data.lastName);
               await setFriendActivity(response.data.friends);
             }
             getFriendsActivity();
@@ -113,12 +140,24 @@ function LoggedInHome () {
                 {/* <PlayList titleName='Punjabi Playlist' />
                 <PlayList titleName='Bollywood' /> */}
 
-                <PlayList titleName='Exciting Plalists' />
+                <PlayList titleName={"Made For"+" "+myDetails} />
 
                 <div className='flex mx-[1.5vw] items-center flex-wrap'>
                 {playlist && playlist.map((item)=>{
                     return <Cards thumbnail={item.thumbnail} title={item.name} description={item.owner} playlistId={item._id} />
                 })}
+                </div>
+                <div>
+                    <PlayList titleName='Recently Played' />
+                    <div className='mx-[1.5vmax]'>
+                {recentPlaylist && <Cards thumbnail={recentPlaylist.thumbnail} title={recentPlaylist.name} description={recentPlaylist.owner} playlistId={recentPlaylist._id} />}
+                </div>
+                </div>
+                <div>
+                    <PlayList titleName='New Releases For You' />
+                    {newSongs && newSongs.map((item)=>{
+                        return <SongCard info={item} />
+                    })}
                 </div>
                 <div className='px-[2.2vw] py-[0.8vw] text-[2.2vw] font-bold'>
                     Friend's Activity
@@ -156,10 +195,15 @@ function PlayList ({titleName, info}) {
 function Cards ({thumbnail, title, description, playlistId}) {
     const navigation = useNavigate();
     const {playlist, setPlaylist} = useContext(songContext);
+    const saveRecents = async (id) => {
+        const response = await makeAuthenticatedGETRequest('/me/save/recents/'+id);
+        console.log(response);
+    }
     return (
         <div onClick={(e)=>{
             e.preventDefault();
             setPlaylist(playlistId);
+            saveRecents(playlistId);
             navigation('/insideplaylist');
         }} className='cursor-pointer hover:bg-zinc-900 p-[0.5vw] flex flex-col items-center justify-end text-white bg-black w-1/5 m-[1vw] h-[18vw] rounded-md'>
             <div className='flex justify-center items-center w-full h-full'><img className='w-full h-full rounded-md' src={thumbnail} /></div>
