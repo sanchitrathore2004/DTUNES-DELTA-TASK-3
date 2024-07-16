@@ -169,7 +169,7 @@ function LoggedInHome () {
                     {friendActivity && friendActivity.map((item)=>{
                         return( item.liveUpdate.songId && 
                             <div>
-                                <div className='mx-[3vw] text-[1.3vw] font-semibold'>{item.firstName} was listening to <span style={{color: '#EA445A'}} className='font-bold'>{item.liveUpdate.songId.name}</span> at {format(new Date(item.liveUpdate.timestamp), 'HH:mm:ss')}</div>
+                                <div className='mx-[3vw] text-[1.3vw] font-semibold'>{item.firstName} was listening to <span style={{color: '#EA445A'}} className='font-bold'>{item.liveUpdate.songId.name}</span> on {format(new Date(item.liveUpdate.timestamp), 'yyyy-MM-dd')} at {format(new Date(item.liveUpdate.timestamp), 'HH:mm:ss')}</div>
                             <SongCard info={item.liveUpdate.songId} /> </div>)
                     })}
                 </div>
