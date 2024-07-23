@@ -8,7 +8,7 @@ function LoggedInNavigation({firstText, nextText, onOpen}) {
   const navigate = useNavigate();
 
   const [profileData, setProfileData] = useState([]);
-  const{userInfo, setUserInfo} = useContext(songContext);
+  const{userInfo, setUserInfo, whichBtn, setWhichBtn} = useContext(songContext);
 
   useEffect(()=>{
     const getData = async () => {
@@ -21,8 +21,8 @@ function LoggedInNavigation({firstText, nextText, onOpen}) {
 
   return (
     <div className='flex items-center'>
-        <Link to='/partymode'><div className='font-bold text-[1.5vw] mx-[0.7vw] cursor-pointer hover:text-white'>PARTY MODE</div></Link>
-        <div className='text-[1.5vw] font-bold mx-[0.7vw] cursor-pointer hover:text-white'><Link to={`${firstText=='SIGN UP'? `/signup` : `/upload/songs`}`} className='font-bold'>{firstText}</Link></div>
+        <Link to='/partymode'><div onClick={(e)=>{setWhichBtn('PARTY MODE')}} className={`font-bold ${whichBtn=='PARTY MODE' ? 'text-white' : 'text-gray-600'} text-[1.5vw] mx-[0.7vw] cursor-pointer hover:text-white`}>PARTY MODE</div></Link>
+        <div onClick={(e)=>{setWhichBtn('UPLOAD SONGS')}} className='text-[1.5vw] font-bold mx-[0.7vw] cursor-pointer hover:text-white'><Link to={`${firstText=='SIGN UP'? `/signup` : `/upload/songs`}`} className={`font-bold ${whichBtn=='UPLOAD SONGS'? 'text-white' : 'text-gray-600'} hover:text-white`}>{firstText}</Link></div>
         <div className='bg-white w-[0.2vw] h-[2.2vw] m-[0.7vw] text-white'>'</div>
         <div className='font-bold h-full cursor-pointer hover:text-white'><img onClick={(e)=>{
           e.preventDefault();

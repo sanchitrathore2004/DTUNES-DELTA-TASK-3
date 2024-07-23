@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../assets/logo-2.png';
 import Input from '../components/shared/Input';
 import Password from '../components/shared/Password';
@@ -42,8 +42,8 @@ function Login() {
     } 
   }
   return (
-    <div className='w-full h-screen bg-white flex flex-col gap-[1.5vmax] justify-center items-center'>
-        <div className='flex flex-col bg-white rounded-md w-[35vmax] h-[38vmax]' style={{backgroundColor: '#000000'}}>
+    <div style={{backgroundImage: `url('https://c4.wallpaperflare.com/wallpaper/707/220/899/gradient-blue-pink-abstract-art-wallpaper-preview.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center'}} className='w-full h-screen bg-white flex flex-col gap-[1.5vmax] justify-center items-center'>
+        <div className='flex flex-col rounded-md w-[32vmax] h-[38vmax] border-2'>
         <div className='w-full h-1/4 my-[1vmax] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
         <div className='w-full h-3/4 flex flex-col justify-center items-center'>
         <Input value={email} setValue={setEmail} label="Email Address" placeholder="Email" />
@@ -60,7 +60,7 @@ function Login() {
         }} className='text-white my-[0.3vmax] bg-zinc-800 p-[1vmax] rounded-[0.5vmax] cursor-pointer font-bold text-[1.1vmax]'>Login with DAUTH</div>
         </div>
         </div>      
-        <footer className='text-[1.1vmax] text-black'>Made with ❤️ by Sanchit</footer>    
+        {/* <footer className='text-[1.3vmax] text-white font-bold'>DTUNES</footer>     */}
     </div>
   )
 }

@@ -36,6 +36,7 @@ function App() {
   const [cookie, setCookies] = useCookies(["token"]);
   const [accountType, setAccountType] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [whichBtn, setWhichBtn] = useState(null);
   const [currentSongFromApi, setCurrentSongFromApi] = useState(null);
   const [recommendedSong, setRecommendedSong] = useState([]);
 
@@ -67,7 +68,7 @@ function App() {
         <Toaster />
         {cookie.token ? (
           //logged in routes
-          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, partyModeActivated, setPartyModeActivated, partyModeData, setPartyModeData, partyModeFriendName, setPartyModeFriendName, recommendedSong, setRecommendedSong, userInfo, setUserInfo}}> 
+          <songContext.Provider value={{currentSong,setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, playlist, setPlaylist, songData, setSongData, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, partyModeActivated, setPartyModeActivated, partyModeData, setPartyModeData, partyModeFriendName, setPartyModeFriendName, recommendedSong, setRecommendedSong, userInfo, setUserInfo, whichBtn, setWhichBtn}}> 
         <Routes>
           {accountType=='artist' ? (
             <>

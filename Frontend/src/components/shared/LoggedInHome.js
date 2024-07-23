@@ -32,6 +32,13 @@ function LoggedInHome () {
     const [myDetails, setMyDetails] = useState("");
     const [recentPlaylist, setRecentPlaylist] = useState(null);
     const [newSongs, setNewSongs] = useState([]);
+    const{whichBtn, setWhichBtn} = useContext(songContext);
+
+    useEffect(()=>{
+        setWhichBtn('HOME');
+    },[]);
+
+
     useEffect(()=>{
         const getPlaylist = async () => {
             const response = await makeAuthenticatedGETRequest('/playlist/get/all/playlist');

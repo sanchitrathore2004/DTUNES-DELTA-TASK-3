@@ -29,10 +29,9 @@ function LoggedInUI({ children }) {
     const {partyModeData, setPartyModeData} = useContext(songContext); 
     // const [accountType, setAccountType] = useState("");
 
-    const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType } = useContext(songContext);
+    const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, whichBtn, setWhichBtn } = useContext(songContext);
 
     let firstUpdate = useRef(true);
-
 
     const saveDetail = async (info) => {
         console.log('aaya');
@@ -138,7 +137,7 @@ function LoggedInUI({ children }) {
     //     console.log(accountType);
     //   },[accountType]);
 
-    return (
+    return ( 
         <div className='h-screen w-full'>
             {profileModal && <ProfileModal onClose={()=> setProfileModal(false)} />}
              {showModal && <AddSongModal onClose={() => setShowModal(false)} />}
@@ -148,17 +147,31 @@ function LoggedInUI({ children }) {
                     <div className='flex justify-center items-center p-2 my-[0.5vw]'>
                         <img src={logo} alt='logo' className='w-[7vw]' />
                     </div>
-                    <Link to='/home'><div><IconText icon={homeIcon} text="HOME" /></div></Link>
-                    <Link to='/searchpage'><div><IconText icon={searchIcon} text="SEARCH" /></div></Link>
-                    <Link to='/myplaylist'><div><IconText icon={playlistIcon} text="PLAYLISTS" /></div></Link>
-                    <Link to='/createplaylist'><div><IconText icon={addIcon} text="CREATE PLAYLISTS" /></div></Link>
-                    <Link to='/liked/songs'><div><IconText icon={likeIcon} text="LIKED SONGS" /></div></Link>
-                    <Link to='/friends'><div><IconText icon={friendsIcon} text="FRIENDS" /></div></Link>
-                    {accountType=='artist' && <Link to='/mymusic'><div><IconText icon={musicIcon} text="MY MUSIC" /></div></Link>}
+                    <Link to='/home'><div onClick={(e)=>{
+                        setWhichBtn('HOME');
+                    }}><IconText icon={homeIcon} brigth={whichBtn} text="HOME" /></div></Link>
+                    <Link to='/searchpage'><div  onClick={(e)=>{
+                        setWhichBtn('SEARCH');
+                    }}><IconText icon={searchIcon} brigth={whichBtn} text="SEARCH" /></div></Link>
+                    <Link to='/myplaylist'><div  onClick={(e)=>{
+                        setWhichBtn('PLAYLISTS');
+                    }}><IconText icon={playlistIcon} brigth={whichBtn} text="PLAYLISTS" /></div></Link>
+                    <Link to='/createplaylist'><div  onClick={(e)=>{
+                        setWhichBtn('CREATE PLAYLISTS');
+                    }}><IconText icon={addIcon} brigth={whichBtn} text="CREATE PLAYLISTS" /></div></Link>
+                    <Link to='/liked/songs'><div  onClick={(e)=>{
+                        setWhichBtn('LIKED SONGS');
+                    }}><IconText icon={likeIcon} brigth={whichBtn} text="LIKED SONGS" /></div></Link>
+                    <Link to='/friends'><div  onClick={(e)=>{
+                        setWhichBtn('FRIENDS');
+                    }}><IconText icon={friendsIcon} brigth={whichBtn} text="FRIENDS" /></div></Link>
+                    {accountType=='artist' && <Link to='/mymusic'><div  onClick={(e)=>{
+                        setWhichBtn('MY MUSIC');
+                    }}><IconText icon={musicIcon} brigth={whichBtn} text="MY MUSIC" /></div></Link>}
                 </div>
                 <div className='w-4/5'>
-                    <div className='h-[10vmin] bg-black text-gray-400 flex items-center justify-end justify-between'>
-                    <Link to='/myactivity'><div className='flex items-center justify-start text-[1.5vw] hover:text-white cursor-pointer font-bold'>My Activity</div></Link>
+                    <div className='h-[10vmin] bg-black text-gray-600 flex items-center justify-end justify-between'>
+                    <Link to='/myactivity'><div onClick={(e)=>{setWhichBtn('My Activity')}} className={`flex items-center ${whichBtn=='My Activity' ? 'text-white' : 'text-gray-600'} justify-start text-[1.5vw] hover:text-white cursor-pointer font-bold`}>My Activity</div></Link>
                         <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText={accountType === 'artist' ? 'UPLOAD SONGS' : ''}  nextText='S' />
                     </div>
                     {/* backgroundColor: '#74F0ED' */}

@@ -32,8 +32,8 @@ function Signup() {
     }
   }
   return (
-    <div className='w-full h-screen bg-white flex flex-col justify-center items-center bg-white'>
-    <div className='flex flex-col bg-white rounded-md w-[35vmax] h-[48vmax] my-2' style={{backgroundColor: '#000000'}}>
+    <div style={{backgroundImage: `url('https://c4.wallpaperflare.com/wallpaper/707/220/899/gradient-blue-pink-abstract-art-wallpaper-preview.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center'}} className='w-full h-screen bg-white flex flex-col justify-center items-center bg-white'>
+    <div className='flex flex-col border-2 rounded-md w-[35vmax] h-[48vmax] my-2'>
     <div className='w-full h-1/5 my-[0.6vw] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
     <div className='w-full h-3/ flex flex-col justify-center items-center'>
     <Input value={email} setValue={setEmail} label="Email or Username" placeholder="Email" />
@@ -50,7 +50,7 @@ function Signup() {
     <div className='text-white my-[0.5vmax] text-[1.1vmax]'>Already have an Account? <Link to='/login' className='font-bold cursor-pointer'>Login</Link></div>
     </div>
     </div>    
-    <footer className='text-[1.1vmax] text-black'>Made with ❤️ by Sanchit</footer>    
+    {/* <footer className='text-[1.3vmax] text-white font-bold'>DTUNES</footer>     */}
 </div> 
   )
 }

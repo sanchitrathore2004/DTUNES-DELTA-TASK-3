@@ -25,6 +25,8 @@ const songContext = createContext({
     setRecommendedSong: (recommendedSong)=>{},
     userInfo: null,
     setUserInfo: (userInfo)=>{},
+    whichBtn: null,
+    setWhichBtn: (whichBtn)=>{},
 });
 
 export default songContext 
