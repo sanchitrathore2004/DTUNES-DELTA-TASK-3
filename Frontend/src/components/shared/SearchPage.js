@@ -92,19 +92,19 @@ const searchSong = async () => {
             <div>
                 {
                 songData.length > 0 && (
-                <div className='flex justify-center items-center font-semibold p-[1.5vmax] text-[1.1vmax]'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
+                <div className='flex justify-center text-white items-center font-semibold p-[1.5vmax] text-[1.1vmax]'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
                 )}
                 {
                 userData.length > 0 && (
-                <div className='flex justify-center items-center font-semibold text-[1.1vmax] p-[1.5vmax]'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
+                <div className='flex justify-center text-white items-center font-semibold text-[1.1vmax] p-[1.5vmax]'> Showing Results For : <span className='font-bold'>"{value}"</span></div>
                 )}
                 {
                 songData.length == 0 && userData.length==0 && (
-                <div className='flex justify-center items-center text-[1.1vmax] font-semibold p-[1.5vmax]'>Nothing to Show Please Modify Your Search</div>
+                <div className='flex justify-center text-white items-center text-[1.1vmax] font-semibold p-[1.5vmax]'>Nothing to Show Please Modify Your Search</div>
                 )}
                 {
                     searchToggle=='' && (
-                        <div className='flex justify-center items-center text-[1.1vmax] font-semibold p-[1.5vmax]'>Please select a toggle to search</div>
+                        <div className='flex justify-center text-white items-center text-[1.1vmax] font-semibold p-[1.5vmax]'>Please select a toggle to search</div>
                     )
                 }
                 {songData.map((items)=>{

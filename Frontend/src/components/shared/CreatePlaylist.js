@@ -36,7 +36,7 @@ function CreatePlaylist() {
                 <button onClick={(e)=>{
                     e.preventDefault();
                     makePlaylist();
-                }} style={{backgroundColor: '#EA445A'}} className='p-[1.5vmax] rounded-full text-[1vmax] text-white font-bold cursor-pointer'>Create Playlist</button>
+                }} style={{backgroundColor: '#1db954'}} className='p-[1.5vmax] rounded-full text-[1vmax] text-white font-bold cursor-pointer'>Create Playlist</button>
                 </div>
             </div>
         </LoggedInUI>
@@ -46,7 +46,7 @@ function CreatePlaylist() {
 
 function PlayList ({titleName}) {
     return (
-        <div className='px-[2vw] py-[0.8vw] font-semibold'><div className='text-[2.2vmax] font-bold'>{titleName}</div>
+        <div className='px-[2vw] py-[0.8vw] text-white font-semibold'><div className='text-[2.2vmax] font-bold'>{titleName}</div>
        </div>
     )
 }

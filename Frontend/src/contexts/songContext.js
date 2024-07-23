@@ -23,6 +23,8 @@ const songContext = createContext({
     setPartyModeFriendName: (partyModeFriendName)=>{},
     recommendedSong: null,
     setRecommendedSong: (recommendedSong)=>{},
+    userInfo: null,
+    setUserInfo: (userInfo)=>{},
 });
 
 export default songContext 

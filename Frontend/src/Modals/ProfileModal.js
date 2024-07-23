@@ -9,6 +9,7 @@ function ProfileModal({onClose}) {
   const {partyModeData, setPartyModeData} = useContext(songContext);
   const{partyModeActivated, setPartyModeActivated} = useContext(songContext);
   const [cookie, setCookies] = useCookies(["token"]);
+  const {paused, setPaused} = useContext(songContext);
 
     const [data,setData] = useState([]);
 
@@ -24,7 +25,8 @@ function ProfileModal({onClose}) {
     const logoutFunc = async () => {
       const response = await makeAuthenticatedPOSTRequest('/auth/logout', {});
       setCookies('token', '');
-      setAccountType("");
+      setAccountType(""); 
+      setPaused(true);
       setCurrentSong(null);
       setPartyModeData(null);
       setPartyModeActivated(false);
@@ -34,7 +36,7 @@ function ProfileModal({onClose}) {
   return (
     <div onClick={onClose} className='w-full h-full bg-black bg-opacity-80 absolute text-white flex justify-center items-center'>
         <div className='gap-[2vmax] w-[30vmax] h-[35vmax] bg-zinc-900 text-white flex flex-col justify-center items-center rounded-[0.5vmax]'>
-              <div style={{backgroundColor: '#EA445A'}} className='rounded-full text-[1.2vmax] w-[3vmax] h-[3vmax] flex justify-center items-center text-[1.7vmax] font-bold'>
+              <div style={{backgroundColor: '#1DB954'}} className='rounded-full text-[1.2vmax] w-[3vmax] h-[3vmax] flex justify-center items-center text-[1.7vmax] font-bold'>
                 {data.firstName && data.firstName.charAt(0).toUpperCase()}
               </div>
               <div className='text-[1.2vmax] flex flex-col justify-center gap-[1vmax] items-center'>
@@ -54,7 +56,7 @@ function ProfileModal({onClose}) {
               <div onClick={(e)=>{
                 e.preventDefault();
                 logoutFunc();
-              }} style={{backgroundColor: '#EA445A'}} className='p-[1vmax] cursor-pointer rounded-[0.5vmax] text-white text-[1.1vmax] font-bold'>
+              }} style={{backgroundColor: '#1DB954'}} className='p-[1vmax] cursor-pointer rounded-[0.5vmax] text-white text-[1.1vmax] font-bold'>
                 Logout
               </div>
         </div>

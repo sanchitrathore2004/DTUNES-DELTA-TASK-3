@@ -30,11 +30,9 @@ function LoggedInUI({ children }) {
     // const [accountType, setAccountType] = useState("");
 
     const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType } = useContext(songContext);
-    console.log(currentSong);
 
     let firstUpdate = useRef(true);
 
-    console.log(songData);
 
     const saveDetail = async (info) => {
         console.log('aaya');
@@ -164,7 +162,7 @@ function LoggedInUI({ children }) {
                         <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText={accountType === 'artist' ? 'UPLOAD SONGS' : ''}  nextText='S' />
                     </div>
                     {/* backgroundColor: '#74F0ED' */}
-                    <div className='overflow-auto bg-white' style={{height: 'calc(100% - 10vmin)' }}>
+                    <div className='overflow-auto' style={{height: 'calc(100% - 10vmin)', backgroundColor: '#212121' }}>
                         {children}
                     </div>
                 </div>

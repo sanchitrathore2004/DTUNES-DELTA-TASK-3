@@ -159,23 +159,23 @@ function LoggedInHome () {
                         return <SongCard info={item} />
                     })}
                 </div>
-                <div className='px-[2.2vw] py-[0.8vw] text-[2.2vw] font-bold'>
+                <div className='px-[2.2vw] py-[0.8vw] text-[2.2vw] text-white font-bold'>
                     Friend's Activity
                     {friendActivity.length==0 && <div>
-                       <Link to='/searchpage'> <button style={{backgroundColor: '#EA445A'}} className='rounded-[0.5vmax] text-white cursor-pointer text-[1.3vmax] p-[1vmax] font-semibold'>Add Friends</button></Link>
+                       <Link to='/searchpage'> <button style={{backgroundColor: '#1db954'}} className='rounded-[0.5vmax] text-white cursor-pointer text-[1.3vmax] p-[1vmax] font-semibold'>Add Friends</button></Link>
                         </div>}
                 </div>
                 <div>
                     {friendActivity && friendActivity.map((item)=>{
                         return( item.liveUpdate.songId && 
                             <div>
-                                <div className='mx-[3vw] text-[1.3vw] font-semibold'>{item.firstName} was listening to <span style={{color: '#EA445A'}} className='font-bold'>{item.liveUpdate.songId.name}</span> on {format(new Date(item.liveUpdate.timestamp), 'yyyy-MM-dd')} at {format(new Date(item.liveUpdate.timestamp), 'HH:mm:ss')}</div>
+                                <div className='mx-[3vw] text-[1.3vw] text-white font-semibold'>{item.firstName} was listening to <span style={{color: '#1DB954'}} className='font-bold'>{item.liveUpdate.songId.name}</span> on {format(new Date(item.liveUpdate.timestamp), 'yyyy-MM-dd')} at {format(new Date(item.liveUpdate.timestamp), 'HH:mm:ss')}</div>
                             <SongCard info={item.liveUpdate.songId} /> </div>)
                     })}
                 </div>
                 <div>
                     <PlayList titleName='Recommended For You' />
-                    {recommendedSong.length==0 && <div className='mx-[1.3vmax] my-[0.5vmax] '><span className='text-[1.1vmax] mx-[0.5vmax] font-semibold'></span><Link to='/searchpage'><button className=' rounded-[0.5vmax] text-white font-semibold text-[1.3vmax] p-[1vmax]' style={{backgroundColor: '#EA445A'}}>Explore Now</button></Link></div>}
+                    {recommendedSong.length==0 && <div className='mx-[1.3vmax] my-[0.5vmax] '><span className='text-[1.1vmax] mx-[0.5vmax] font-semibold'></span><Link to='/searchpage'><button className=' rounded-[0.5vmax] text-white font-semibold text-[1.3vmax] p-[1vmax]' style={{backgroundColor: '#1db954'}}>Explore Now</button></Link></div>}
                     {recommendedSong && recommendedSong.map((item)=>{
                         return <SongCard info={item.songId} />
                     })}
@@ -187,7 +187,7 @@ function LoggedInHome () {
 
 function PlayList ({titleName, info}) {
     return (
-        <div className=' px-[2vw] py-[0.8vw] font-semibold'><div className='text-[2.2vw] font-bold'>{titleName}</div>
+        <div className=' px-[2vw] py-[0.8vw] font-semibold text-white'><div className='text-[2.2vw] font-bold'>{titleName}</div>
        </div>
     )
 }
@@ -205,7 +205,7 @@ function Cards ({thumbnail, title, description, playlistId}) {
             setPlaylist(playlistId);
             saveRecents(playlistId);
             navigation('/insideplaylist');
-        }} className='cursor-pointer hover:bg-zinc-900 p-[0.5vw] flex flex-col items-center justify-end text-white bg-black w-1/5 m-[1vw] h-[18vw] rounded-md'>
+        }} className='cursor-pointer hover:bg-zinc-800 p-[0.5vw] flex flex-col items-center justify-end text-white bg-black w-1/5 m-[1vw] h-[18vw] rounded-md'>
             <div className='flex justify-center items-center w-full h-full'><img className='w-full h-full rounded-md' src={thumbnail} /></div>
             <div className='font-semibold text-[1.2vw] p-[0.3vw]'>{title}</div>
             <div className='text-[0.8vw] text-gray p-[0.3vw]'>Created By - {description.firstName}</div>

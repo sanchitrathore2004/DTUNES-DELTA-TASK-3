@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import bellIcon from '../../assets/bell-icon-2.jpg';
+import songContext from '../../contexts/songContext';
 
 function LoggedInNavigation({firstText, nextText, onOpen}) {
   const navigate = useNavigate();
 
   const [profileData, setProfileData] = useState([]);
+  const{userInfo, setUserInfo} = useContext(songContext);
 
   useEffect(()=>{
     const getData = async () => {
         const response  = await makeAuthenticatedGETRequest('/me/get/my/details');
-        setProfileData(response.data);
+        setProfileData(response.data); 
+        setUserInfo(response.data);
     }
     getData();
 });
@@ -25,7 +28,7 @@ function LoggedInNavigation({firstText, nextText, onOpen}) {
           e.preventDefault();
           navigate('/notification');
         }} className='w-[2.2vw] h-[2.2vw] cursor-pointer rounded-full' src={bellIcon} /></div>
-    <div onClick={onOpen} className={`${nextText!=''? `rounded-full w-[2.3vw] h-[2.3vw] flex items-center justify-center` : `rounded-md`} cursor-pointer font-bold mx-[0.7vw] text-[1.5vw] text-white`} style={{backgroundColor:'#EA445A'}}>{profileData.firstName && profileData.firstName.charAt(0).toUpperCase()}</div>
+    <div onClick={onOpen} className={`${nextText!=''? `rounded-full w-[2.3vw] h-[2.3vw] flex items-center justify-center` : `rounded-md`} cursor-pointer font-bold mx-[0.7vw] text-[1.5vw] text-white`} style={{backgroundColor:'#1DB954'}}>{profileData.firstName && profileData.firstName.charAt(0).toUpperCase()}</div>
     </div>
   )
 }

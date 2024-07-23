@@ -20,7 +20,7 @@ function MyPlaylist() {
   return (
     <div>
         <LoggedInUI> 
-          <div className='font-bold text-[2.2vw] px-[2vw] py-[0.8vw]'>Your Playlists</div>
+          <div className='font-bold text-[2.2vw] text-white px-[2vw] py-[0.8vw]'>Your Playlists</div>
           <div className='flex mx-[1.5vw]'>
           {playlistData.map((item)=>{
             console.log(item);

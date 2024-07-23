@@ -67,7 +67,7 @@ function UploadSongs () {
                 <div onClick={(e) => {
                     e.preventDefault();
                     uploadBtn();
-                }} style={{backgroundColor: '#EA445A'}} className='my-[1.5vw] flex p-[1vw] text-white w-1/6 h-full text-[1.3vw] justify-center items-center font-bold cursor-pointer rounded-full'>Upload Song</div>
+                }} style={{backgroundColor: '#1DB954'}} className='my-[1.5vw] flex p-[1vw] text-white w-1/6 h-full text-[1.3vw] justify-center items-center font-bold cursor-pointer rounded-full'>Upload Song</div>
                 </div>  
         </div>
         </LoggedInUI>
@@ -76,7 +76,7 @@ function UploadSongs () {
 
 function PlayList ({titleName}) {
     return (
-        <div className='px-[2vw] py-[0.8vw] font-semibold'><div className='text-[2.2vw] font-bold'>{titleName}</div>
+        <div className='px-[2vw] py-[0.8vw] text-white font-semibold'><div className='text-[2.2vw] font-bold'>{titleName}</div>
        </div>
     )
 }

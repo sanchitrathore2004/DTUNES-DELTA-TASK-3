@@ -61,7 +61,7 @@ function LikedSongs() {
   return (
     <div>
         <LoggedInUI>
-          <div className='px-[2vw] py-[0.8vw] text-[2.2vw] font-bold'>Your Liked Songs</div>
+          <div className='px-[2vw] py-[0.8vw] text-[2.2vw] text-white font-bold'>Your Liked Songs</div>
           {likedSongData && likedSongData.map((item)=>{
             return <SongCard info={item} playMusic={playMusic} />
           })}

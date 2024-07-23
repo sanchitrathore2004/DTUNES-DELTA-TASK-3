@@ -42,7 +42,7 @@ function Login() {
     } 
   }
   return (
-    <div className='w-full h-screen bg-zinc-900 flex flex-col gap-[1.5vmax] justify-center items-center'>
+    <div className='w-full h-screen bg-white flex flex-col gap-[1.5vmax] justify-center items-center'>
         <div className='flex flex-col bg-white rounded-md w-[35vmax] h-[38vmax]' style={{backgroundColor: '#000000'}}>
         <div className='w-full h-1/4 my-[1vmax] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
         <div className='w-full h-3/4 flex flex-col justify-center items-center'>
@@ -60,7 +60,7 @@ function Login() {
         }} className='text-white my-[0.3vmax] bg-zinc-800 p-[1vmax] rounded-[0.5vmax] cursor-pointer font-bold text-[1.1vmax]'>Login with DAUTH</div>
         </div>
         </div>      
-        <footer className='text-[1.1vmax] text-white'>Made with ❤️ by Sanchit</footer>    
+        <footer className='text-[1.1vmax] text-black'>Made with ❤️ by Sanchit</footer>    
     </div>
   )
 }

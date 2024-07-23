@@ -36,23 +36,23 @@ function UserCard({info}) {
   console.log(isFriend);
   
   return (
-    <div className='p-4'>
-    <div className='bg-black hover:bg-gray-900 flex justify-center items-center mx-12 rounded-md cursor-pointer h-14'>
-      <div className='text-white font-bold h-3/4 rounded-full w-12 text-xl flex justify-center items-center mx-6' style={{backgroundColor: '#EA445A'}}>{info.firstName && info.firstName.charAt(0).toUpperCase()}</div>
-    <div className='w-3/4 text-white flex flex-col justify-center px-5'>
-        <div className='hover:underline font-semibold'>
+    <div className='p-[2vmax]'>
+    <div className='bg-black hover:bg-gray-900 flex justify-center items-center mx-[3vmax] rounded-md cursor-pointer h-[4vmax]'>
+      <div className='text-white font-bold h-3/4 rounded-full w-[3vmax] text-[1.5vmax] flex justify-center items-center mx-[2vmax]' style={{backgroundColor: '#1DB954'}}>{info.firstName && info.firstName.charAt(0).toUpperCase()}</div>
+    <div className='w-3/4 text-white flex flex-col justify-center px-[2vmax]'>
+        <div className='hover:underline font-semibold text-[1.5vmax]'>
             {info.firstName+" "+info.lastName}
         </div>
     </div>
     {isFriend ? (
-          <div className='text-white font-semibold w-1/6 flex justify-center items-center h-7/10 rounded-md cursor-pointer' style={{ backgroundColor: '#EA445A' }}>
+          <div className='text-white text-[1.1vmax] font-semibold w-1/6 flex justify-center items-center h-7/10 rounded-md cursor-pointer' style={{ backgroundColor: '#1DB954' }}>
             Friend
           </div>
         ) : (
           <div onClick={(e) => {
             e.preventDefault();
             sendRequest();
-          }} className='text-white font-semibold w-1/6 flex justify-center items-center h-7/10 rounded-md cursor-pointer' style={{ backgroundColor: '#EA445A' }}>
+          }} className='text-white text-[1.1vmax] font-semibold w-1/6 flex justify-center items-center h-7/10 rounded-md cursor-pointer' style={{ backgroundColor: '#1DB954' }}>
             Send Request
           </div>
         )}
