@@ -4,12 +4,14 @@ import songContext from '../../contexts/songContext'
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import SongCard from './SongCard';
 import { Howl, Howler } from 'howler';
+import SpinnerLoader from './SpinnerLoader';
 
 function InsidePlaylist() {
   const {playlist} = useContext(songContext);
   const {currentSong} = useContext(songContext);
   const {songData, setSongData} = useContext(songContext);
   const [playlistName, setPLaylistName] = useState("");
+  const [loaded, setLoaded] = useState(false);
   console.log(playlist);
   const [musicPlayed, setMusicPlayed] = useState(null);
 
@@ -40,7 +42,8 @@ function InsidePlaylist() {
       const response = await makeAuthenticatedGETRequest('/playlist/get/playlist/'+playlist);
       console.log(response);
       setSongData(response.songs);
-      setPLaylistName(response.name)
+      await setPLaylistName(response.name);
+      setLoaded(true);
       console.log(playlistName);
     }
     getData();
@@ -60,6 +63,7 @@ function InsidePlaylist() {
   return (
     <div>
         <LoggedInUI>
+        {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
           <div className=' font-bold text-[2.2vw] px-[2vw] text-white py-[0.8vw]'>{playlistName}</div>
             {songData.map((item)=>{
               return <SongCard playMusic={playMusic} info={item} />

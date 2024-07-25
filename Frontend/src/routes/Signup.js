@@ -5,6 +5,7 @@ import Password from '../components/shared/Password';
 import { Link, useNavigate } from 'react-router-dom';
 import { makeUnauthenticatedPOSTRequest } from '../utils/apiCalling';
 import {useCookies} from 'react-cookie';
+import SpinnerLoader from '../components/shared/SpinnerLoader';
 
 function Signup() {
   const [cookie, setCookie] = useCookies(["token"]);
@@ -15,6 +16,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [loaded, setLoaded] = useState(true);
 
   const signUpBtn = async () => {
     if(email != confirmEmail){
@@ -28,12 +30,14 @@ function Signup() {
       date.setDate(date.getDate()+30);
       const token = response.token;
       setCookie("token", token, {path: "/", expires: date});
-      navigate("/home");
-    }
+      await navigate("/home");
+      setLoaded(false); 
+    } 
   }
   return (
     <div style={{backgroundImage: `url('https://c4.wallpaperflare.com/wallpaper/707/220/899/gradient-blue-pink-abstract-art-wallpaper-preview.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center'}} className='w-full h-screen bg-white flex flex-col justify-center items-center bg-white'>
-    <div className='flex flex-col border-2 rounded-md w-[35vmax] h-[48vmax] my-2'>
+      {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
+    { loaded && <div className='flex flex-col border-2 rounded-md w-[35vmax] h-[48vmax] my-2'>
     <div className='w-full h-1/5 my-[0.6vw] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
     <div className='w-full h-3/ flex flex-col justify-center items-center'>
     <Input value={email} setValue={setEmail} label="Email or Username" placeholder="Email" />
@@ -45,11 +49,12 @@ function Signup() {
     <Input value={lastName} setValue={setLastName} label="Last Name" placeholder="Last Name" />
     </div>
     <div className='flex justify-center items-center'><button style={{backgroundColor:'#EA445A'}} className='rounded-[0.5vmax] text-white p-[1vmax] font-bold text-[1.1vmax] bg-white' onClick={(e)=>{e.preventDefault();
+    setLoaded(false); 
       signUpBtn();
     }}>REGISTER AS LISTENER</button></div>
     <div className='text-white my-[0.5vmax] text-[1.1vmax]'>Already have an Account? <Link to='/login' className='font-bold cursor-pointer'>Login</Link></div>
     </div>
-    </div>    
+    </div>    }
     {/* <footer className='text-[1.3vmax] text-white font-bold'>DTUNES</footer>     */}
 </div> 
   )

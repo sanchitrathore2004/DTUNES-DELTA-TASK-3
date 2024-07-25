@@ -4,6 +4,7 @@ import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import SongCard from './SongCard';
 import { Howl, Howler } from 'howler';
 import songContext from '../../contexts/songContext';
+import SpinnerLoader from './SpinnerLoader';
 
 function LikedSongs() {
   const [likedSongData, setlikedSongData] = useState([]);
@@ -13,6 +14,7 @@ function LikedSongs() {
   const [playlistName, setPLaylistName] = useState("");
   console.log(playlist);
   const [musicPlayed, setMusicPlayed] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
     useEffect(()=>{
         const getLikedSongs = async () => {
@@ -20,7 +22,8 @@ function LikedSongs() {
             console.log(data);
             console.log(data.data.likedSongs);
             setlikedSongData(data.data.likedSongs);
-            setSongData(data.data.likedSongs);
+            await setSongData(data.data.likedSongs);
+            setLoaded(true);
         }
         getLikedSongs();
     },[]);
@@ -61,6 +64,7 @@ function LikedSongs() {
   return (
     <div>
         <LoggedInUI>
+        {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
           <div className='px-[2vw] py-[0.8vw] text-[2.2vw] text-white font-bold'>Your Liked Songs</div>
           {likedSongData && likedSongData.map((item)=>{
             return <SongCard info={item} playMusic={playMusic} />

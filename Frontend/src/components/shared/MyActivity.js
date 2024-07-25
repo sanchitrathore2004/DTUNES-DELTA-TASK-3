@@ -3,6 +3,7 @@ import LoggedInUI from './LoggedInUI'
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling'
 import SongCard from './SongCard';
 import songContext from '../../contexts/songContext';
+import SpinnerLoader from './SpinnerLoader';
 let checkGenre=[];
 
 function MyActivity() {
@@ -10,6 +11,7 @@ function MyActivity() {
     const [artistNames, setArtistNames] = useState([]);
     const [numberOfSongs, setNumberOfSongs] = useState(null);
     const{userInfo, setUserInfo} = useContext(songContext);
+    const [loaded, setLoaded] = useState(false);
     useEffect(()=>{
       const getData = async () => {
         if(recommendedSong.length>0){
@@ -17,7 +19,11 @@ function MyActivity() {
         recommendedSong.forEach(element => {
           totalSongs+=parseInt(element.frequency);
         });
-        setNumberOfSongs(totalSongs);
+        await setNumberOfSongs(totalSongs);
+        setLoaded(true);
+      }
+      else{
+        setLoaded(true);
       }
       }
       getData();
@@ -25,6 +31,7 @@ function MyActivity() {
   return (
     <div>
         <LoggedInUI>
+        {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
             <div className='px-[2vw] py-[0.8vw] text-[2.2vw] font-bold text-white'>Recap of your last week</div>
             {recommendedSong.length>0 && recommendedSong.map((item)=>{
                 return <div className=''> <div className='mx-[2vmax] text-[1.5vmax] text-white font-semibold '>You Listened to <span style={{color: '#1DB954'}} className='font-bold'>{item.songId.name}</span><span className='font-bold text-[2vmax]'>{" "+item.frequency}</span> Times</div> <SongCard info={item.songId} /> </div>

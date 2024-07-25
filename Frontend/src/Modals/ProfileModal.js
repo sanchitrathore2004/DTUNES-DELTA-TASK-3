@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { makeAuthenticatedGETRequest, makeAuthenticatedPOSTRequest } from '../utils/apiCalling';
 import { useCookies } from 'react-cookie';
 import songContext from '../contexts/songContext';
+import SpinnerLoader from '../components/shared/SpinnerLoader';
+
 
 function ProfileModal({onClose}) {
   const {accountType, setAccountType} = useContext(songContext);
@@ -10,6 +12,7 @@ function ProfileModal({onClose}) {
   const{partyModeActivated, setPartyModeActivated} = useContext(songContext);
   const [cookie, setCookies] = useCookies(["token"]);
   const {paused, setPaused} = useContext(songContext);
+  const [loaded, setLoaded] = useState(false);
 
     const [data,setData] = useState([]);
 
@@ -17,7 +20,8 @@ function ProfileModal({onClose}) {
         const getData = async () => {
             const response = await makeAuthenticatedGETRequest('/me/get/my/details');
             console.log(response.data);
-            setData(response.data);
+            await setData(response.data);
+            setLoaded(true);
         }
         getData();
     },[]);
@@ -35,7 +39,8 @@ function ProfileModal({onClose}) {
 
   return (
     <div onClick={onClose} className='w-full h-full bg-black bg-opacity-80 absolute text-white flex justify-center items-center'>
-        <div className='gap-[2vmax] w-[30vmax] h-[35vmax] bg-zinc-900 text-white flex flex-col justify-center items-center rounded-[0.5vmax]'>
+      {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
+        {loaded && <div className='gap-[2vmax] w-[30vmax] h-[35vmax] bg-zinc-900 text-white flex flex-col justify-center items-center rounded-[0.5vmax]'>
               <div style={{backgroundColor: '#1DB954'}} className='rounded-full text-[1.2vmax] w-[3vmax] h-[3vmax] flex justify-center items-center text-[1.7vmax] font-bold'>
                 {data.firstName && data.firstName.charAt(0).toUpperCase()}
               </div>
@@ -59,7 +64,7 @@ function ProfileModal({onClose}) {
               }} style={{backgroundColor: '#1DB954'}} className='p-[1vmax] cursor-pointer rounded-[0.5vmax] text-white text-[1.1vmax] font-bold'>
                 Logout
               </div>
-        </div>
+        </div>}
     </div>
   )
 }

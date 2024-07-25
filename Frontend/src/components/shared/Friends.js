@@ -2,21 +2,25 @@ import React, { useEffect, useState } from 'react'
 import LoggedInUI from './LoggedInUI'
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import UserCard from './UserCard';
+import SpinnerLoader from './SpinnerLoader';
 
 function Friends() {
     const [friendsData, setFriendsData] = useState([]);
+    const [loaded, setLoaded] = useState(false);
 
     useEffect(()=>{
         const getData = async () => {
             const data = await makeAuthenticatedGETRequest('/me/get/my/details');
             console.log(data.data.friends);
-            setFriendsData(data.data.friends);
+            await setFriendsData(data.data.friends);
+            setLoaded(true);
         }
         getData();
     },[]);
   return (
     <div>
         <LoggedInUI>
+        {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
             <div className='px-[2vw] py-[0.8vw] text-white text-[2.2vw] font-bold'>Friends</div>
             {friendsData.map((item)=>{
                 return <FriendsCard info={item} />

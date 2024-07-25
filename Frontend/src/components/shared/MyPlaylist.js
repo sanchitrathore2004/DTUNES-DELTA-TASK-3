@@ -5,21 +5,25 @@ import { useNavigate } from 'react-router-dom';
 import songContext from '../../contexts/songContext';
 import moreIcon from '../../assets/more (1).png';
 import toast from 'react-hot-toast';
+import SpinnerLoader from './SpinnerLoader';
 
 function MyPlaylist() {
   const [playlistData, setPlaylistData] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
     useEffect(()=>{
         const getPlaylist = async () => {
             const response = await makeAuthenticatedGETRequest('/playlist/get/my/playlist');
             console.log(response.data);
-            setPlaylistData(response.data);
+            await setPlaylistData(response.data);
+            setLoaded(true);
         }
         getPlaylist();
     },[]);
   return (
     <div>
         <LoggedInUI> 
+        {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
           <div className='font-bold text-[2.2vw] text-white px-[2vw] py-[0.8vw]'>Your Playlists</div>
           <div className='flex mx-[1.5vw]'>
           {playlistData.map((item)=>{

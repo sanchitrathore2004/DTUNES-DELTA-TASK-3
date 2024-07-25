@@ -19,12 +19,14 @@ import SongCard from './SongCard';
 import levelsImage from '../../assets/levels.jpg';
 import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import LoggedInUI from './LoggedInUI';
+import SpinnerLoader from './SpinnerLoader';
 
 const data = [{name:'LEVELS', thumbnail: 'https://c.saavncdn.com/220/Levels-feat-Sunny-Malton-Punjabi-2022-20220525101628-500x500.jpg', artist: 'Siddhu Moosewala'}];
 
 function MyMusic() {
     const [songData, setSongData] = useState([]);
     const [musicPlayed, setMusicPlayed] = useState(null);
+    const [loaded, setLoaded] = useState(false);
 
     //for music streaming we are using howler 
 
@@ -50,7 +52,8 @@ function MyMusic() {
             const response=[];
              response.push(await makeAuthenticatedGETRequest('/song/get/mysongs'));
                 console.log(response[0].data);
-                setSongData(response[0].data.songs); 
+                await setSongData(response[0].data.songs); 
+                setLoaded(true);
                 console.log(songData);
         }
         getData();
@@ -58,6 +61,7 @@ function MyMusic() {
 
     return (
         <LoggedInUI>
+            {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
             <div className='w-4/5'>
             <div className='h-9/10 overflow-auto'>
             <div className='px-[2vw] py-[0.8vw] text-white text-[2.2vw] font-bold'>

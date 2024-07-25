@@ -5,12 +5,14 @@ import Password from '../components/shared/Password';
 import { Link, useNavigate } from 'react-router-dom';
 import { makeUnauthenticatedPOSTRequest } from '../utils/apiCalling';
 import { useCookies } from 'react-cookie';
+import SpinnerLoader from '../components/shared/SpinnerLoader';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cookie, setCookie] = useCookies(["token"]);
   const navigate = useNavigate();
+  const [loaded, setLoaded] = useState(true);
 
 
   const clientId = 'Yc8VTFJ0m8Hetmzz';
@@ -38,18 +40,21 @@ function Login() {
       date.setDate(date.getDate() + 30);
       const token = response.token;
       setCookie('token', token, {path: '/', expires: date});
-      navigate('/home');
+      await navigate('/home');
+      setLoaded(true);
     } 
   }
   return (
     <div style={{backgroundImage: `url('https://c4.wallpaperflare.com/wallpaper/707/220/899/gradient-blue-pink-abstract-art-wallpaper-preview.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center'}} className='w-full h-screen bg-white flex flex-col gap-[1.5vmax] justify-center items-center'>
-        <div className='flex flex-col rounded-md w-[32vmax] h-[38vmax] border-2'>
+      {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
+        {loaded && <div className='flex flex-col rounded-md w-[32vmax] h-[38vmax] border-2'>
         <div className='w-full h-1/4 my-[1vmax] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
         <div className='w-full h-3/4 flex flex-col justify-center items-center'>
         <Input value={email} setValue={setEmail} label="Email Address" placeholder="Email" />
         <Password value={password} setValue={setPassword} label="Password" placeholder="Password" />
         <div className=' flex justify-center items-center'><button onClick={(e) => {
           e.preventDefault();
+          setLoaded(false); 
           loginBtn();
         }} style={{backgroundColor:'#EA445A'}} className='rounded-[0.5vmax] text-white p-[1vmax] font-bold text-[1.2vmax] bg-white'>LOGIN</button></div>
         <div className='text-white my-[0.5vmax] text-[1.1vmax]'>Don't have an Account? Register as <Link to='/signup' className='font-bold cursor-pointer'>Listener</Link>/<Link to='/artist/signup' className='font-bold cursor-pointer'>Artist</Link></div>
@@ -59,7 +64,7 @@ function Login() {
           loginWithDauth();
         }} className='text-white my-[0.3vmax] bg-zinc-800 p-[1vmax] rounded-[0.5vmax] cursor-pointer font-bold text-[1.1vmax]'>Login with DAUTH</div>
         </div>
-        </div>      
+        </div>    }  
         {/* <footer className='text-[1.3vmax] text-white font-bold'>DTUNES</footer>     */}
     </div>
   )

@@ -5,6 +5,7 @@ import SongCard from './SongCard';
 import songContext from '../../contexts/songContext';
 import { Howl, Howler } from 'howler';
 import { Link } from 'react-router-dom';
+import SpinnerLoader from './SpinnerLoader';
 
 function PartyMode() {
     const {playlist} = useContext(songContext);
@@ -15,6 +16,7 @@ function PartyMode() {
     const{partyModeActivated, setPartyModeActivated} = useContext(songContext);
     const {partyModeData, setPartyModeData} = useContext(songContext); 
     const {partyModeFriendName, setPartyModeFriendName} = useContext(songContext);
+    const [loaded, setLoaded] = useState(false);
 
     const playNextSong = async () => {
         const currentIndex = partyModeData.indexOf(currentSong);
@@ -53,7 +55,8 @@ function PartyMode() {
                 }
                 return array;
             };
-            setPartyModeData(shuffleArray(combinedSongs));
+            await setPartyModeData(shuffleArray(combinedSongs));
+            setLoaded(true);
         }
         getData();
         setPartyModeActivated(true);
@@ -61,6 +64,9 @@ function PartyMode() {
     },[]);
     useEffect(()=>{
         console.log(partyModeData);
+        if(partyModeData.length==0){
+            setLoaded(true);
+        }
     },[partyModeData]);
 
     const playMusic = (songSrc) => {
@@ -84,6 +90,7 @@ function PartyMode() {
   return (
     <div>
         <LoggedInUI>
+        {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
             <div className='px-[2vw] py-[0.8vw] text-[2.2vw] text-white font-bold'>Party Mode (You & {partyModeFriendName})</div>
             {partyModeData.length>0 && partyModeData.map((item)=>{
                 return <SongCard playMusic={playMusic} info={item} />

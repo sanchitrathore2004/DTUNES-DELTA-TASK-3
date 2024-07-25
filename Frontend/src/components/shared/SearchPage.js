@@ -7,6 +7,7 @@ import { makeAuthenticatedGETRequest } from '../../utils/apiCalling';
 import SongCard from './SongCard';
 import UserCard from './UserCard';
 import SongCardApi from './SongCardApi';
+import SpinnerLoader from './SpinnerLoader';
 
 function SearchPage() {
     const [value, setValue] = useState("");
@@ -14,6 +15,7 @@ function SearchPage() {
     const [apiSongData, setApiSongData] = useState([]);
     const [searchToggle, setSearchToggle] = useState("");
     const [userData, setUserData] = useState([]);
+    const [loaded, setLoaded] = useState(true);
     console.log(value);
 
 const searchSong = async () => {
@@ -24,7 +26,8 @@ const searchSong = async () => {
 
         const response = await makeAuthenticatedGETRequest('/song/get/songname/'+value);
         console.log(response.data);
-        setSongData(response.data); 
+        await setSongData(response.data); 
+        setLoaded(true);
 
         try {
             let response = await fetch(`https://v1.nocodeapi.com/sanchit0610/spotify/nGprlezEVcXvcxuT/search?q=${q}&type=track`);
@@ -45,7 +48,8 @@ const searchSong = async () => {
         setSongData([]);
         const response = await makeAuthenticatedGETRequest('/me/get/my/details/'+value);
         console.log(response)
-        setUserData(response.data);
+        await setUserData(response.data);
+        setLoaded(true);
     }
     else{
         console.log('select a toggle');
@@ -78,6 +82,7 @@ const searchSong = async () => {
         <LoggedInUI>
             <div onKeyDown={(e)=>{
             if(e.key=="Enter"){
+                setLoaded(false);
                 searchSong();
             }
           }} className='w-full flex justify-center items-center '>
@@ -107,6 +112,7 @@ const searchSong = async () => {
                         <div className='flex justify-center text-white items-center text-[1.1vmax] font-semibold p-[1.5vmax]'>Please select a toggle to search</div>
                     )
                 }
+                {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
                 {songData.map((items)=>{
                     return <SongCard playMusic={playMusic} info={items} />;
                 })}
