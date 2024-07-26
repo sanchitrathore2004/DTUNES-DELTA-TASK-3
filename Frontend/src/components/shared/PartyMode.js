@@ -91,12 +91,12 @@ function PartyMode() {
     <div>
         <LoggedInUI>
         {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
-            <div className='px-[2vw] py-[0.8vw] text-[2.2vw] text-white font-bold'>Party Mode (You & {partyModeFriendName})</div>
+            {loaded && <div className='px-[2vw] py-[0.8vw] text-[2.2vw] text-white font-bold'>Party Mode (You & {partyModeFriendName})</div>}
             {partyModeData.length>0 && partyModeData.map((item)=>{
                 return <SongCard playMusic={playMusic} info={item} />
             })}
 
-            {partyModeData.length==0 && <Link to='/searchpage'><button style={{backgroundColor: '#1DB954'}} className='mx-[2.5vmax] rounded-[0.5vmax] text-white font-semibold text-[1.5vmax] p-[0.5vmax]'>Add Friends</button></Link>}
+            {loaded && partyModeData.length==0 && <Link to='/searchpage'><button style={{backgroundColor: '#1DB954'}} className='mx-[2.5vmax] rounded-[0.5vmax] text-white font-semibold text-[1.5vmax] p-[0.5vmax]'>Add Friends</button></Link>}
             
         </LoggedInUI>
     </div>

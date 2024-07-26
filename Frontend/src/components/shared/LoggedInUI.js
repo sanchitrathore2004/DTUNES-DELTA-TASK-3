@@ -29,7 +29,7 @@ function LoggedInUI({ children }) {
     const {partyModeData, setPartyModeData} = useContext(songContext); 
     // const [accountType, setAccountType] = useState("");
 
-    const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, whichBtn, setWhichBtn } = useContext(songContext);
+    const { currentSong, setCurrentSong, musicPlayed, setMusicPlayed, paused, setPaused, currentSongFromApi, setCurrentSongFromApi, accountType, setAccountType, whichBtn, setWhichBtn, recommendedSong, setRecommendedSong } = useContext(songContext);
 
     let firstUpdate = useRef(true);
 
@@ -78,6 +78,9 @@ function LoggedInUI({ children }) {
                 if(songData.length!=0){
                 playNextSong();
                 }
+                else if (songData.length==0){
+                    playRecommendedSong();
+                }
                 else if(partyModeData.length!=0){
                     playNextSongFromPartyMode();
                 }
@@ -112,10 +115,18 @@ function LoggedInUI({ children }) {
       },[songData]);
     
       const playNextSong = async () => {
+        if(songData.length>0){
         const currentIndex = songData.indexOf(currentSong);
         saveDetail(songData[currentIndex+1]);
         setCurrentSong(songData[currentIndex+1]);
         console.log('new song',currentSong);
+        }
+      }
+
+      const playRecommendedSong = async () => {
+        console.log(Math.floor(Math.random()*recommendedSong.length));
+        await setCurrentSong(recommendedSong[Math.floor(Math.random()*recommendedSong.length)].songId);
+        console.log(currentSong);
       }
 
       const playNextSongFromPartyMode = async () => {
@@ -174,8 +185,8 @@ function LoggedInUI({ children }) {
                     <Link to='/myactivity'><div onClick={(e)=>{setWhichBtn('My Activity')}} className={`flex items-center ${whichBtn=='My Activity' ? 'text-white' : 'text-gray-600'} justify-start text-[1.5vw] hover:text-white cursor-pointer font-bold`}>My Activity</div></Link>
                         <LoggedInNavigation onOpen={()=>setProfileModal(true)} firstText={accountType === 'artist' ? 'UPLOAD SONGS' : ''}  nextText='S' />
                     </div>
-                    {/* backgroundColor: '#74F0ED' */}
-                    <div className='overflow-auto' style={{height: 'calc(100% - 10vmin)', backgroundColor: '#212121' }}>
+                    {/* backgroundColor: '#74F0ED' */} 
+                    <div className='overflow-auto' style={{height: 'calc(100% - 10vmin)', background: 'linear-gradient(45deg,#212121, #0F5132)' }}>
                         {children}
                     </div>
                 </div>

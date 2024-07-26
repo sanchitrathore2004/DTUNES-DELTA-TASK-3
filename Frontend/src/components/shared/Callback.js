@@ -58,7 +58,7 @@ const Callback = () => {
       }
     }
 
-  return <div style={{backgroundColor: '#74F0ED'}} className='h-screen w-full flex flex-col justify-center items-center'>
+  return <div style={{background: 'linear-gradient(45deg,#212121, #0F5132)'}} className='h-screen w-full flex flex-col justify-center items-center'>
     <div className='w-full flex justify-center items-center'>
     {<select className='w-[15vmax] text-[1.1vmax] text-center h-[2.5vmax]' value={value} onChange={(e)=>{
       setValue(e.target.value);
@@ -70,7 +70,10 @@ const Callback = () => {
       }
       </div>
       <div>
-      {<button style={{backgroundColor: '#EA445A'}} className='cursor-pointer text-white m-[2vmax] p-[1vmax] rounded-[0.7vmax] text-[1.1vmax] font-bold' onClick={(e)=>{
+      {<button style={{ 
+          background: 'linear-gradient(45deg,#0000, #1DB954)', 
+          color: 'white' 
+        }} className='cursor-pointer text-white m-[2vmax] p-[1vmax] rounded-[0.7vmax] text-[1.1vmax] font-bold' onClick={(e)=>{
         e.preventDefault();
         func();
       }}>Proceed</button>}</div>

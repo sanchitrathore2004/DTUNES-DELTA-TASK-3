@@ -31,6 +31,8 @@ function Login() {
   const loginBtn = async () => {
     if(!email || !password){
       console.log('Incomplete details filled');
+      navigate('/error');
+      setLoaded(true);
     }
     const data = {email, password};
     const response = await makeUnauthenticatedPOSTRequest('/auth/login', data);
@@ -42,12 +44,16 @@ function Login() {
       setCookie('token', token, {path: '/', expires: date});
       await navigate('/home');
       setLoaded(true);
+    }
+    else if(response.err){
+      await navigate('/error');
+      setLoaded(true);
     } 
   }
   return (
     <div style={{backgroundImage: `url('https://c4.wallpaperflare.com/wallpaper/707/220/899/gradient-blue-pink-abstract-art-wallpaper-preview.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center'}} className='w-full h-screen bg-white flex flex-col gap-[1.5vmax] justify-center items-center'>
       {!loaded && <div className='w-full h-full'><SpinnerLoader /></div>}
-        {loaded && <div className='flex flex-col rounded-md w-[32vmax] h-[38vmax] border-2'>
+        {loaded && <div className='flex flex-col rounded-md w-[32vmax] h-[38vmax] '>
         <div className='w-full h-1/4 my-[1vmax] flex justify-center'><img className='w-[8vmax] h-[8vmax]' src={logo} alt='logo'/></div>
         <div className='w-full h-3/4 flex flex-col justify-center items-center'>
         <Input value={email} setValue={setEmail} label="Email Address" placeholder="Email" />
@@ -56,13 +62,19 @@ function Login() {
           e.preventDefault();
           setLoaded(false); 
           loginBtn();
-        }} style={{backgroundColor:'#EA445A'}} className='rounded-[0.5vmax] text-white p-[1vmax] font-bold text-[1.2vmax] bg-white'>LOGIN</button></div>
+        }} style={{ 
+          background: 'linear-gradient(45deg, #1DB954, #0000)', 
+          color: 'white' 
+        }}  className='rounded-[0.5vmax] text-white p-[1vmax] font-bold text-[1.2vmax] bg-white'>LOGIN</button></div>
         <div className='text-white my-[0.5vmax] text-[1.1vmax]'>Don't have an Account? Register as <Link to='/signup' className='font-bold cursor-pointer'>Listener</Link>/<Link to='/artist/signup' className='font-bold cursor-pointer'>Artist</Link></div>
         <div className='text-white font-bold text-[1.5vmax] my-[0.5vmax]'>OR</div>
         <div onClick={(e)=>{
           e.preventDefault();
           loginWithDauth();
-        }} className='text-white my-[0.3vmax] bg-zinc-800 p-[1vmax] rounded-[0.5vmax] cursor-pointer font-bold text-[1.1vmax]'>Login with DAUTH</div>
+        }} style={{ 
+          background: 'linear-gradient(45deg,#0000, #1DB954)', 
+          color: 'white' 
+        }} className='text-white my-[0.3vmax] p-[1vmax] rounded-[0.5vmax] cursor-pointer font-bold text-[1.1vmax]'>Login with DAUTH</div>
         </div>
         </div>    }  
         {/* <footer className='text-[1.3vmax] text-white font-bold'>DTUNES</footer>     */}

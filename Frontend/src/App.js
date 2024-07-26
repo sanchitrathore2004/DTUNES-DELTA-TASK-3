@@ -23,6 +23,7 @@ import MyActivity from "./components/shared/MyActivity";
 import Callback from "./components/shared/Callback";
 import {Auth0Provider} from '@auth0/auth0-react';
 import { Toaster } from "react-hot-toast";
+import Error from "./components/Error";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
@@ -72,6 +73,7 @@ function App() {
         <Routes>
           {accountType=='artist' ? (
             <>
+            <Route path="/error" element={<Error />} />
             <Route path="/loggedin/home" element={<LoggedInHome />} />
           <Route path="*" element={<Navigate to='/loggedin/home' />}/>
           <Route path="/upload/songs" element={<UploadSongs />} />
@@ -88,6 +90,7 @@ function App() {
             </>
           ):(
             <>
+            <Route path="/error" element={<Error />} />
             <Route path="/myactivity" element={<MyActivity />} />
             <Route path="/partymode" element={<PartyMode />} />
             <Route path="/friends" element={<Friends />} />
@@ -105,6 +108,7 @@ function App() {
           </songContext.Provider>
         ) : (
           <Routes>
+            <Route path="/error" element={<Error />} />
             <Route path="/callback" element={<Callback />} />
           <Route path="/artist/signup" element={<ArtistSignUp />} />
           <Route path="/login" element={<Login />}/>

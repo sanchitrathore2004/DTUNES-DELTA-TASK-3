@@ -28,7 +28,7 @@ function CreatePlaylist() {
         <div className='h-9/10 overflow-none' >
         <PlayList titleName='Create Playlist' />
         <div className='flex p-[1vmax] w-full'>
-                <UploadInput value={name} setValue={setName} label='Name' placeholder='Name of Your Song' />
+                <UploadInput value={name} setValue={setName} label='Name' placeholder='Name of Your Playlist' />
                 <UploadInput value={thumbnail} setValue={setThumbnail} label='Thumbnail' placeholder='Link for your Thumbnail' />
                 <DroupDown value={visibility} setValue={setVisibility} />
                 </div>
